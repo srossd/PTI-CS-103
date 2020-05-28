@@ -1,0 +1,266 @@
+\chapter{Loop Structures}
+
+Sometimes, it is useful to repeat an action multiple times. Maybe you want to
+ask a user for their home address, if they do not provide a valid address, you
+ask them for an address again. Repeating an action a number of times in this way
+is a commonly used technique in programming. Structures that repeat actions are
+called \emph{loop structures}.
+
+In this chapter, we will learn a number of useful loop structures, like
+\ic{while} and \ic{for} loops. We describe when to use a \ic{while} loop, and
+when to use a \ic{for} loop. The chapter ends with a list of common mistakes to
+avoid when writing loops.
+
+\section{A \ic{while} loop}
+
+\begin{definition}
+A \emph{while loop} is a \emph{loop structure} that consists of the reserved
+keyword \ic{while}, followed by a boolean expression enclosed in parentheses,
+followed by statements typically enclosed in curly braces. These statements is
+executed as long as the boolean expression remains true. If the expression
+evaluates to false, the loop termates, and the program coninues.
+\end{definition}
+
+A \ic{while} loop allows us to write programs execute statements
+(called the \emph{loop body}), based on a boolean expression (called the \emph{condition}). Below is an example of a simple \ic{while} loop:
+
+\begin{code}
+while (count < 20) {
+  count = count+1;
+  System.out.println("Count less than 20");
+}
+System.out.println("Count greater than, or equal to, 20");
+\end{code}
+
+\noindent The condition in this example is \ic{count > 20}. It is a boolean
+expression that evaluates to either true or false. That is, \ic{count} is either
+greater than \ic{20} or not. If it is, count is increased by one, and ``Count
+less than 20'' is printed. Then, the program tests whether the new count is less
+than 20. If it is, the count is again increased by one, and ``Count less than
+20'' is printed again. Once count is greater than, or equal to, 20, ``Count
+greater than, or equal to, 20'' is printed.
+
+\begin{example}
+What does the following piece of code print if \ic{x} is 98? What about if \ic{x} is 200? What about if \ic{x} is 100?
+
+\begin{code}
+while (x < 100) {
+    x = x+1
+    System.out.println("Not big enough...");
+} 
+System.out.println("Big enough!");
+\end{code}
+
+\emph{Answer}: If \ic{x} is 98, the first boolean expression will evaluate to
+true, so the program will print ``Not big enough...'' Then the program will
+loop, and check the condition again.  Again, it will evaluate to true, and print
+``Not big enough...'' In the next iteration, x will be 100, and the conditional
+will evaluate to false, and will print out ``Big enough.''
+
+Using the same reasoning to trace the execution with \ic{x} is 200, the
+following statements will be printed: ``Big enough!''.
+
+When \ic{x} is 100, the condition is just barely big enough, so ``Big enough''
+will be printed.
+\end{example}
+
+\begin{example}
+How would you fill in the boolean expression to print x, until x is less than 0?.
+
+\begin{code}
+while (/* Insert boolean expression here */) {
+    x = x-1;
+} 
+\end{code}
+
+\emph{Answer}: Insert the boolean expression x $<$ 0.
+\end{example}
+
+\begin{example}
+How would you fill in the loop body to print all even numbers from 0 to 10.
+
+\begin{code}
+int x = 0;
+while (x <= 10) {
+    /* Insert loop body here */
+} 
+\end{code}
+
+\emph{Answer}: Insert the statements:
+\begin{code}
+  System.out.println(x);
+  x = x+2;
+\end{code}
+\end{example}
+
+\section{The \ic{for} loop}
+While a \ic{while} loop can express all possible loops, many while loops follow
+the same pattern. Before the loop, you initialize a variable; the loop condition
+involves that variable; and within the loop body, you then update that variable
+in the same way. When loops involves this pattern, programmers typically write a
+\ic{for} loop. Below is a \ic{for} loop that prints all the numbers from 0 to 9.
+
+\begin{code}
+for (int i = 0; i < 10; i++)
+{
+    System.out.println(i);
+}
+\end{code}
+
+A \ic{for} loop has 4 parts, initialization, condition, change, and body. In the
+above \ic{for} loop, \ic{int i = 0} is the initialization. It initializes a new
+variable, \ic{i}, to be zero. Next is the condition, \ic{i < 10}. This is the
+condition that describes when the loop ends. Then comes the change, \ic{i++}.
+After the loop body is run, the change is run as well.  Finally is the loop
+body, which in this case merely prints out \ic{i}.
+
+Note that this loop could have been written as a while loop, shown below:
+\begin{code}
+int i = 0;
+while (i < 10)  
+{
+    System.out.println(i);
+    i++
+}
+\end{code}
+%
+However, programmers use a \ic{for} loop, they know that the loop structure has
+the structure of requiring initialization, having a loop condition (typically
+refer to the initialized variable), and having a change on each loop
+iteration (typically changing the initialized variable), and having a loop body
+(that typically does not change the initialized variable).
+
+\begin{example}
+What does the following piece of code do?
+
+\begin{code}
+for (int i = 10; i > 0; i--)
+{
+    System.out.println(i);
+}
+\end{code}
+
+\emph{Answer}: It prints the numbers from 10 to 1.
+\end{example}
+
+\begin{example}
+What does the following piece of code do?
+
+\begin{code}
+for (int j = 1; j<100; j = j*2)
+{
+    System.out.println(j);
+}
+\end{code}
+
+\emph{Answer}: It prints all the powers of two from 1 to 100.
+\end{example}
+
+\begin{example}
+What would you put in the initialization, condition, and change to print all
+even numbers from 0 to 20.
+
+\begin{code}
+for (?; ?; ?)
+{
+    System.out.println(i);
+}
+\end{code}
+
+\emph{Answer}:
+\begin{code}
+for (int i = 0; i < 20; i = i+2)
+{
+    System.out.println(i);
+}
+\end{code}
+\end{example}
+
+\section{Nested loops}
+It is possible to combine loop statements in many interesting ways. Consider the following example:
+
+\begin{code}
+for (int i = 0; i < 100; i++)
+{
+    System.out.println("Go up to: " + i);
+    for (int j = 0; j < i; j++)
+    {
+        System.out.println(j);
+    }
+}
+\end{code}
+
+\noindent For each number from 0 to 99, this code will print all the numbers up
+to (and not including) it.  For example, it will start by printing \ic{0}. Then it will print \ic{0}
+and \ic{1}.  Then it will print \ic{0}, \ic{1}, and \ic{2}.  This will continue
+until it prints all the numbers from \ic{0} to \ic{98}.
+
+\section{Curly braces}
+So far, we have been using curly braces to enclose each of our loop bodies. These curly braces can be omitted if there is only a single statement. For example, in the snippet of code below, the first set of curly braces can be omitted, while the second cannot.
+
+\begin{code}
+int i = 0;
+while (i < 10)
+{
+    i++;
+}
+i = 0;
+while (i < 10)
+{
+    System.out.println(i);
+    i++;
+}
+\end{code}
+
+\noindent If all the curly braces were left out (as in the code below), the
+program would complete the first loop, printing nothing. Then it would begin the
+second loop, and print 0 forever..
+
+\begin{code}
+int i = 0;
+while (i < 10)
+    i++;
+i = 0;
+while (i < 10)
+    System.out.println(i);
+    i++;
+// ^^^ Careful! This is not part of the while loop!
+\end{code}
+
+Here it is important to note that whitespace and indentation are ignored by Java. Indentation has no effect on the behavior of a program. Proper indentation is extremely important for human readability. When used incorrectly, however, misleading indentation can result in unexpected behavior.
+
+\exercisesection
+
+\begin{exercise}
+What output is produced by the following code fragment?
+
+\begin{code}
+int i = 0;
+int j = 0;
+while (i < 3)
+{
+  j = j+i;
+  i++;
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Convert the following loop into a \ic{for} loop.
+
+\begin{code}
+int num = 100;
+while (num > 0)
+{
+    System.out.println(num);
+    num = num / 2;
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+  Write code that prints out ``hi'' 10 times, once without using loops, and once
+  using loops.
+\end{exercise}
+
+\referencessection
