@@ -20,7 +20,7 @@ deploy:
   skip_cleanup: true
   overwrite: true
   on:
-    repo: pti-cs/pti-cs-103
+    repo: srossd/pti-cs-103
 
 notifications:
   email: false

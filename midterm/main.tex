@@ -1,4 +1,4 @@
-\documentclass[answers,addpoints]{exam}
+\documentclass[answers,addpoints]{exam} %answers,addpoints]{exam}
 
 \usepackage{style}
 
@@ -234,35 +234,39 @@ else if(y - x == -2) {
 \begin{code}
 int x = 7;
 int y = 3;
-for(int i = 0; i < 5; i++) {
-    System.out.print(x/y);
-    x++;
-}
+System.out.print(x/y);
+y++;
+System.out.print(x/y);
+x++;
+System.out.println(x/y);
+y++;
+System.out.println(x/y);
 \end{code}
 
     \begin{solution}
-        \ic{22333}
+        \ic{2121}
     \end{solution}
 
     \part[4] \hfill\\
 
 \begin{code}
-for(int i = 0; i < 6; i++) {
-    for(int j = 0; j < 6; j++) {
-        if(i + j % 2 == 0) {
-            System.out.print('X');
-        }
-        else {
-            System.out.print(')');
-        }
-    }
-    System.out.println();
+int a = 5;
+int b = a*3;
+a = b-7;
+b = 4*a/9;
+if(b % a <= 1) {
+    System.out.println(b*a);
+}
+else if(b % a <= 2) {
+    System.out.println(a+b);
+}
+else {
+    System.out.println(a-b);
 }
 \end{code}
 
     \begin{solution}
-        \hfill\\
-        \ic{XOXOXO\newline OXOXOX\newline XOXOXO\newline OXOXOX\newline XOXOXO\newline OXOXOX}
+        11
     \end{solution}
 \end{parts}
 
@@ -272,38 +276,116 @@ for(int i = 0; i < 6; i++) {
     \answerline[$100000000_2$]
     \part[5] $10110101_2 \,\&\; 10010011_2$
     \answerline[$10010001_2$]
-    \part[5] $10110101_2 \;\verb!^!\; 10010011_2$
+    \part[5] $10110101_2 \text{ xor }10010011_2$
     \answerline[$100110_2$]
 \end{parts}
 
 \section{Programming}
 
-\question[15] There is an integer \ic{n} and a String \ic{s}. Write Java code which will print \ic{s} once on the first line, twice on the second line, and so on, up to \ic{n} times on the \ic{n}th line.
+\question[15] Complete the Java code below to input an integer from the user, and check whether it is a palindrome (i.e., the same read forwards or backwards: 787 is a palindrome, 35 is not). Print \ic{palindrome} if it is and \ic{not a palindrome} if it is not. Your code should work for any integer between 1 and 999.
+
+\begin{code}
+import java.util.Scanner;
+
+class CustomPyramid {
+    public static void main(String[] args) {
+    	Scanner input = new Scanner(System.in);
+        System.out.print("Enter your number: ");
+        int n = input.nextInt();
+       	/* *************************** */
+        
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     	/* *************************** */
+     	input.close(); 
+    }
+}
+\end{code}
 
 \begin{solution}
 \begin{code}
-for(int i = 1; i <= n; i++) {
-    for(int j = 0; j < i; j++) {
-        System.out.print(s);
-    }
-    System.out.println();
+int revn;
+if(n < 10) {
+    revn = n;
+}
+else if(n < 100) {
+    revn = 10*(n % 10) + n/10;
+}
+else {
+    revn = 100*(n % 10) + 10*((n/10) % 10) + n/100;
+}
+
+if(n == revn) {
+    System.out.println("palindrome");
+}
+else {
+    System.out.println("not a palindrome");
 }
 \end{code}
 \end{solution}
 
-\question[15] Print the first 100 integers, starting from 1, each on their own line. Next to each one, print \ic{fizz} if the integer is divisible by 7, print \ic{buzz} if the integer is divisible by 9, but print nothing if the integer is divisible by both.
+\question[15] Complete the following Java code to check if the integer \ic{n} given by the user is prime. Test whether it is divisible by 2, 3, 5, or 7. If it is, factor the number. For example, if the user inputs 35, your code should print \ic{5 * 7}. If it is not divisible by any of these numbers, print \ic{Could be prime}.
+
+\begin{code}
+import java.util.Scanner;
+
+class PrimeCheck {
+    public static void main(String[] args) {
+    	Scanner input = new Scanner(System.in);
+        System.out.print("Enter your number: ");
+        int n = input.nextInt();
+       	/* *************************** */
+        
+        
+        
+        
+        
+        
+        
+     
+     
+     
+     
+     
+     
+     	/* *************************** */
+     	input.close(); 
+    }
+}
+\end{code}
 
 \begin{solution}
 \begin{code}
-for(int i = 1; i <= 100; i++) {
-    System.out.print(i + " ");
-    if(i % 7 == 0 && i & 9 != 0) {
-        System.out.print("fizz");
-    }
-    if(i % 7 != 0 && i % 9 == 0) {
-        System.out.print("buzz");
-    }
-    System.out.println();
+int x = 0;
+if(n % 2 == 0) {
+    x = 2;
+}
+else if(n % 3 == 0) {
+    x = 3;
+}
+else if(n % 5 == 0) {
+    x = 2;
+}
+else if(n % 7 == 0) {
+    x = 7;
+}
+
+if(x > 0) {
+    int y = n/x;
+    System.out.printf("%d * %d\n",y,x);
+}
+else {
+    System.out.println("Could be prime");
 }
 \end{code}
 \end{solution}

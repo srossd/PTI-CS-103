@@ -210,43 +210,43 @@ Medium estimated that in 2016 approximately a trillion dollars was lost to the U
 For this reason, developers are always expected to carefully test the code they write to ensure there are no bugs. In addition, even relatively small software firms often have an entire team whose sole job is to test code written by the developers. Their job is to use the product in a variety of potentially unexpected ways. In essence, they try their best to break the code. The product is not ready for the market until the testing team is unable to break it, and all of its behaviors are as expected by the API for the product. 
 
 
-\section{Java interfaces}
-Recall that an API (Application Programming Interface) is a contract expressing what components in a system do. When we write code we determine \emph{how} a component works, while in an API, we only state \emph{what} it's meant to do.
+% \section{Java interfaces}
+% Recall that an API (Application Programming Interface) is a contract expressing what components in a system do. When we write code we determine \emph{how} a component works, while in an API, we only state \emph{what} it's meant to do.
 
-In Java, APIs\footnote{unfortunately, a set of packages that is the API of the Java language itself, and defines what classes and methods can be used "out of the box".} can be designed with a feature of the language called interface. Let's take the previous example of an ATM, its bank and its user, and consider a possible interface for the Bank:
+% In Java, APIs\footnote{unfortunately, a set of packages that is the API of the Java language itself, and defines what classes and methods can be used "out of the box".} can be designed with a feature of the language called interface. Let's take the previous example of an ATM, its bank and its user, and consider a possible interface for the Bank:
 
-\begin{code}
-public interface IBank {
-    public boolean checkCard(CreditCard card, int pin);
-}
-\end{code}
+% \begin{code}
+% public interface IBank {
+%     public boolean checkCard(CreditCard card, int pin);
+% }
+% \end{code}
 
-First, notice the name we chose for the interface - IBank. It is a good habit to start interface names with a capital I, and then continue in CamelCase. This helps readers know this name refers to an interface.
+% First, notice the name we chose for the interface - IBank. It is a good habit to start interface names with a capital I, and then continue in CamelCase. This helps readers know this name refers to an interface.
 
-Our interface has one method called checkCard, that returns a boolean. If we were implementing the method checkCard, its definition would look like this:
+% Our interface has one method called checkCard, that returns a boolean. If we were implementing the method checkCard, its definition would look like this:
 
-\begin{code}
-public boolean isValid(CreditCard card, int pin) {
-    // some code here
-}
-\end{code}
+% \begin{code}
+% public boolean isValid(CreditCard card, int pin) {
+%     // some code here
+% }
+% \end{code}
 
-but in an interface, the method is only declared, with a semicolon after its declaration, and not implemented. From the declaration a user of IBank infer that checkCard receives two parameters:
-\begin{itemize}
-    \item A parameter of type int named pin
-    \item A parameter of type CreditCard named card
-\end{itemize}
-and that it returns a boolean. Someone reading the interface gets no information about \emph{how} an IBank decides whether a card is valid or not. They do know enough, however, to write their own code that needs to use the method isValid to check a card. 
+% but in an interface, the method is only declared, with a semicolon after its declaration, and not implemented. From the declaration a user of IBank infer that checkCard receives two parameters:
+% \begin{itemize}
+%     \item A parameter of type int named pin
+%     \item A parameter of type CreditCard named card
+% \end{itemize}
+% and that it returns a boolean. Someone reading the interface gets no information about \emph{how} an IBank decides whether a card is valid or not. They do know enough, however, to write their own code that needs to use the method isValid to check a card. 
 
-An interface by itself is not an API
-
-
-
-Besides their use for modularity, interfaces also help maintain another important principle in software development -- abstraction.
-
-\begin{definition}
-
-\end{definition}
+% An interface by itself is not an API
 
 
-% add question about why creditcard isn't an interface? Add a question asking for such an interface?
+
+% Besides their use for modularity, interfaces also help maintain another important principle in software development -- abstraction.
+
+% \begin{definition}
+
+% \end{definition}
+
+
+% % add question about why creditcard isn't an interface? Add a question asking for such an interface?

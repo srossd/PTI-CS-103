@@ -395,42 +395,56 @@ In Java, you are allowed to combine a declaration statement and an assignment st
   What will the following code snippet print out?
     Here you should be aware that using ``System.out.print'' will print exactly what it is given and nothing more,
     whereas ``System.out.println'' will add a new line to the end, such that the next thing that gets printed will be on a new line.
-  \begin{code}	
-    String a = "computer  science ";	
-    int b = 4;	
-    String c = " ever";	
-    System.out.print(a);	
-    System.out.print(b);	
-    System.out.print(c);	
-    System.out.println();	
-    c = " life";	
-    System.out.print(a);	
-    System.out.print(b);	
-    System.out.print(c);	
-    System.out.println();	
-  \end{code}	
+  \begin{lstlisting}[language=Java]
+public class Snippet{
+    public static void main(String []args){
+        String a = "computer  science ";	
+        int b = 4;	
+        String c = " ever";	
+        System.out.print(a);	
+        System.out.print(b);	
+        System.out.print(c);	
+        System.out.println();	
+        c = " life";	
+        System.out.print(a);	
+        System.out.print(b);	
+        System.out.print(c);	
+        System.out.println();
+    }
+}
+  \end{lstlisting}
+  
+  Try it by yourself by copying the code to DrJava!
 \end{example}	
 It is important to note the difference between the single equals sign used for assignment and the double equals sign used for comparison. In \ic{age = 17;} the single equals sign represents an \emph{assignment statement}, meaning we are storing the value 17 into a variable named \ic{age}. In contrast, in \ic{age == 17}, the double equals sign represents the fact that we are comparing the value of age to 17, meaning we are asking a yes/no question, whether or not \ic{age} is equal to 17. Look at the following code snippet and make sure you understand the difference between \ic{=} and \ic{==}.	
-\begin{code}	
-  int a = 5;	
-  int b = 3;	
-  System.out.println(a == b);   // prints false	
-  a = b;                        // now a is 3	
-  System.out.println(a == b);   // prints true	
-\end{code}	
+\begin{lstlisting}[language=Java]	
+public class Snippet{
+    public static void main(String []args){
+        int a = 5;	
+        int b = 3;	
+        System.out.println(a == b);   // prints false	
+        a = b;                        // now a is 3	
+        System.out.println(a == b);   // prints true	
+    }
+}
+\end{lstlisting}	
 When using the \ic{=} symbol to assign to a variable, the variable you are assigning to should always go on the left. For example, we can write \ic{x = 5;} to assign \ic{5} to \ic{x}, but \ic{5 = x;} is not valid Java code, since we can't assign to a literal. If we have two different variables, say \ic{x} and \ic{y}, then \ic{x = y;} and \ic{y = x;} are both valid lines of code, but they do different things. If we write \ic{x = y;}, then the value of \ic{x} changes to become the value of \ic{y}. If we write \ic{y = x;}, then the value of \ic{y} changes to become the value of \ic{x}.	
 \begin{example}	
   Fill in some code in the middle of the following snippet to swap the values of \texttt{a} and \texttt{b}. The code should print \ic{ABBA} if you do this correctly. \emph{Hint:} you may need to define a third variable!	
-  \begin{code}	
-    String a = "A";	
-    String b = "B";	
-    System.out.print(a);	
-    System.out.print(b);	
-    // Your code here	
-    // Swap the values of a and b	
-    System.out.print(a);	
-    System.out.println(b);	
-  \end{code}	
+  \begin{lstlisting}[language=Java]	
+public class Snippet{
+    public static void main(String []args){
+        String a = "A";	
+        String b = "B";	
+        System.out.print(a);	
+        System.out.print(b);	
+        // Your code here	
+        // Swap the values of a and b	
+        System.out.print(a);	
+        System.out.println(b);	
+    }
+}
+  \end{lstlisting}	
 \end{example}	
 A declaration statement will also lead to a compiler error if the variable has already been declared. For example, if we have a line \ic{int x = 5;} followed by another line \ic{int x = 7;}, the compiler will see the second line and complain that the variable \ic{x} has already been declared. You might imagine that this could cause some difficulties: in a large program, we might want to use the variable \ic{x} to mean different things at different points, without worrying about whether \ic{x} has been declared earlier. Luckily, Java and most other programming languages provide a tool to manage this, called \emph{scope}.	
 \begin{definition}	
@@ -442,67 +456,91 @@ Previously we saw that we can combine multiple operations with literals to perfo
 An \emph{expression} is a combination of one or more operators and operands that usually performs a calculation.	
 \end{definition}	
 For example, look at the following code snippet for computing the area of a circle.	
-\begin{code}	
-  double radius = 4.5;	
-  double area = 3.14*radius*radius;	
-  System.out.print("Radius: ");	
-  System.out.println(radius);	
-  System.out.print("Area: ");	
-  System.out.println(area);	
-\end{code}	
+\begin{lstlisting}[language=Java]	
+public class Snippet{
+    public static void main(String []args){
+        double radius = 4.5;	
+        double area = 3.14*radius*radius;	
+        System.out.print("Radius: ");	
+        System.out.println(radius);	
+        System.out.print("Area: ");	
+        System.out.println(area);	
+    }
+}
+\end{lstlisting}	
 We can even update the value of a variable with an expression that includes that same variable. For example, \ic{x = x + 5;} will increase the value of \ic{x} by 5.	
 \begin{example}	
   To convert from Celsius to Fahrenheit, multiply by 1.8 and then add 32. Fill in a single line of code below to convert \ic{temp} from Celsius to Fahrenheit;	
-  \begin{code}	
-    double temp = 12;	
-    System.out.print("The temperature is ");	
-    System.out.print(temp);	
-    System.out.println(" degrees Celsius");	
-    // Your code here	
-    System.out.print("The temperature is ");	
-    System.out.print(temp);	
-    System.out.println(" degrees Fahrenheit");	
-  \end{code}	
+  \begin{lstlisting}[language=Java]	
+public class Snippet{
+    public static void main(String []args){
+        double temp = 12;	
+        System.out.print("The temperature is ");	
+        System.out.print(temp);	
+        System.out.println(" degrees Celsius");	
+        // Your code here	
+        System.out.print("The temperature is ");	
+        System.out.print(temp);	
+        System.out.println(" degrees Fahrenheit");	
+    }
+}
+  \end{lstlisting}	
 \end{example}	
 There are a few shorthand notations for updating variables. If you want to act on a variable \ic{var} with a single operator, such as \ic{var = var - 7;} or \ic{var = var * 2.3;}, you can abbreviate this as \ic{var -= 7;} or \ic{var *= 2.3} respectively. This works for any of the arithmetic operators: you can use \ic{+=}, \ic{-=}, \ic{*=}, \ic{/=}, or \ic{\%=}.	
 When mixing variables in expressions, it is important to be aware of their types and to know how variables of different types combine together. When working with numeric types, if you combine two values of the same type with an operator, the result will also be of that type. A common pitfall for this rule is division: if you divide two \ic{int}s, the result will be an \ic{int}.	
-\begin{code}	
-  int x = 8;	
-  int y = 5;	
-  System.out.println(x/y); // prints 1	
-\end{code}	
+\begin{lstlisting}[language=Java]
+public class Snippet{
+    public static void main(String []args){
+        int x = 8;	
+        int y = 5;	
+        System.out.println(x/y); // prints 1
+    }
+}
+\end{lstlisting}	
 Even though 8/5 = 1.6, Java will interpret \ic{x/y} as another \ic{int}, so it becomes \ic{1}. This is just like dividing integer literals, but with variables, you have to keep in mind what the variable types are so you will know if division will be truncated.	
 When you combine two different numeric types, the result will be a value of the more precise type. The most common example of this is combining an \ic{int} with a \ic{double}, which will result in a \ic{double}. This is called "automatic type conversion".
 You can also override Java's default rules for assigning types to expressions by using \emph{casting}. Casting allows you to tell Java to interpret an expression as a given type by putting the desired type in front of the expression in parentheses: for example, \ic{(int) x} casts \ic{x} to an \ic{int}. For now, we will only use casting to convert between different numeric types. Later on we will learn more detailed rules for casting.	
 \begin{example}	
   Look at the following examples and make sure you understand how Java assigns a type to each expression. Keep track of the parentheses so you know what is being casted.	
-  \begin{code}	
-    double eight = 8.0;	
-    int five = 5;	
-    System.out.println(eight/five); // prints 1.6	
-    System.out.println((int)(eight/five)); // prints 1	
-    System.out.println(eight/((double)five)); // prints 1.6	
-    System.out.println(((int) eight)/five); // prints 1	
-    System.out.println(((int) eight)/((double) five)); // prints 1.6	
-  \end{code}	
+  \begin{lstlisting}[language=Java]	
+public class Snippet{
+    public static void main(String []args){
+        double eight = 8.0;	
+        int five = 5;	
+        System.out.println(eight/five); // prints 1.6	
+        System.out.println((int)(eight/five)); // prints 1	
+        System.out.println(eight/((double)five)); // prints 1.6	
+        System.out.println(((int) eight)/five); // prints 1	
+        System.out.println(((int) eight)/((double) five)); // prints 1.6
+    }
+}
+  \end{lstlisting}	
 \end{example}	
 
 As previously mentioned, Java will attempt ``automatic type conversion" in case you try to assign a lower-precision value to a type that has higher precision without casting yourself. Java will throw an error, however, if you try to assign a higher-precision value to a lower-precision type. This can get very confusing. So it's best to avoid type conversion in your code when you can, and explicitly cast the type when you must. 
 
 \begin{example}
   What will happen if you compile and run this code? 
-  \begin{code}
-    int intEight = 8;
-   double doubleEight = intEight;
-   System.out.println(doubleEight);
-  \end{code}
+  \begin{lstlisting}[language=Java]
+public class Snippet{
+    public static void main(String []args){
+        int intEight = 8;
+        double doubleEight = intEight;
+        System.out.println(doubleEight);
+    }
+}
+  \end{lstlisting}
   
   How about this code? 
-  \begin{code}
-  double doubleEight = 8.0;
-  int intEight = doubleEight; 
-  System.out.println(intEight);
-  \end{code}
+  \begin{lstlisting}[language=Java]
+public class Snippet{
+    public static void main(String []args){
+        double doubleEight = 8.0;
+        int intEight = doubleEight; 
+        System.out.println(intEight);
+    }
+}
+  \end{lstlisting}
   
 \noindent \emph{Answer}: In the first example, Java will happily use automatic type conversion to convert the lower-precision int (intEight) to the higher-precision double (doubleEight). The output of the code is \ic{8.0}, the double version of \ic{8}. In the second example, however, Java cannot use automatic type conversion to go from a higher-precision double (doubleEight) to a lower-precision int (intEight). Java will throw an error when you try to compile this code. 
 \end{example}

@@ -1,6 +1,13 @@
 \chapter{Programming Languages and Linux commands}
 
-Today's lecture will focus on programming languages and how to give a computer instructions through a command line. Programming languages allow programmers to write instructions, or \emph{code}, that can be interpreted by a computer to perform operations. However, computers cannot directly understand code. Instead, the code is translated to a format that the computer can understand. This process is called \emph{compilation}. When code is compiled, a program called a compiler takes the code as input, and as output produces operations that the computer hardware can directly execute.
+Today's lecture will focus on programming languages and how to give a computer instructions through a command line. Programming languages allow programmers to write instructions, or \emph{code}, that can be interpreted by a computer to perform operations. However, computers cannot directly understand code. Instead, the code is translated to a format that the computer can understand. This process is called \emph{compilation}. When code is compiled, a program called a compiler takes the code as input, and as output produces operations that the computer hardware can directly execute. These operations, or bytecode, can be very hard to read! In Figure \ref{fig:ch8:bytecode}, we show the bytecode for the ``Hello World!" code you previously wrote.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.85\textwidth]{lectures/images/java-bytecode-example.png}
+	\caption{Java bytecode for the ``Hello World" code.}
+	\label{fig:ch8:bytecode}
+\end{figure}
 
 %In Java that transformation is referred to as compilation. When Java code is compiled, a program called a compiler takes the Java code as input and as output produces code that’s easier for a computer to execute directly. \\
 
@@ -24,12 +31,12 @@ Other programming languages that you might hear the names of include:
 \item \emph{Assembly}, \emph{COBOL}, and \emph{Fortran}, three older languages that are behind a lot of old software (e.g. government software).
 \end{itemize} 
 
-The number and diversity of programming languages can be intimidating, but learning new programming languages languages becomes easier once you have a solid understanding of fundamental concepts. 
+The number and diversity of programming languages can be intimidating, but learning new programming languages becomes easier once you have a solid understanding of fundamental concepts. 
 We recommend focusing on one programming language initially to learn fundamental concepts rather than spending time trying to learn multiple languages. \\
 
 In this course we use one programming language, Java, to teach these fundamental concepts.
 However, the ideas and concepts you learn will help you learn any programming language you need to. 
-We use Java because it’s easier to learn, widely used, and illustrates many important concepts in programming. 40\% of developers who responded to a large survey of developers stated that they know Java! \\
+We use Java because it’s easier to learn, widely used, and illustrates many important concepts in programming. 40\% of software developers stated that they know Java! \\
 
 \section{Overview of GUI and Command Line}
 
@@ -47,7 +54,8 @@ A \textbf{Graphical User Interface (GUI)} is the primary way most users of a com
 The file explorer GUI hides the details of the operations being done by the computer away from the user of the program. This provides simplicity, but it also limits the flexibility of what a user can do with the computer. Moreover, it means that users can only interact with a system that has a GUI installed. This doesn’t include computers without a standard operating system, servers, or computers that a user is connected to remotely. \\
 
 %The \textbf{command line} is a program you can access through the GUI of a linux machine. 
-On the other hand, the \textbf{command line} is a program that  interface directly with the operating system and issue commands that it can understand. The command line can be accessed directly through the monitor without a GUI. In fact, before the invention of the GUI, the command line was the only way to interact with computers!  On modern computers, the command line can be accessed through the GUI of a linux machine. \\
+On the other hand, the \textbf{command line} is a program that  interface directly with the operating system and issue commands that it can understand. The command line can be accessed directly through the monitor without a GUI. In fact, before the invention of the GUI, the command line was the only way to interact with computers!  
+%On modern computers, the command line can be accessed through the GUI of a linux machine. \\
 %The command line is also installed on servers without a GUI and can be accessed directly through monitors (this was the only way to interact with computers before the invention of the GUI).\\
 
 The command line allows the user to issue a broader range of commands and interact with computers without a graphical interface. 
@@ -87,7 +95,7 @@ Figure \ref{fig:linux:one} shows the command line interface for a Linux computer
 
 For example, Figure \ref{fig:linux:two} displays an example of creating a new directory called commandLineLearning (using the `mkdir` command) and then going inside the commandLineLearning directory (using the `cd` command). This is like making a new folder within an existing folder in the window’s file explorer, and then going inside that folder. \\
 
-In Figure \ref{fig:linux:two}, the $\sim$ sign prepending the command represents the user’s home directory. The home directory is the outer most folder for that user’s account on the server or machine. \\
+In Figure \ref{fig:linux:two}, the $\sim$ sign prepending the command represents the user’s home directory. The home directory is the outermost folder for that user’s account on the server or machine. \\
 
 \begin{figure}
 	\centering

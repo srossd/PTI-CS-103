@@ -1,66 +1,26 @@
 \chapter{Introduction}
 
-\section{Overview of course}
-
-Knowing just a little bit of computer science can get you started right away in
-writing code for real-world applications. In this course, you will learn about
-the fascinating subject of computer science. You will develop algorithmic
-thinking skills that will imporove day-to-day critical thinking and
-problem-solving. Perhaps most importantly, you will learn to code, which will
-not only open up new job opportunities but also make you more effective in most
-areas of business.
-
-\afm{Is this still true?} In the first semester, the first two classes of each
-week focus on computer science theory and special topics. The final day of each
-week will be a lab day, where we actually start practicing coding skills.
-
-In the second semester, we will focus more on practical coding, with a single day a week for theory and 2 lab periods per week for coding. 
-
-Broadly, we will cover the following topics:
-\begin{itemize}
-    \item How modern computers work
-    	\begin{itemize}
-       		\item Hardware
-       		\item Software
-       		\item Computer networks and information systems
-    	\end{itemize}
-    \item Algorithms for quickly solving complex problems
-    	\begin{itemize}
-       		\item Searching
-       		\item Sorting
-    	\end{itemize}
-    \item Data structures 
-    	\begin{itemize}
-       		\item Arrays
-       		\item ArrayLists
-    	\end{itemize}
-    \item Applications of Computer science
-    	\begin{itemize}
-       		\item Basic coding in Java
-       		\item How to use productivity software
-    	\end{itemize}
-    \end{itemize}
-
 \section{Brief history of computer science}
 
-Timeline:\footnote{https://www.worldsciencefestival.com/infographics/a\_history\_of\_computer\_science/}
+The history of inventions is complicated, so assigning faces and dates to specific technologies that are often many years and people in the making is difficult. For an excellent layman's survey of the history of computer science, check out ``The Innovators" by Walter Isaacson. To give a general sense of where / when advancements were made, though, here is a brief summary: 
+
+Timeline:
 \begin{itemize}
-\item Invention of the abacus (2700-2300 BC, Sumerians)
-\item Design of first modern-style computer (Charles Babbage, 1837)
-\item Design of first computer algorithm (Ada Lovelace, 1843)
-\item Invention of first electronic digital computer (Konrad Zuse, 1941)
-\item Invention of the transistor (Bell labs, 1947)
-\item Invention of the first computer network (early Internet) (DARPA, 1968)
-\item Invention of the World Wide Web (Sir Tim Berners-Lee, 1990)
+\item Design of first modern-style computer + conceptualization of promise of computers (Charles Babbage and Ada the Countess of Lovelace, England, 1830-40)
+\item Invention of the first electronic, programmable, general-purpose computer ``ENIAC" (John Mauchly and Presper Eckert, Pennsylvania, 1945)
+\item Invention of the transistor (John Bardeen and Walter Brattain, New Jersey, 1947)
+\item Invention of the first computer network (early Internet) ``ARPANET" (Bob Taylor and Larry Roberts, across the US, 1960s - 1970s)
+\item First program that can run on a home hobbyist computer (Bill Gates and Paul Allen, New Mexico, 1975)
+\item First simple and integrated computer for the common man ``Apple II" (Steve Jobs and Steve Wozniak, California, 1977)
+\item Invention of the World Wide Web (Sir Tim Berners-Lee, Switzerland, 1990)
 \end{itemize}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.85\textwidth]{images/z1.jpg}
-	\caption{Construction of Konrad Zuse's Z1, the first modern computer, in his
-    parents' apartment.
-    https://history-computer.com/ModernComputer/Relays/Zuse.html}
-	\label{fig:z1}
+	\includegraphics[width=0.85\textwidth]{images/analytic_engine.jpg}
+	\caption{Charles Babbage's Victorian-era computer, called the ``Analytical Engine". Ada Lovelace worked closely with Babbage and was inspired to imagine how powerful future computers would be. 
+    https://www.livescience.com/20718-computer-history.html}
+	\label{fig:analytic_engine}
 \end{figure}
 
 \section{Components of a computer}
@@ -97,7 +57,7 @@ Computer hardware consists of physical, electronic devices. These are the parts 
 	\label{fig:hardware}
 \end{figure}
 
-We will discuss these components in more detail in lecture 3.
+We will discuss these components in more detail in a later lecture. 
 
 \subsection{Software}
 
@@ -206,28 +166,42 @@ Some examples of careers in computer science include
 
 \begin{figure}
   \centering
-    \includegraphics[scale=.4]{graph-paper.png}
-    \caption{An example maze. The input is in the lower left, the output is in
-      the upper right.}
+    \includegraphics[width=.32\textwidth]{images/maze_example}
+    %\includegraphics{maze2.png}
+   % \includegraphics{maze3.png}
+    \caption{An example maze. The roboturt starts at the box in the bottom left facing toward the top of the page. We need to get it to the box with the finish flags at the top right.}
     \label{fig:graph-paper}
 \end{figure}
 
 \begin{exercise}
-  Get a piece of graph paper, and build a maze on it. Your maze should have one
-  input, and one output. An example maze is shown on
-  Figure~\ref{fig:graph-paper}.
 
-  Next, get another student's maze. You are programming a robot that can solve
-  this maze. These robots can take a sequence of commands, where each command is
-  ``Turn Left [number]'' (TL[n]) and ``Move Forwards [number]'' (MF[n]). Create
-  a sequence of inputs to the robots that would solve that maze. For example,
-  the following robot completes the provided maze: MF[3], TL[3], MF[6], TL[1],
-  MF[4], TL[3], MF[3], TL[1], MF[4].
+For this exercise you are going to program a robotic turtle ("roboturt") to complete a maze. The roboturt accepts two commands:  ``Turn Left [number]'' (TL[n]) and ``Move Forwards [number]'' (MF[n]). TL tells the roboturt to change the direction it's facing without moving out of its box (and note that 3 lefts can make a right). MF tells the roboturt to step into the box in front of it. For example, the following commands would tell the roboturt to complete the example maze: MF[4], TL[3], MF[6], TL[1], MF[3], TL[3], MF[3], TL[1], MF[4]. A visual representation of the roboturt following these commands is in Figure~\ref{fig:turtle_sequence}
+
+  Get a piece of graph paper, and build your own maze on it. Make sure to draw a roboturt in the starting box in whatever direction you want it to start in, and a flag at the finish box. An example maze is shown on Figure~\ref{fig:graph-paper}. 
+  
+First create a list of commands that tells the robot to complete your own maze. Then do the same for another student's maze. Compare your command sequences. 
 
   What types of commands could have made this easier? Could your robot solve
   arbitrary mazes? What types of commands would be helpful for making your robot
   solve any maze?
 \end{exercise}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=.32\textwidth]{images/turtle_1}
+    \includegraphics[width=.32\textwidth]{images/turtle_2}
+    \includegraphics[width=.32\textwidth]{images/turtle_3}
+    \includegraphics[width=.32\textwidth]{images/turtle_4}
+    \includegraphics[width=.32\textwidth]{images/turtle_5}
+    \includegraphics[width=.32\textwidth]{images/turtle_6}
+    \includegraphics[width=.32\textwidth]{images/turtle_7}
+    \includegraphics[width=.32\textwidth]{images/turtle_8}
+    \includegraphics[width=.32\textwidth]{images/turtle_9}
+    %\includegraphics{maze2.png}
+   % \includegraphics{maze3.png}
+    \caption{A visual representation of what happens when the roboturt follows the commands (MF[4], TL[3], MF[6], TL[1], MF[3], TL[3], MF[3], TL[1], MF[4]).}
+    \label{fig:turtle_sequence}
+\end{figure}
 
 \begin{exercise}
 What are some other tasks a computer can accomplish?
@@ -239,7 +213,7 @@ What are some other tasks a computer can accomplish?
   hardware would you need to add features like voice chat or online play. What
   types of computers would best run this game? Why?
 
-  Do the same for a text editor.
+  Do the same for a text editor and an ATM machine. 
 \end{exercise}
 
 

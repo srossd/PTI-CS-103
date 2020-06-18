@@ -12,15 +12,13 @@ class HelloWorld {
 \end{code}
 
 When you ran this program, it produced the \emph{output} \ic{Hello World!} on a single line.
-Using \ic{System.out.println} is one way in which you can have your programs
-produce output. In particular, here \ic{System.out} refers to the \emph{output stream}
-that, in our case, is where you see output in the ``Interactions'' tab in DrJava.
+Using \ic{System.out.println} is one way to
+produce output. Here \ic{System.out} refers to the \emph{output stream}
+which in our case shows up in the ``Interactions'' tab in DrJava.
 The \ic{println} part refers to printing (i.e., outputting) the argument
 --the String provided between the parentheses--followed by a linebreak (the \ic{ln} part).
-As you might imagine, there are ways to produce output in Java, ranging from printing
-to \ic{System.out} with and without linebreaks to writing out image files that
-plot data. We can also provide \emph{inputs} to a program in order
-to affect what is computed and ultimately outputted.
+As you might imagine, there are many ways to produce output in Java. For example, we can use print to \ic{System.out} with different formatting. We can also output image files that
+plot data, which we will revisit later. 
 
 In this chapter, we will be exploring different ways to produce program output
 as well as take program inputs.
@@ -77,7 +75,7 @@ The \ic{>} that indicates that you can type input into the ``Interactions''
 tab is now on the same line as \ic{Hello World!} because the linebreak
 wasn't output.
 
-\ic{System.out.println} actually does not require a String to be provided,
+\ic{System.out.println} does not require a String to be provided,
 so we can actually get the linebreak back by adding a
 \ic{System.out.println} statement without the String provided:
 \begin{code}
@@ -101,7 +99,7 @@ Hello World!
 \end{code}
 
 An alternative is to use the \emph{newline} character \ic{\textbackslash n} that represents a
-linebreak:
+linebreak. 
 \begin{code}
 class HelloWorld {
 
@@ -113,6 +111,27 @@ class HelloWorld {
     }
 
 }
+\end{code}
+
+The \ic{\textbackslash} is used to create various types of ``escape characters" that the computer treats in a special way. Note that instead of printing ``\textbackslash n", it replaced the \ic{\textbackslash n} with a newline. Another example of an escape character is ``\textbackslash t}" for inputting a tab, as demonstrated here. 
+
+\begin{code}
+class HelloWorld {
+
+    public static void main(String[] args) {
+        String hi = "Hello";
+        String earth = "World";
+        String result = hi + "\t" + earth;
+        System.out.print(result + "!\n");
+    }
+
+}
+\end{code}
+
+\begin{code}
+> run HelloWorld
+Hello	      World!
+>
 \end{code}
 
 We can provide non-String arguments to \ic{System.out.print} and \ic{System.out.println} as well:
