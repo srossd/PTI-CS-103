@@ -18,7 +18,7 @@ A \emph{while loop} is a \emph{loop structure} that consists of the reserved
 keyword \ic{while}, followed by a boolean expression enclosed in parentheses,
 followed by statements typically enclosed in curly braces. These statements is
 executed as long as the boolean expression remains true. If the expression
-evaluates to false, the loop termates, and the program coninues.
+evaluates to false, the loop terminates, and the program continues.
 \end{definition}
 
 A \ic{while} loop allows us to write programs execute statements
@@ -65,7 +65,7 @@ will be printed.
 \end{example}
 
 \begin{example}
-How would you fill in the boolean expression to print x, until x is less than 0?.
+How would you fill in the boolean expression to print every number downwards by 1 from the initial value of x, until x is less than 0?.
 
 \begin{code}
 while (/* Insert boolean expression here */) {
@@ -73,7 +73,7 @@ while (/* Insert boolean expression here */) {
 } 
 \end{code}
 
-\emph{Answer}: Insert the boolean expression x $<$ 0.
+\emph{Answer}: Insert the boolean expression x $>=$ 0. Note that it must be $>=$ rather than just $>$ since we still want to print if x is exactly 0 (only stop if x is less than 0). 
 \end{example}
 
 \begin{example}
@@ -131,7 +131,7 @@ iteration (typically changing the initialized variable), and having a loop body
 (that typically does not change the initialized variable).
 
 \begin{example}
-What does the following piece of code do?
+What does the following piece of code print?
 
 \begin{code}
 for (int i = 10; i > 0; i--)
@@ -140,11 +140,21 @@ for (int i = 10; i > 0; i--)
 }
 \end{code}
 
-\emph{Answer}: It prints the numbers from 10 to 1.
+\emph{Answer}: 
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
 \end{example}
 
 \begin{example}
-What does the following piece of code do?
+What does the following piece of code print?
 
 \begin{code}
 for (int j = 1; j<100; j = j*2)
@@ -153,12 +163,19 @@ for (int j = 1; j<100; j = j*2)
 }
 \end{code}
 
-\emph{Answer}: It prints all the powers of two from 1 to 100.
+\emph{Answer}: 
+1
+2
+4
+8
+16
+32
+64
 \end{example}
 
 \begin{example}
 What would you put in the initialization, condition, and change to print all
-even numbers from 0 to 20.
+even numbers from 0 to 20 with a new line in between them?
 
 \begin{code}
 for (?; ?; ?)
@@ -240,6 +257,7 @@ int j = 0;
 while (i < 3)
 {
   j = j+i;
+  System.out.println(j);
   i++;
 }
 \end{code}
