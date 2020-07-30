@@ -6,9 +6,13 @@
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{color}
 \usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{forest}
+\usetikzlibrary{arrows.meta}
 \usepackage{subcaption}
+\usepackage{tabularx}
 
 % Allow line breaks in URLs.
 \PassOptionsToPackage{hyphens}{url}
@@ -20,6 +24,9 @@
 \usepackage{mdframed}
 
 \usepackage{hyperref}
+
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.1in}
 
 
 % Manager header
@@ -100,11 +107,10 @@
 % Define example frames
 \mdfdefinestyle{exmplframe}{%
   bottomline=false,
-  leftline=false,
+  linewidth=2,
   rightline=false,
   topline=false,
-  innerrightmargin=0,
-  innerleftmargin=0
+  innerrightmargin=0
 }
 
 %\renewcommand{\theexamplecounter}{\thesection.\arabic{examplecounter}}
@@ -202,10 +208,12 @@
     showstringspaces=false,
     breakatwhitespace=true,
     % Padding above and below frame.
-    aboveskip=1.5em
+    aboveskip=1.5em,
+    escapechar=ß
   }
 }{}
 
+\newsavebox\codebox
 
 % Define monospace code without highlighting.
 % ------------------------------------------------------------------------------
@@ -257,3 +265,46 @@
 \newenvironment{graybox}{%
   \begin{mdframed}[style=genericframe]
 }{\end{mdframed}}
+
+% Control flow diagrams
+% ------------------------------------------------------------------------------
+
+\forestset{
+    default preamble={
+        for tree={
+            base=bottom,
+            child anchor=north,
+            align=center,
+            s sep+=2.8cm,
+            straight edge/.style={
+                edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+                (!u.parent anchor) -- (.child anchor);}
+                },
+            if n children={0}
+                {draw, thick, rectangle}
+                {draw, ellipse, aspect=1.25, thick}, % ... and retain: aspect=2
+            % if n children={2}{
+            %     if n=1{%
+            %         edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+            %         (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {N};}
+            %         }{
+            %         edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+            %         (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {Y};}
+            %         }
+            % }{} % ugh i want this special case only for when the number of children is 2 but it won't work...
+        }
+     }
+ }
+
+% Learning goals
+% ------------------------------------------------------------------------------
+
+\mdfdefinestyle{goalframe}{%
+rightline=true,innerleftmargin=10,innerrightmargin=10,
+frametitlebackgroundcolor=blue!20}
+
+\newenvironment{goals}{%
+  \begin{mdframed}[style=goalframe,frametitle={\raisebox{-0.25\height}{\includegraphics[height=1.5em]{images/lightbulb.png}}$\quad$Learning Goals}]
+  \par\medskip
+  \begin{itemize}}
+  {\end{itemize}\end{mdframed}\medskip}
