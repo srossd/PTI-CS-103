@@ -1,4 +1,4 @@
-\usepackage[a4paper, top=1in, bottom=1in, right=1.5in, left=1.5in]{geometry}
+%\usepackage[a4paper, top=1in, bottom=1in, right=1.5in, left=1.5in]{geometry}
 
 \usepackage{appendix}
 \usepackage{amsmath}
@@ -82,6 +82,8 @@
 \newcounter{exercisecounter}[chapter]
 \numberwithin{exercisecounter}{chapter}
 
+\setcounter{secnumdepth}{1}
+
 
 % Define "definition" environment.
 % ------------------------------------------------------------------------------
@@ -96,7 +98,7 @@
 \newenvironment{definition}{%
   \refstepcounter{definitioncounter}
   \begin{mdframed}[style=defnframe]
-  \noindent\textbf{Definition~\thedefinitioncounter.}
+  \sloppy\noindent\textbf{Definition~\thedefinitioncounter.}
   }{\end{mdframed}}
   %\numberwithin{definitioncounter}{section}
 
@@ -118,12 +120,8 @@
   \begin{mdframed}[style=exmplframe]
   \par\medskip
   \refstepcounter{examplecounter}%
-  \noindent\emph{Example~\theexamplecounter:} \rmfamily}
+  \sloppy\noindent\emph{Example~\theexamplecounter:} \rmfamily}
   {\end{mdframed}\medskip}
-\newenvironment{example*}{%
-  \par\medskip
-  \noindent\emph{Example:} \rmfamily}
-  {\medskip}
 
 
 % Define "exercise" title class and environment.
@@ -131,7 +129,6 @@
 \newcommand{\exercisesection}{%
   \vspace{5em}
   \noindent\rule{\textwidth}{1pt}
-  \\\\
   \noindent {\bfseries \Large Exercises}
   \vspace{1em}
 }
@@ -147,7 +144,7 @@
 \newenvironment{exercise}{%
   \refstepcounter{exercisecounter}
   \begin{mdframed}[style=exerciseframe]
-  \noindent\textbf{Exercise~\theexercisecounter:}
+  \sloppy\noindent\textbf{Exercise~\theexercisecounter:}
   }{\end{mdframed}}
 
 \newenvironment{exercise*}{%
@@ -161,7 +158,6 @@
 \newcommand{\referencessection}{%
   \vspace{5em}
   \noindent\rule{\textwidth}{1pt}
-  \\\\
   \noindent {\bfseries \normalsize References}
   \vspace{1em}
 }
@@ -308,3 +304,80 @@ frametitlebackgroundcolor=blue!20}
   \par\medskip
   \begin{itemize}}
   {\end{itemize}\end{mdframed}\medskip}
+  
+\let\tempmarginnote\marginnote
+\let\marginnote\relax
+\usepackage{marginnote}
+% Make marginnote always on right side
+% https://tex.stackexchange.com/questions/69595/marginnote-always-on-right-side-of-the-page
+\makeatletter
+\long\def\@mn@@@marginnote[#1]#2[#3]{%
+  \begingroup
+    \ifmmode\mn@strut\let\@tempa\mn@vadjust\else
+      \if@inlabel\leavevmode\fi
+      \ifhmode\mn@strut\let\@tempa\mn@vadjust\else\let\@tempa\mn@vlap\fi
+    \fi
+    \@tempa{%
+      \vbox to\z@{%
+        \vss
+        \@mn@margintest
+        \if@reversemargin\if@tempswa
+            \@tempswafalse
+          \else
+            \@tempswatrue
+        \fi\fi
+          \rlap{%
+            \ifx\@mn@currxpos\relax
+              \kern\marginnoterightadjust
+              \if@mn@verbose
+                \PackageInfo{marginnote}{%
+                  xpos not known,\MessageBreak
+                  using \string\marginnoterightadjust}%
+              \fi
+            \else\ifx\@mn@currxpos\@empty
+                \kern\marginnoterightadjust
+                \if@mn@verbose
+                  \PackageInfo{marginnote}{%
+                    xpos not known,\MessageBreak
+                    using \string\marginnoterightadjust}%
+                \fi
+              \else
+                \if@mn@verbose
+                  \PackageInfo{marginnote}{%
+                    xpos seems to be \@mn@currxpos,\MessageBreak
+                    \string\marginnoterightadjust
+                    \space ignored}%
+                \fi
+                \begingroup
+                  \setlength{\@tempdima}{\@mn@currxpos}%
+                  \kern-\@tempdima
+                  \if@twoside\ifodd\@mn@currpage\relax
+                      \kern\oddsidemargin
+                    \else
+                      \kern\evensidemargin
+                    \fi
+                  \else
+                    \kern\oddsidemargin
+                  \fi
+                  \kern 1in
+                \endgroup
+              \fi
+            \fi
+            \kern\marginnotetextwidth\kern\marginparsep
+            \vbox to\z@{\kern\marginnotevadjust\kern #3
+              \vbox to\z@{%
+                \hsize\marginparwidth
+                \linewidth\hsize
+                \kern-\parskip
+                \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
+                \ignorespaces#2\endgraf
+                \vss}%
+              \vss}%
+          }%
+      }%
+    }%
+  \endgroup
+}
+\makeatother
+\let\safemarginnote\marginnote
+\let\marginnote\tempmarginnote

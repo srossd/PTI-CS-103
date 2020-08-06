@@ -1,4 +1,4 @@
-\chapter{Control Structures [WORK-IN-PROGRESS (uthsav)]}
+\chapter{Control Structures}
 
 So far, we have seen programs in which each statement is executed in order, one by one. Today we will learn about \emph{conditionals}, which allow us to execute statements depending on certain conditions. This is our first exposure to the idea of \emph{control flow}, which refers to the order (or sequence) in which statements of a program are executed.
 
@@ -6,7 +6,11 @@ In this chapter, we will first discuss \emph{flowcharts}, which allow you to dra
 
 \section{Flowcharts}
 
-A \emph{flowchart} is a diagram that documents a process with multiple steps and choices at each step. Flowcharts are best explained with an example, so let's start with one.
+\begin{definition}
+A \emph{flowchart} is a diagram that documents a process with multiple steps and choices at each step. 
+\end{definition}
+
+Flowcharts are best explained with an example, so let's start with one.
 
 Suppose you are a parent, and your child wants you to buy a toy. As a fiscally responsible parent, you decide to buy the toy if it costs less than \$20, and not buy the toy if it costs more than \$20. We represent this in the following flowchart diagram.
 
@@ -21,12 +25,12 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{forest}
 \end{center}
 
-The diamond at the top of the flowchart asks a ``yes or no" question. In this case, the question is ``does the toy cost less than \$20?" If the answer is ``No", i.e. the toy does not cost less than \$20, then you follow the ``N" arrow, which says to not buy the toy. Otherwise, if the answer is yes, i.e. the toy does cost less than \$20, then you follow the ``Y" arrow, which says to buy the toy.
+The diamond at the top of the flowchart asks a ``yes or no" question. In this case, the question is ``does the toy cost less than \$20?" If the answer is ``No", i.e. the toy does not cost less than \$20, then you follow the ``No" arrow, which says to not buy the toy. Otherwise, if the answer is yes, i.e. the toy does cost less than \$20, then you follow the ``Yes" arrow, which says to buy the toy.
 
 \begin{example}
 You are writing software for an ATM, and you want to code up the following situation. If a person wants to withdraw money, you want the ATM to display ``funds available" if they have money in their bank account, and display ``funds unavailable" if they do not have money in their account. How do we draw this situation in a flowchart diagram?
 
-\emph{Answer:} We can describe this situation via the user's \textbf{ATM balance}. If the balance is $> \$0$, then we want the ATM to display ``funds available". Otherwise, if the balance is $\leq \$0$, we want to display ``funds unavailable". (Question: why $\leq 0$? What should we display if the balance is exactly \$0?)
+\emph{Answer:} We can describe this situation via the user's \textbf{ATM balance}. If the balance is $> \$0$, then we want the ATM to display ``funds available". Otherwise, if the balance is $\leq \$0$, we want to display ``funds unavailable". (Question: what should happen if the balance is exactly \$0?)
 
 We represent this situation in the following flowchart.
 
@@ -43,6 +47,28 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 
 \end{example}
 
+% Given a flowchart, we can also draw the ``reverse" flowchart. In the reverse flowchart, we ask the opposite of the question, so that the ``yes" and ``no" labels are flipped. This sounds a lot harder than it is, so let's look at an example.
+
+% \begin{example}
+% Consider the following flowchart from the beginning of the section.
+% \begin{center}
+
+% \begin{forest}
+% for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+% [Is the price of the \\ toy less than \$20?
+%     [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+%     [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+% ]
+% \end{forest}
+% \end{center}
+
+% Draw the reverse flowchart, so that the ``yes" arrow points to ``Don't buy the toy", and the ``no" arrow points ``Buy the toy".
+
+% \textit{Answer: } To solve this problem, we need to figure out the opposite of the question ``is the price of the toy less than \$20?".
+
+% The opposite of the question is ``is the price of the toy greater than or equal to \$20?". This is because, if the answer is ``yes", then 
+% \end{example}
+
 The two previous flowcharts expressed a \emph{single} question, i.e. ``is the price greater than \$20?". Sometimes you might want a flowchart that describes \emph{multiple} questions, where the answer to one question influences the future questions. We describe an example below.
 
 \begin{example}
@@ -51,7 +77,7 @@ Recall the parent example from before.
 
 \textit{``Suppose you are a parent, and your child wants you to buy a toy. As a fiscally responsible parent, you decide to buy the toy if it costs less than \$20, and not buy the toy if it costs more than \$20."}
 
-You realize later on that your child found a loophole: there is a very violent video game ``Age of Corpses" that they want to buy that only costs \$15. Because you don't want your child to play violent video games, you now want to do the following: if the toy costs more than \$20, you still won't buy it. However, if the toy costs less than \$20, then you will check if the toy is ``Age of Corpses". If it is ``Age of Corpses", then you will not buy the toy. Otherwise, you will buy the toy.
+You realize later that your child found a loophole: there is a very violent video game called ``Age of Corpses" that they want to buy and only costs \$15. Because you don't want your child to play violent video games, you now want to do the following: if the toy costs more than \$20, you still won't buy it. However, if the toy costs less than \$20, then you will check if the toy is ``Age of Corpses". If it is ``Age of Corpses", then you will not buy the toy. Otherwise, you will buy the toy.
 
 We can express this situation using the following ``multi-level" flowchart, sometimes called a \emph{decision tree}.
 
@@ -69,17 +95,17 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{forest}
 \end{center}
 
-Like the previous flowchart, we first ask the question ``does the toy cost less than \$20?". If the answer is no, then we follow the ``N" arrow and decide not to buy the toy. If the answer is yes, then we follow the ``Y" arrow, where we are directed to another question: is the toy the violent video game ``Age of Corpses"? If the answer is no, then we follow the ``N" arrow which tells us to buy the game. If the answer is yes, we follow the ``Y" arrow, which tells us not to buy the game. This makes sense, since the toy is ``Age of Corpses", so we do not want to buy it.
+Like the previous flowchart, we first ask the question ``does the toy cost less than \$20?". If the answer is no, then we follow the ``No" arrow and decide not to buy the toy. If the answer is yes, then we follow the ``Yes" arrow, where we are directed to another question: is the toy the violent video game ``Age of Corpses"? If the answer is no, then we follow the ``No" arrow which tells us to buy the game. If the answer is yes, we follow the ``Yes" arrow, which tells us not to buy the game. This makes sense, since the toy is ``Age of Corpses", so we do not want to buy it.
 
 Notice that we only ask the question ``Is the toy `Age of Corpses`?" if the toy costs less than \$20. If the toy costs more than \$20, then we don't need to ask that question, since we have already decided not to buy the toy.
 \end{example}
 
-In our previous examples, we looked at flowcharts where each question had only a ``yes" or ``no" answer. Next, we'll look at some flowcharts with questions that have more than two answers.
+In our previous examples, the flowcharts had questions with only two answers: ``yes" or ``no". Next, we'll look at flowcharts with questions that have more than two answers.
 
 \begin{example}
-You are writing software for teachers to store their grades in. Given a number, you want to output the grade corresponding to that number. Here, we assume an A is any grade above 90, a B is between 80-90, a C is between 70-80, and an F is anything below 70. How do we draw this situation in a flowchart diagram?
+You are writing software for teachers to store their grades in. Given a number, you want to output the grade corresponding to that number. Here, assume an A is any grade above 90, a B is between 80-90, a C is between 70-80, and an F is anything below 70. How do we draw this situation in a flowchart diagram?
 
-\textit{Answer: } We draw this represent using the following flowchart.
+\textit{Answer: } We draw this using the following flowchart.
 
 
 \begin{center}
@@ -93,7 +119,7 @@ for tree={l sep+=1.3cm, s sep+=-1cm,edge={thick, color=darkgray, -{Triangle[]}}}
     [Grade is A, edge label={node[midway,above left,font=\scriptsize]{Above 90}}]
     [Grade is B, edge label={node[midway,above left,font=\scriptsize]{80-90}}]
     [Grade is C, edge label={node[near end,above right,font=\scriptsize]{70-80}}]
-    [Grade is F, edge label={node[midway,above right,font=\scriptsize]{Below 50}}]
+    [Grade is F, edge label={node[midway,above right,font=\scriptsize]{Below 70}}]
 ]
 \end{forest}
 \end{center}
@@ -101,7 +127,7 @@ for tree={l sep+=1.3cm, s sep+=-1cm,edge={thick, color=darkgray, -{Triangle[]}}}
 \end{example}
 
 \begin{example}
-You and a friend are playing a game of soccer. At the end of the game, you each tally up your points, and compare your total points to see who won. How can you model this with a flowchart?
+You and a friend are playing a game of soccer. At the end of the game, you each count the total number of goals scored. You compare your total points with your friend's total points to see who won. How do you model this with a flowchart?
 
 \textit{Answer: } We draw this represent using the following flowchart.
 
@@ -121,89 +147,159 @@ for tree={l sep+=1.4cm, s sep+= 0.6cm,edge={thick, color=darkgray, -{Triangle[]}
 
 \section{The \ic{if}-\ic{else} statement}
 
-\textcolor{red}{UTHSAV TODO: (1)First, connect if-else to the Yes-No flowcharts. Go through the examples from earlier and convert them to code. Then go through more examples. At the end you can discuss if statements on their own.
-(2) Then go through nested if-else statements.
-(3) Finally, connect if-else if-else statements to the flowcharts with multiple answers.
-}
+In this section, we'll connect the flowcharts we described before to actual Java code. We'll start by describing \ic{if}-\ic{else} statements, which correspond to the "yes or no" flow charts above.
 
 \begin{definition}
-An \ic{if} statement allows us to write programs that decide whether to execute a particular statement depending on a condition.
+An \ic{if}-\ic{else} statement allows us to write programs that execute one of two commands, depending on whether a condition is true or false.
 \end{definition}
 
-Let's start with an example:
+Let's start with an example. Consider the following flowchart discussed at the beginning of the previous section. Here, your kid wants to buy a toy, and you say yes if it costs less than \$20 and no if it costs more than \$20.
+
+\begin{center}
+
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the price of the} \\ \textcolor{mygreen}{toy less than \$20?}
+    [\textcolor{Brown}{Buy the toy}, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [\textcolor{Rhodamine}{Don't buy the toy}, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+
+Let's see how to write this flowchart in Java code. The color-coded parts in the code correspond to the corresponding colors in the flowchart. Note: your Java code on the computer will not have these colors! This is just for explanation.
 
 \begin{code}
-if (count > 20) {
-    System.out.println("Count exceeded");
+if (ß\textcolor{mygreen}{price < 20}ß) 
+{
+    ß\textcolor{Brown}{System.out.println("Buy the toy");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{System.out.println("Do not buy the toy");}ß
 }
 \end{code}
 
-The condition in this example is \ic{count > 20}. It is a boolean expression that is either true or false. That is, \ic{count} is either greater than \ic{20} or not. If it is, ``Count exceeded" is printed. Otherwise, the \ic{println} statement is skipped.
+Let's take a closer look at this Java code.
+There are three components to an \ic{if}-\ic{else} statement: a \textcolor{mygreen}{condition}, a \textcolor{Brown}{``true-action"}, and a \textcolor{Rhodamine}{``false-action"}. These correspond to the colors in the flowchart.
 
-Notice the structure of an \ic{if} statement -- the condition is wrapped with parentheses. Then curly braces wrap the statement to execute if the condition is true.
+In our flow chart, the \textcolor{mygreen}{condition} is: ``the price of the toy is less than \$20``. If the \textcolor{mygreen}{condition} is true, which means that the toy \emph{does} cost less than \$20, then we execute the \textcolor{Brown}{true-action}. In our code, the \textcolor{Brown}{true-action} is to print that we will buy the toy.
+
+Otherwise, if the \textcolor{mygreen}{condition} is false, which means that the toy \emph{does} costs more than \$20, then we execute the \textcolor{Rhodamine}{false-action}. In our code, the \textcolor{Rhodamine}{false-action} is to print that we will not buy the toy.
+
+Note: in the above code snippet, we never define the variable \textcolor{mygreen}{price}. So if you tried to run the code, Java would give you an error. You need to define \textcolor{mygreen}{price}. For example, the following code would successfully run.
+
+\begin{code}
+int price = 15;
+if (ß\textcolor{mygreen}{price < 20}ß) 
+{
+    ß\textcolor{Brown}{System.out.println("Buy the toy");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{System.out.println("Do not buy the toy");}ß
+}
+\end{code}
+
+\begin{exercise}
+What will happen if you run the above code? (You don't have to use your computer to answer this.)
+\end{exercise}
+
+\noindent \textbf{Question: } What happens if the price is \emph{exactly} \$20? (i.e. the first line is \ic{int price = 20;})
+
+In this case, the \textcolor{mygreen}{condition} is \textbf{false}, as 20 is not less than 20. This means we execute the \textcolor{Rhodamine}{false-action}, and will print that we will not buy the toy.
+This is known as an \emph{edge case}, since the price being equal to \$20 is right on the ``edge" of whether the \textcolor{mygreen}{condition} is true or false. If the price was even a little bit smaller than \$20, then the \textcolor{mygreen}{condition} would be true.
+
+Let's look at another example of turning a flowchart into code. We'll go through it step-by-step.
 
 \begin{example}
-What does the following piece of code print if \ic{x} is 101? What about if \ic{x} is 200? What about if \ic{x} is 8?
+
+Write the following flowchart from the previous section in Java code. This flowchart describes whether an ATM displays ``funds available" or ``funds unavailable".
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the user's ATM balance} \\ \textcolor{mygreen}{greater than \$0?}
+    [\textcolor{Brown}{Display ``funds available"}, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [\textcolor{Rhodamine}{Display ``funds unavailable"}, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+
+\textit{Answer: } To write this flowchart into code, we first need to gather the three ingredients of an \ic{if}-\ic{else} statement: the \textcolor{mygreen}{condition}, the \textcolor{Brown}{true-action}, and the \textcolor{Rhodamine}{false-action}. Then we place our ingredients in the following outline:
 
 \begin{code}
-if (x > 100) {
-    System.out.println("Big number!");
-} 
-System.out.println("Hi there");
-if (x % 2 == 0) { // checks if a number is evenß\footnote{Recall that the modulo operator (\ic{a \% b}) computes the remainder of \ic{a} when divided by \ic{b}. By checking if the remainder of some number when divided by 2 is 0, we are checking if that number is even. }ß
-    System.out.println("Even number!");
+if (ß\textcolor{mygreen}{condition}ß) 
+{
+    ß\textcolor{Brown}{true-action;}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{false-action;}ß
 }
 \end{code}
 
-\emph{Answer}: If \ic{x} is 101, the first boolean expression will evaluate to true, so the program will print ``Big number!" Then the program will print ``Hi there" regardless of any condition. Finally, since 101 is not even, the program will not print ``Even number!"
+To define the \textcolor{mygreen}{condition}, we first need to figure out what our variables are. In this problem, we need a variable for the user's ATM balance. Let's call that variable \ic{balance}. (While it may be simple here, note that in coding real software, figuring out your variables is a very tricky process!)
 
-Using the same reasoning to trace the execution with \ic{x} as 200, the following statements will be printed: ``Big number! Hi there! Even number!"
+For this flowchart, our \textcolor{mygreen}{condition} is ``\ic{balance} > 0". This is because, if the \textcolor{mygreen}{condition} is true, this means that the user's ATM balance is greater than \$0, so we would follow the ``yes" arrow in the flowchart. On the other hand, if the \textcolor{mygreen}{condition} is false, then the user's ATM balance is not greater than \$0, so we would follow the ``no" arrow. So our code outline looks like this:
 
-When \ic{x} is 8, the output is ``Hi there! Even number!"
+\begin{code}
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{true-action;}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{false-action;}ß
+}
+\end{code}
+
+Next we need our \textcolor{Brown}{true-action}. If the \textcolor{mygreen}{condition} is true --- meaning that the balance is greater than 0 --- the flowchart says to display ``funds available". We can execute this by writing a print statement, i.e. \ic{System.out.println(``funds available")}. Thus, our \textcolor{Brown}{true-action} is \ic{System.out.println(``funds available")}, so our code looks like:
+
+\begin{code}
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{System.out.println(``funds available");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{false-action;}ß
+}
+\end{code}
+
+Finally, we need our \textcolor{Rhodamine}{false-action}. In the flow chart, if the \textcolor{mygreen}{condition} is false --- meaning that the balance is not greater than 0 --- the flowchart says to display ``funds unavailable".  We can execute this by writing a print statement, i.e. \ic{System.out.println(``funds unavailable")}. Thus, our \textcolor{Rhodamine}{false-action} is \ic{System.out.println(``funds unavailable")}. So our code looks like:
+
+\begin{code}
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{System.out.println(``funds available");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{System.out.println(``funds unavailable");}ß
+}
+\end{code}
+
 \end{example}
 
-\begin{example}
-How would you fill in the boolean expression below to take the absolute value of an integer \ic{x}? (Hint: to take an absolute value of a negative number, you must negate it).
+\begin{exercise}
+What happens if you run the following code?
 
 \begin{code}
-if (/* Insert boolean expression here */) {
-    x = -x;
-} 
-\end{code}
-
-\emph{Answer}: Insert the boolean expression x $<$ 0.
-\end{example}
-
-\section{The \ic{else} statement}
-Sometimes we want to do one thing if a condition is true and another thing if that condition is false. We can add an \ic{else} clause to an \ic{if} statement to handle this kind of situation. Below is an example of a simple \ic{if-else} statement:
-
-\begin{code}
-if (price > 20) {
-    System.out.println("Too expensive");
-} else {
-    System.out.println("Affordable");
+double balance = -5;
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{System.out.println(``funds available");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{System.out.println(``funds unavailable");}ß
 }
 \end{code}
 
-\noindent This example prints either ``Too expensive" or ``Affordable", depending on whether \ic{price} is greater than 20. Only one or the other is ever executed, never both.
+What about if we replace the first line with \ic{double balance = 10;}? Or \ic{double balance = 0;}?
+\end{exercise}
 
-Note that it is not possible to have an \ic{else} statement without having a corresponding \ic{if} statement. Any \ic{else} statement must be attached to a preceding \ic{if} statement. It is also not possible to have two \ic{else} statements for the same \ic{if} statement.
-
-\begin{example}
-What does the following piece of code do?
-
-\begin{code}
-if (balance <= 0) {
-    System.out.println("Funds not available");
-} else {
-    System.out.println("Funds available");
-}
-\end{code}
-
-\emph{Answer}: It prints ``Funds not available" if balance is 0 or lower. Otherwise, it prints ``Funds available".
-\end{example}
-
-\begin{example}
+\begin{exercise}
 What does the following piece of code do? What is an example of where you could use this code?
 
 \begin{code}
@@ -213,23 +309,174 @@ if (rating >= 4) {
     System.out.println("Would not recommend")
 }
 \end{code}
+% \emph{Answer}: It prints ``Would recommend" if rating is greather than or equal to 4. Otherwise, it prints ``Would not recommend".
 
-\emph{Answer}: It prints ``Would recommend" if rating is greather than or equal to 4. Otherwise, it prints ``Would not recommend".
+% You might use this code when recommending books or movies to a user --- the above code would only recommend books/movies with four stars or higher.
+\end{exercise}
 
-You might use this code when recommending books or movies to a user --- the above code would only recommend books/movies with four stars or higher.
-\end{example}
+\begin{exercise}
+In the above examples, we made the true-action and false-actions very simple, i.e. you print something. In actual software, typically you will execute more complicated code than printing. Consider the following.
+
+\begin{code}
+boolean offerLoan;
+double balance = -5;
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{offerLoan = False;}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{offerLoan = True;}ß
+}
+\end{code}
+
+What do you think is the meaning of the \ic{offerLoan} variable? If you were writing real software for a bank, how might you use the \ic{offerLoan} variable?
+\end{exercise}
+
+\begin{exercise}
+Write Java code for the following flowchart.
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
+    [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+\end{exercise}
+
+\subsection{Different conditions}
+
+% Consider the generic Java \ic{if}-\ic{else} code.
+
+% \begin{code}
+% if (ß\textcolor{mygreen}{condition}ß) 
+% {
+%     ß\textcolor{Brown}{true-action;}ß
+% }
+% else
+% {
+%     ß\textcolor{Rhodamine}{false-action;}ß
+% }
+% \end{code}
+
+% It turns out that the \textcolor{mygreen}{condition} in an \ic{if}-\ic{else} clause is \textbf{not unique}. That is, there is more than one way to write an \ic{if}-\ic{else} clause.
+
+% To demonstrate this, c
+
+Consider the ATM flowchart from earlier.
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the user's ATM balance} \\ \textcolor{mygreen}{greater than \$0?}
+    [\textcolor{Brown}{Display ``funds available"}, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [\textcolor{Rhodamine}{Display ``funds unavailable"}, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+
+One question you might have is: does it matter which arrow is yes or which is no? As it turns out, it does not matter. 
+
+For example, let's look at the following flowchart which flips the yes and no labels.
+
+% This flowchart isn't unique. There's actually another way to write this flowchart: the ``negated" flowchart.
+
+% There is another \textcolor{mygreen}{condition} we can use, which corresponds to the following ``negated" flowchart.
+
+\begin{center}
+
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the user's ATM balance} \\ \textcolor{mygreen}{\textbf{not} greater than \$0?}
+    [\textcolor{Brown}{Display ``funds unavailable"}, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [\textcolor{Rhodamine}{Display ``funds available"}, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+
+Here, we wrote the opposite of the question, flipping the ``yes" and ``no" labels. However, the behavior of the flowchart is exactly the same.
+
+If we write this ``flipped" flowchart in Java code, we will get different code too. In particular, the \textcolor{mygreen}{condition} will be negated, which is expressed through an exclamation point (!).  The \textcolor{Brown}{true-action} and \textcolor{Rhodamine}{false-action} would also be flipped. 
+
+\begin{code}
+if (ß\textcolor{mygreen}{!(balance > 0)}ß) 
+{
+    ß\textcolor{Brown}{System.out.println(``funds unavailable");}ß
+}
+else
+{
+    ß\textcolor{Rhodamine}{System.out.println(``funds available");}ß
+}
+\end{code}
+
+Compare this code to the code we wrote in the earlier example. While the two pieces of code look different, they do the same thing. This is because the two flowcharts express the same behavior.
+
+\begin{exercise}
+Draw the ``flipped" flowchart for the following.
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
+    [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+\end{exercise}
+
+\subsection{Only using an \ic{if}-statement}
+
+It is also possible to write only an \ic{if} statement without an \ic{else}. Consider the following example.
+
+\begin{code}
+if (ß\textcolor{mygreen}{balance > 0}ß) 
+{
+    ß\textcolor{Brown}{System.out.println(``funds available");}ß
+}
+\end{code}
+
+This code will check the \textcolor{mygreen}{condition}, i.e. \ic{balance > 0}. It will execute the \textcolor{Brown}{true-action} if the \textcolor{mygreen}{condition} is true. However, if the \textcolor{mygreen}{condition} is false, the code will do \textbf{nothing}. This behavior is expressed in the following flowchart.
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the user's ATM balance} \\ \textcolor{mygreen}{greater than \$0?}, l sep = 15mm
+    [\textcolor{Brown}{Display ``funds available"}, edge label={node[midway,left,font=\normalsize]{Yes}}]
+]
+\end{forest}
+\end{center}
+
+In other words, there is no ``no" arrow. This is also equivalent to the following flowchart.
+
+\begin{center}
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[\textcolor{mygreen}{Is the user's ATM balance} \\ \textcolor{mygreen}{greater than \$0?}, l sep = 15mm
+    [\textcolor{Brown}{Display ``funds available"}, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [\textcolor{Rhodamine}{Do nothing}, edge label={node[midway,above right,font=\normalsize]{No}}]
+]
+\end{forest}
+\end{center}
+
+However, it is not possible to get rid of the \ic{if}, nor can you add ``extra" \ic{else} clauses. We demonstrate this in the following two examples.
 
 \begin{example}
 Does the following code compile?
 
 \begin{code}
-else {
-    System.out.println("Hello");
+else
+{
+    ß\textcolor{Brown}{System.out.println(``funds unavailable");}ß
 }
 \end{code}
 
-\emph{Answer}: No, since an \ic{else} statement must have a corresponding \ic{if} statement.
+\textit{Answer: } No, because you cannot have an \ic{else} without an \ic{if}.
 \end{example}
+
 
 \begin{example}
 Does the following code compile?
@@ -244,98 +491,125 @@ if (duration > 60) {
 }
 \end{code}
 
-\emph{Answer}: No, since an \ic{if} statement may only have at most one corresponding \ic{else} statement.
+\emph{Answer}: No, since an \ic{if} statement may have at most one corresponding \ic{else} statement.
 \end{example}
 
-One way to keep track of how \ic{if} and \ic{else} statements will execute is to think of them in terms of decision trees. All the code we have seen so far can be represented by a linear flow through the lines of the program. For example, think about how the computer steps through the lines in this program:
+\section{Nested \ic{if}-\ic{else} statements (Nested conditionals)}
 
-\begin{lrbox}{\codebox}
-\begin{minipage}{3.3in}
- \begin{code}
-System.out.println("Program starting!");
-int x = 7;
-System.out.printf("x + 3 = %d\n",x + 3);
-System.out.println("Program finished!");
-  \end{code}
-\end{minipage}
-\end{lrbox}
+In this section, we will describe how to turn ``multi-level" flowcharts into code. This involves ``nesting" our \ic{if}-\ic{else} statements, known as a \emph{nested conditional}. (From this section onwards, we will stop color coding the condition, true-action, and false-action.)
+
+Consider the following flowchart from earlier.
+
 \begin{center}
-\begin{tabularx}{\textwidth}{c | X}
- \usebox\codebox &
- \noindent\parbox[c]{\hsize}{
-\begin{tikzpicture}
-\node at (0,4) (a) {Print ``Program starting!''};
-\node at (0,3) (b) {Let \ic{x} be 7};
-\node at (0,2) (c) {Print ``x + 3 = 10''};
-\node at (0,1) (d) {Print ``Program finished!''};
-\draw[-{Latex}, thick] (a) -- (b);
-\draw[-{Latex}, thick] (b) -- (c);
-\draw[-{Latex}, thick] (c) -- (d);
-\end{tikzpicture}
-}
-\end{tabularx}
-\end{center}
-
-The \ic{if} and \ic{else} statements allow us to define other ways for the computer to move through the program. For example, take a look at the following program and a decision tree representing how the computer sees it.
-
-\begin{lrbox}{\codebox}
-\begin{minipage}{2.5in}
- \begin{code}
-if(x < y) {
-    System.out.println(x);
-}
-else {
-    System.out.println(y);
-}
-  \end{code}
-\end{minipage}
-\end{lrbox}
-\begin{center}
-\begin{tabularx}{\textwidth}{c | X}
- \usebox\codebox &
- \noindent\parbox[c]{\hsize}{
 \begin{forest}
-[\ic{x < y} 
-    [Print \ic{x}]
-    [Print \ic{y}]
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[Is the price of the \\ toy less than \$20?
+    [Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
+        [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+        [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+    ]
+    [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
 ]
 \end{forest}
-}
-\end{tabularx}
 \end{center}
 
-The program can follow different paths depending on the evaluation of boolean expressions. 
-
-\section{Nested conditionals}
-It is possible to combine \ic{if} and \ic{else} statements in more interesting ways, by nesting them. Consider the following example:
+Let's write this in Java code. Our \ic{if}-\ic{else} outline looks like:
 
 \begin{code}
-if (x < y) {
-    System.out.println("x < y");
-} else {
-    if (x > y) {
-        System.out.println("x > y");
-    } else {
-        System.out.println("x == y");
-    }
+if (condition) 
+{
+    true-action;
+}
+else
+{
+    false-action;
 }
 \end{code}
 
-We can draw a decision tree to understand how this program operates.
+As before, our condition is still \ic{price < 20}. The false-action is also \ic{System.out.println(``Do not buy the toy")}. So our code would look like:
+
+\begin{code}
+if (price < 20) 
+{
+    true-action;
+}
+else
+{
+    System.out.println("Do not buy the toy");
+}
+\end{code}
+
+But unlike the previous example, the true-action here isn't just another print statement. Here, the true-action is another flowchart:
 
 \begin{center}
 \begin{forest}
-[\ic{x < y}
-    [Print ``x < y'']
-    [\ic{x > y}
-        [Print ``x > y'']
-        [Print ``x {==} y'']
-    ]
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
+    [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
 ]
 \end{forest}
 \end{center}
 
-This example correctly prints out the relationship between two integer variables \ic{x} and \ic{y} using nested conditionals. No matter what the values of \ic{x} and \ic{y} are, only a single statement will be printed. 
+The Java code for this flowchart (see previous exercise) is
+
+\begin{code}
+if (toy == "Age of Corpses") 
+{
+    System.out.println("Buy the toy");
+}
+else
+{
+    System.out.println("Do not buy the toy");
+}
+\end{code}
+
+Plugging this code into the true-action, then the Java code for our overall flowchart is as follows.
+
+\begin{code}
+if (price < 20) 
+{
+    if (toy == "Age of Corpses") 
+    {
+        System.out.println("Buy the toy");
+    }
+    else
+    {
+        System.out.println("Do not buy the toy");
+    }
+}
+else
+{
+    System.out.println("Do not buy the toy");
+}
+\end{code}
+
+Note that you can't run this Java code by itself, as the variables \ic{price} and \ic{toy} were not previously defined. You need to define those variables before running the code. For example, the following code would be valid to run.
+
+\begin{code}
+int price = 15;
+int toy = "Age of Corpses"
+
+if (price < 20) 
+{
+    if (toy == "Age of Corpses") 
+    {
+        System.out.println("Buy the toy");
+    }
+    else
+    {
+        System.out.println("Do not buy the toy");
+    }
+}
+else
+{
+    System.out.println("Do not buy the toy");
+}
+\end{code}
+
+\begin{exercise}
+What happens if you run the above code?
+\end{exercise}
 
 \begin{example}
 Fill in each blank below with \ic{if} or \ic{else} to describe a person's height.
@@ -353,29 +627,27 @@ Fill in each blank below with \ic{if} or \ic{else} to describe a person's height
 \end{code}
 
 \emph{Answer}: The four blanks should contain \ic{if}, \ic{else}, \ic{if}, and \ic{else}, in that order.
+
+The flowchart is as follows.
+
+\begin{center}
+
+\begin{forest}
+for tree={edge={thick, color=darkgray, -{Triangle[]}}}
+[Is height \\ less than 60?
+    [Relatively short, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [Is height \\ larger than 72?, edge label={node[midway,above right,font=\normalsize]{No}}
+        [Relatively tall, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+        [Pretty average, edge label={node[midway,above right,font=\normalsize]{No}}]
+    ]
+]
+\end{forest}
+\end{center}
+
 \end{example}
 
 \begin{example}
-Given integer variables \ic{a} and \ic{b} and the following piece of code, what value gets stored in variable \ic{c}?
-
-\begin{code}
-int c;
-if (a > b) {
-    c = a;
-} else {
-    if (b > a) {
-        c = b;
-    } else {
-        c = 0;
-    }
-}
-\end{code}
-
-\emph{Answer}: The larger of the two variables, \ic{a} and \ic{b}, gets stored in \ic{c}. If \ic{a} and \ic{b} are equal, 0 gets stored in \ic{c}.
-\end{example}
-
-\begin{example}
-Imagine that the following program represents the person's reaction to different types of food. Given a pizza (\ic{green} = false, \ic{bitter} = false, \ic{warm} = true, \ic{cheesy} = true), how will this person respond? What about when given a kiwi (\ic{green} = true, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)? What about a strawberry (\ic{green} = false, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)?\footnote{Recall Java's boolean operators: \ic{A || B} is true if at least one of \ic{A}, \ic{B} is true. \ic{A \&\& B} is true if both \ic{A} and \ic{B} are true. \ic{!A} is true if \ic{A} is false.}
+Imagine that the following program represents the person's reaction to different types of food. Given a pizza (\ic{green} = false, \ic{bitter} = false, \ic{warm} = true, \ic{cheesy} = true), how will this person respond? What about when given a kiwi (\ic{green} = true, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)? What about a strawberry (\ic{green} = false, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)?\safemarginnote{Recall Java's boolean operators: \ic{A || B} is true if at least one of \ic{A}, \ic{B} is true. \ic{A \&\& B} is true if both \ic{A} and \ic{B} are true. \ic{!A} is true if \ic{A} is false.}
 
 \begin{code}
 if (green || bitter) {
@@ -388,78 +660,271 @@ if (green || bitter) {
     }
 }
 \end{code}
+
+It might help to draw the flowchart for the code.
+
 \emph{Answer}: The person reponds ``Yum, yes please!" to pizza, ``No thank you" to kiwi, and ``Thank you, I'll take some" to strawberry.
 \end{example}
 
-\section{The \ic{else if} statement}
-Nested conditionals are useful in many applications, but they can start feeling clunky as the nesting becomes deep. For example, consider the following piece of code:
+\section{\ic{else if} statements}
+
+In this section, we will describe how to write Java code for flowcharts with more two answers.
+
+Consider the following flowchart from the first section, which describes how to convert a number into a letter grade.
+
+\begin{center}
+\begin{forest}
+for tree={l sep+=1.3cm, s sep+=-1cm,edge={thick, color=darkgray, -{Triangle[]}}}
+[What is the student's grade?
+    [\textcolor{LimeGreen}{Grade is A}, edge label={node[midway,above left,font=\scriptsize]{\textcolor{ForestGreen}{Above 90}}}]
+    [\textcolor{Cerulean}{Grade is B}, edge label={node[midway,above left,font=\scriptsize]{\textcolor{Blue}{80-90}}}]
+    [\textcolor{OrangeRed}{Grade is C}, edge label={node[near end,above right,font=\scriptsize]{\textcolor{Mahogany}{70-80}}}]
+    [\textcolor{Plum}{Grade is F}, edge label={node[midway,above right,font=\scriptsize]{\textcolor{Orchid}{Below 70}}}]
+]
+\end{forest}
+\end{center}
+
+To express this flowchart with Java code, we use something called an \ic{else if} clause.
+
+\begin{definition}
+An \ic{else if} statement allows us to write programs for flowcharts that have multiple answers for a single question.
+\end{definition}
+
+Below is Java code for writing the above flowchart. The colors in the code corresponding to those in the flowchart. 
 
 \begin{code}
-if (grade > 90) {
+if (ß\textcolor{ForestGreen}{grade >= 90}ß) 
+{
+    ß\textcolor{LimeGreen}{System.out.println(``Grade is A");}ß
+}
+else if (ß\textcolor{Blue}{80 <= grade \&\& grade <= 90}ß)
+{
+    ß\textcolor{Cerulean}{System.out.println(``Grade is B");}ß
+}
+else if (ß\textcolor{Mahogany}{70 <= grade \&\& grade <= 80}ß)
+{
+    ß\textcolor{OrangeRed}{System.out.println(``Grade is C");}ß
+}
+else if (ß\textcolor{Orchid}{grade <= 70}ß)
+{
+    ß\textcolor{Plum}{System.out.println(``Grade is F");}ß
+}
+\end{code}
+
+Each label on an arrow is a condition in an \ic{else if} clause, except for the first label which is a condition in an \ic{if} clause. More generally, if you have the following flowchart:
+
+\begin{center}
+\begin{forest}
+for tree={l sep+=1.3cm, s sep+=-1cm,edge={thick, color=darkgray, -{Triangle[]}}}
+[Question?
+    [\textcolor{LimeGreen}{Action 1}, edge label={node[midway,above left,font=\scriptsize]{\textcolor{ForestGreen}{Condition 1}}}]
+    [\textcolor{Cerulean}{Action 2}, edge label={node[midway,above left,font=\scriptsize]{\textcolor{Blue}{Condition 2}}}]
+    [\textcolor{OrangeRed}{Action 3}, edge label={node[near end,above right,font=\scriptsize]{\textcolor{Mahogany}{Condition 3}}}]
+    [\textcolor{Plum}{Action 4}, edge label={node[midway,above right,font=\scriptsize]{\textcolor{Orchid}{Condition 4}}}]
+]
+\end{forest}
+\end{center}
+
+Then the code will look like:
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{Condition 1}ß) 
+{
+    ß\textcolor{LimeGreen}{Action 1;}ß
+}
+else if (ß\textcolor{Blue}{Condition 2}ß)
+{
+    ß\textcolor{Cerulean}{Action 2;}ß
+}
+else if (ß\textcolor{Mahogany}{Condition 3}ß)
+{
+    ß\textcolor{OrangeRed}{Action 3;}ß
+}
+else if (ß\textcolor{Orchid}{Condition 4}ß)
+{
+    ß\textcolor{Plum}{Action 4;}ß
+}
+\end{code}
+
+One helpful shortcut is that the final \ic{else if} can actually be replaced by an \ic{else} clause. For example, in the code above, this would look like the following.
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{Condition 1}ß) 
+{
+    ß\textcolor{LimeGreen}{Action 1;}ß
+}
+else if (ß\textcolor{Blue}{Condition 2}ß)
+{
+    ß\textcolor{Cerulean}{Action 2;}ß
+}
+else if (ß\textcolor{Mahogany}{Condition 3}ß)
+{
+    ß\textcolor{OrangeRed}{Action 3;}ß
+}
+else
+{
+    ß\textcolor{Plum}{Action 4;}ß
+}
+\end{code}
+
+% \begin{code}
+% if (ß\textcolor{ForestGreen}{grade >= 90}ß) 
+% {
+%     ß\textcolor{LimeGreen}{System.out.println(``Grade is A");}ß
+% }
+% else if (ß\textcolor{Blue}{80 <= grade \&\& grade <= 90}ß)
+% {
+%     ß\textcolor{Cerulean}{System.out.println(``Grade is B");}ß
+% }
+% else if (ß\textcolor{Mahogany}{70 <= grade \&\& grade <= 80}ß)
+% {
+%     ß\textcolor{OrangeRed}{System.out.println(``Grade is C");}ß
+% }
+% else
+% {
+%     ß\textcolor{Plum}{System.out.println(``Grade is F");}ß
+% }
+% \end{code}
+
+Let's look at an example.
+
+\begin{example}
+Consider the following flowchart, which was discussed in the first section.
+
+\begin{center}
+\begin{forest}
+for tree={l sep+=1.4cm, s sep+= 0.6cm,edge={thick, color=darkgray, -{Triangle[]}}}
+[What is the result of the game?
+    [You win, edge label={node[midway,above left,font=\scriptsize]{Your score $>$ friend's score}}]
+    [You tied, edge label={node[near end,above right,font=\scriptsize]{Your score $=$ friend's score}}]
+    [You lost, edge label={node[near end,above right,font=\scriptsize]{Your score $<$ friend's score}}]
+]
+\end{forest}
+\end{center}
+
+Write Java code that expresses the logic in this flowchart.
+
+\textit{Answer: } First, we need to define our variables. For this problem, we have two variables: our score, and our friend's score. Let's call these variables \ic{myScore} and \ic{friendScore}, respectively.
+
+From the stencil above, our code will look as follows.
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{Condition 1}ß) 
+{
+    ß\textcolor{LimeGreen}{Action 1;}ß
+}
+else if (ß\textcolor{Blue}{Condition 2}ß)
+{
+    ß\textcolor{Cerulean}{Action 2;}ß
+}
+else if (ß\textcolor{Mahogany}{Condition 3}ß)
+{
+    ß\textcolor{OrangeRed}{Action 3;}ß
+}
+\end{code}
+
+The conditions are the labels on the arrows in the flowchart. \textcolor{ForestGreen}{Condition 1} is when your score is larger than your friend's score, or \ic{myScore > friendScore}. Action 1 is to say that you win. So filling in the code stencil:
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{myScore > friendScore}ß) 
+{
+    ß\textcolor{LimeGreen}{System.out.println(``I win!");}ß
+}
+else if (ß\textcolor{Blue}{Condition 2}ß)
+{
+    ß\textcolor{Cerulean}{Action 2;}ß
+}
+else if (ß\textcolor{Mahogany}{Condition 3}ß)
+{
+    ß\textcolor{OrangeRed}{Action 3;}ß
+}
+\end{code}
+
+Filling in the rest of the conditions similarly gives us the following.
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{myScore > friendScore}ß) 
+{
+    ß\textcolor{LimeGreen}{System.out.println(``I won!");}ß
+}
+else if (ß\textcolor{Blue}{myScore < friendScore}ß)
+{
+    ß\textcolor{Cerulean}{System.out.println(``I lost.");}ß
+}
+else if (ß\textcolor{Mahogany}{myScore == friendScore}ß)
+{
+    ß\textcolor{OrangeRed}{System.out.println("We tied."));}ß
+}
+\end{code}
+
+Note that the last \ic{else if} can also be replaced with an \ic{else}. So the following code is also valid.
+
+\begin{code}
+if (ß\textcolor{ForestGreen}{myScore > friendScore}ß) 
+{
+    ß\textcolor{LimeGreen}{System.out.println(``I won!");}ß
+}
+else if (ß\textcolor{Blue}{myScore < friendScore}ß)
+{
+    ß\textcolor{Cerulean}{System.out.println(``I lost.");}ß
+}
+else
+{
+    ß\textcolor{OrangeRed}{System.out.println("We tied."));}ß
+}
+\end{code}
+
+\end{example}
+
+\begin{exercise}
+\ic{else if} statements can also be used to simplify nested conditionals, which we discussed in the previous section. For example, consider the following code.
+
+\begin{code}
+if (grade >= 90) {
     System.out.println("You earned an A");
 } else {
-    if (grade > 80) {
+    if (grade >= 80) {
         System.out.println("You earned a B");
     } else {
-        if (grade > 70) {
+        if (grade >= 70) {
             System.out.println("You earned a C");
         } else {
-            if (grade > 60) {
-                System.out.println("You earned a D");
-            } else {
-                System.out.println("You earned an F");
-            }
+            System.out.println("You earned an F");
         }
     }
 }
 \end{code}
 
-\noindent To avoid having such deeply nested conditionals, we introduce the \ic{else if} clause. Using \ic{else if} statements, we can rewrite the above program as:
+Draw out the flowchart for this code (you should only need ``yes" or ``no" questions). Compare to the flowchart at the beginning of the section, with multiple answers for a single question. Which flowchart is simpler? Which code is easier to read?
+\end{exercise}
+
+In general, it is very common to have a conditional block of code with 1 \ic{if} statement, 1 or more \ic{else if} statements, and 1 \ic{else} statement.
+
+Suppose you have code where multiple of the \ic{if} and \ic{else if} statements are true. In this case, only the \emph{first} true statement will count. For example, consider the following generic code.
 
 \begin{code}
-if (grade > 90) {
-    System.out.println("You earned an A");
-} else if (grade > 80) {
-    System.out.println("You earned a B");
-} else if (grade > 70) {
-    System.out.println("You earned a C");
-} else if (grade > 60) {
-    System.out.println("You earned a D");
-} else {
-    System.out.println("You earned an F");
+if (ß\textcolor{ForestGreen}{Condition 1}ß) 
+{
+    ß\textcolor{LimeGreen}{Action 1;}ß
+}
+else if (ß\textcolor{Blue}{Condition 2}ß)
+{
+    ß\textcolor{Cerulean}{Action 2;}ß
+}
+else if (ß\textcolor{Mahogany}{Condition 3}ß)
+{
+    ß\textcolor{OrangeRed}{Action 3;}ß
 }
 \end{code}
 
-You can imagine an \ic{else if} statement as shorthand for an \ic{if} nested inside an \ic{else}. For example, the following snippets of code behave identically (for any boolean expressions \ic{A} and \ic{B}):
-
-\begin{code}
-// Version 1 (using nested conditionals)
-if (A) {
-    System.out.println("A");
-} else {
-    if (B) {
-        System.out.println("B");
-    } else {
-        System.out.println("C");
-    }
-}
-
-// Version 2 (equivalent, using else if)
-if (A) {
-    System.out.println("A");
-} else if (B) {
-    System.out.println("B");
-} else {
-    System.out.println("C");
-}
-\end{code}
-
-It is very common to see a conditional block of code that consists of 1 \ic{if} statement, 0 or more \ic{else if} statements, and 1 \ic{else} statements. In these cases, recall that only one of these statements will ever execute. That will be the first statement that is true.
+Suppose \textcolor{ForestGreen}{Condition 1} and \textcolor{Blue}{Condition 2} are both true. Then only \textcolor{LimeGreen}{Action 1;} will execute. \textcolor{Cerulean}{Action 2;} will \textbf{not} execute, even though \textcolor{Blue}{Condition 2} is true. This is because only one Action will be executed in an \ic{if}/\ic{else if}/\ic{else} block.
 
 \begin{example}
-Suppose \ic{A = false} and \ic{B = true}. What does the following code print out?
+Consider the following code.
 
 \begin{code}
+boolean A = true;
+boolean B = true;
 if (A) {
     System.out.println("apple");
 } else if (B) {
@@ -470,82 +935,76 @@ if (A) {
 System.out.println("dragonfruit");
 \end{code}
 
-\emph{Answer}: The code will print ``apple" and then ``dragonfruit". Notice that ``banana" does not get printed even though \ic{B} is true since the entire \ic{if}, \ic{else if}, \ic{else} chain will only ever print one of ``apple", ``banana", and ``carrot". 
+What does the following code print out?
+
+\emph{Answer}: The code will print ``apple" and then ``dragonfruit". Notice that ``banana" does not get printed even though \ic{B} is true. This is because once one of the \ic{if} or \ic{else if} conditions is true, no other conditions will be checked.
+
+ ``dragonfruit" is always printed because it is outside of the \ic{if}/\ic{else if}/\ic{else} block.
 \end{example}
 
-\begin{example}
-Suppose \ic{X = true}, \ic{Y = false}, and \ic{Z = false}. What does the following code print out?
+\begin{exercise}
+Consider the following code.
 
 \begin{code}
+boolean A = false;
+boolean B = true;
+if (A) {
+    System.out.println("apple");
+} else if (B) {
+    System.out.println("banana");
+} else {
+    System.out.println("carrot");
+} 
+System.out.println("dragonfruit");
+\end{code}
+
+What does the following code print out?
+\end{exercise}
+
+\begin{exercise}
+What does the following code print out?
+
+\begin{code}
+boolean X = true;
+boolean Y = false;
+boolean Z = false;
+boolean W = false;
 if (X && Y) {
     System.out.println("xylophone");
 } else if (!Z) {
     System.out.println("zoo");
+} else if (W) {
+    System.out.println("monkey");
 }
 \end{code}
+\end{exercise}
 
-\emph{Answer}: This code will print ``zoo". Notice that the boolean expressions used with \ic{if} statements can be complex and contain boolean operators such as \ic{\&\&} and \ic{||} and \ic{!}, as long as the expression evaluates to a true or false.
-\end{example}
+\begin{exercise}
+What does the following piece of code print if \ic{x} is 101? What about if \ic{x} is 200? What about if \ic{x} is 8?
 
-\section{Curly braces}
-So far, we have been using curly braces to enclose each of our \ic{if}, \ic{else if}, and \ic{else} statements. These curly braces can be omitted if there is only a single statement. For example, in the snippet of code below, the first set of curly braces can be omitted, while the second cannot.
+\safemarginnote{Recall that the modulo operator (\ic{a \% b}) computes the remainder of \ic{a} when divided by \ic{b}. By checking if the remainder of some number when divided by 2 is 0, we are checking if that number is even.}
 
 \begin{code}
-if (guess == answer) {
-    System.out.println("You guessed correctly!");
-} else {
-    System.out.println("Sorry, you guessed incorrectly.");
-    System.out.println("The answer was " + answer);
+if (x > 100) {
+    System.out.println("Big number!");
 } 
-\end{code}
-
-This code is equivalent to the following:
-
-\begin{code}
-if (guess == answer)
-    System.out.println("You guessed correctly!");
-else {
-    System.out.println("Sorry, you guessed incorrectly.");
-    System.out.println("The answer was " + answer);
-} 
-\end{code}
-
-\noindent If all the curly braces were left out (as in the code below), the program would first either print ``You guessed correctly!" or ``Sorry, you guessed incorrectly.", but then also print ``The answer was ..." in all cases, regardless of the condition.
-
-\begin{code}
-if (guess == answer)
-    System.out.println("You guessed correctly!");
-else
-    System.out.println("Sorry, you guessed incorrectly.");
-    System.out.println("The answer was " + answer); 
-    // ^^^ Careful! This is not part of the else clause!
-\end{code}
-
-Here it is important to note that whitespace and indentation are ignored by Java. Indentation has no effect on the behavior of a program. In this case, although the indentation makes it harder to see, after omitting all the curly braces the code is equivalent to 
-
-\begin{code}
-if (guess == answer){
-    System.out.println("You guessed correctly!");
-} else {
-    System.out.println("Sorry, you guessed incorrectly.");
-}
-System.out.println("The answer was " + answer); 
-\end{code}
-
-Proper indentation is extremely important for human readability. When used incorrectly, however, misleading indentation can result in unexpected behavior.
-
-\begin{example}
-Does the following code compile and print the larger of two integers \ic{a} and \ic{b} correctly?
-
-\begin{code}
-if (a > b)      System.out.println("a");
-else {
-System.out.println("b");
+System.out.println("Hi there");
+if (x % 2 == 0) { // checks if a number is even
+    System.out.println("Even number!");
 }
 \end{code}
 
-\emph{Answer}: Yes! Even though the whitespacing and indentation look funny, this piece of code compiles correctly.
-\end{example}
+% \emph{Answer}: If \ic{x} is 101, the first boolean expression will evaluate to true, so the program will print ``Big number!" Then the program will print ``Hi there" regardless of any condition. Finally, since 101 is not even, the program will not print ``Even number!"
+
+% Using the same reasoning to trace the execution with \ic{x} as 200, the following statements will be printed: ``Big number! Hi there! Even number!"
+
+% When \ic{x} is 8, the output is ``Hi there! Even number!"
+\end{exercise}
+
+
+
+
+
 
 \section{Common mistakes}
 When writing conditional structures, beware of the following common  mistakes:
@@ -566,7 +1025,8 @@ if (count > 10);
 
 \noindent The code above is misleading because it is identical to the following:
 \begin{code}
-if (count > 10) {
+if (count > 10) 
+{
     ;
 }
 System.out.println("So many!");
@@ -578,23 +1038,42 @@ System.out.println("So many!");
 As mentioned before, indentation helps make code more readable to humans, but it can also make code more confusing if used incorrectly. It is a common mistake to accidentally forget curly braces.
 
 \begin{code}
-if (leaves == 4) {
+if (leaves == 4) 
+{
     System.out.println("You found a four-leaf clover, how lucky!");
-} else
+} 
+else
     System.out.println("Sorry, not a four-leaf clover.");
     System.out.println("Keep looking!");
 \end{code}
 
-\noindent This code above is misleading because it prints ``Keep looking!" regardless of whether a four-leaf clover was found. The writer of this program probably meant to add curly braces around the \ic{else} clause.
+\noindent This code forgets curly braces around the \ic{else} clause. Without curly braces, Java thinks it is parsing the following:
+
+\begin{code}
+if (leaves == 4) 
+{
+    System.out.println("You found a four-leaf clover, how lucky!");
+} 
+else
+{
+    System.out.println("Sorry, not a four-leaf clover.");
+}
+System.out.println("Keep looking!");
+\end{code}
+
+and will always print ``Keep looking!" regardless of whether a four-leaf clover was found. 
+%The writer of this program probably meant to add curly braces around the \ic{else} clause.
 
 \subsection{\ic{else} without an \ic{if}}
 
 Although the following example looks fine at first glance, it does not compile. This is because the \ic{else} clause is nested \emph{inside} the \ic{if} statement instead of acting as an \emph{alternative} option to the \ic{if} statement.
 
 \begin{code}
-if (chanceOfRain > 50) {
+if (chanceOfRain > 50) 
+{
     System.out.println("Bring an umbrella!");
-    else {
+    else 
+    {
         System.out.println("Hm, I don't think it will rain today.")
     }
 }
@@ -603,9 +1082,12 @@ if (chanceOfRain > 50) {
 \noindent To fix the code above, move the \ic{else} statement \emph{outside} of the \ic{if} as below:
 
 \begin{code}
-if (chanceOfRain > 50) {
+if (chanceOfRain > 50) 
+{
     System.out.println("Bring an umbrella!");
-} else {
+} 
+else 
+{
     System.out.println("Hm, I don't think it will rain today.")
 }
 \end{code}
@@ -614,7 +1096,8 @@ if (chanceOfRain > 50) {
 It is very easy to mix up the assignment operator (the single equals sign \ic{=}) with the equality operator (the double equals sign \ic{==}). The following code is incorrect and results in a compilation error:
 
 \begin{code}
-if (temperature = 0) {
+if (temperature = 0) 
+{
     System.out.println("It's freezing!");
 }
 \end{code}
@@ -623,18 +1106,18 @@ if (temperature = 0) {
 
 \exercisesection
 
-\begin{exercise}
-What output is produced by the following code fragment?
+% \begin{exercise}
+% What output is produced by the following code fragment?
 
-\begin{code}
-int alpha = 23;
-int beta = 12;
-if (alpha >= beta*2)
-    System.out.println("bigger!");
-    System.out.println("smaller?");
-System.out.println("who knows");
-\end{code}
-\end{exercise}
+% \begin{code}
+% int alpha = 23;
+% int beta = 12;
+% if (alpha >= beta*2)
+%     System.out.println("bigger!");
+%     System.out.println("smaller?");
+% System.out.println("who knows");
+% \end{code}
+% \end{exercise}
 
 \begin{exercise}
 What output is produced by the following code fragment?
@@ -645,11 +1128,17 @@ double maximum = 2.50;
 int numApples = 22;
 double totalPrice = 47.30;
 if(totalPrice/numApples > maximum)
+{
     System.out.println("Price too high!");
+}
 else if(totalPrice/numApples < minimum)
+{
     System.out.println("Price too low!");
+}
 else
+{
     System.out.println("Looks good!");
+}
 \end{code}
 \end{exercise}
 
@@ -682,6 +1171,442 @@ Convert the following decision tree into Java code.
 \end{center}
 \end{exercise}
 
+
+
+
+
+
+
+
+
+% \section{OLD!!!!}
+
+% \begin{definition}
+% An \ic{if} statement allows us to write programs that decide whether to execute a particular statement depending on a condition.
+% \end{definition}
+
+% Let's start with an example:
+
+% \begin{code}
+% if (count > 20) {
+%     System.out.println("Count exceeded");
+% }
+% \end{code}
+
+% The condition in this example is \ic{count > 20}. It is a boolean expression that is either true or false. That is, \ic{count} is either greater than \ic{20} or not. If it is, ``Count exceeded" is printed. Otherwise, the \ic{println} statement is skipped.
+
+% Notice the structure of an \ic{if} statement -- the condition is wrapped with parentheses. Then curly braces wrap the statement to execute if the condition is true.
+
+% \begin{example}
+% What does the following piece of code print if \ic{x} is 101? What about if \ic{x} is 200? What about if \ic{x} is 8?
+
+% \begin{code}
+% if (x > 100) {
+%     System.out.println("Big number!");
+% } 
+% System.out.println("Hi there");
+% if (x % 2 == 0) { // checks if a number is even
+%     System.out.println("Even number!");
+% }
+% \end{code}
+
+% \safemarginnote{Recall that the modulo operator (\ic{a \% b}) computes the remainder of \ic{a} when divided by \ic{b}. By checking if the remainder of some number when divided by 2 is 0, we are checking if that number is even.}
+
+% \emph{Answer}: If \ic{x} is 101, the first boolean expression will evaluate to true, so the program will print ``Big number!" Then the program will print ``Hi there" regardless of any condition. Finally, since 101 is not even, the program will not print ``Even number!"
+
+% Using the same reasoning to trace the execution with \ic{x} as 200, the following statements will be printed: ``Big number! Hi there! Even number!"
+
+% When \ic{x} is 8, the output is ``Hi there! Even number!"
+% \end{example}
+
+% \begin{example}
+% How would you fill in the boolean expression below to take the absolute value of an integer \ic{x}? (Hint: to take an absolute value of a negative number, you must negate it).
+
+% \begin{code}
+% if (/* Insert boolean expression here */) {
+%     x = -x;
+% } 
+% \end{code}
+
+% \emph{Answer}: Insert the boolean expression x $<$ 0.
+% \end{example}
+
+% \section{The \ic{else} statement}
+% Sometimes we want to do one thing if a condition is true and another thing if that condition is false. We can add an \ic{else} clause to an \ic{if} statement to handle this kind of situation. Below is an example of a simple \ic{if-else} statement:
+
+% \begin{code}
+% if (price > 20) {
+%     System.out.println("Too expensive");
+% } else {
+%     System.out.println("Affordable");
+% }
+% \end{code}
+
+% \noindent This example prints either ``Too expensive" or ``Affordable", depending on whether \ic{price} is greater than 20. Only one or the other is ever executed, never both.
+
+% Note that it is not possible to have an \ic{else} statement without having a corresponding \ic{if} statement. Any \ic{else} statement must be attached to a preceding \ic{if} statement. It is also not possible to have two \ic{else} statements for the same \ic{if} statement.
+
+% \begin{example}
+% What does the following piece of code do?
+
+% \begin{code}
+% if (balance <= 0) {
+%     System.out.println("Funds not available");
+% } else {
+%     System.out.println("Funds available");
+% }
+% \end{code}
+
+% \emph{Answer}: It prints ``Funds not available" if balance is 0 or lower. Otherwise, it prints ``Funds available".
+% \end{example}
+
+% \begin{example}
+% What does the following piece of code do? What is an example of where you could use this code?
+
+% \begin{code}
+% if (rating >= 4) {
+%     System.out.println("Would recommend");
+% } else {
+%     System.out.println("Would not recommend")
+% }
+% \end{code}
+
+% \emph{Answer}: It prints ``Would recommend" if rating is greather than or equal to 4. Otherwise, it prints ``Would not recommend".
+
+% You might use this code when recommending books or movies to a user --- the above code would only recommend books/movies with four stars or higher.
+% \end{example}
+
+% \begin{example}
+% Does the following code compile?
+
+% \begin{code}
+% else {
+%     System.out.println("Hello");
+% }
+% \end{code}
+
+% \emph{Answer}: No, since an \ic{else} statement must have a corresponding \ic{if} statement.
+% \end{example}
+
+% \begin{example}
+% Does the following code compile?
+
+% \begin{code}
+% if (duration > 60) {
+%     System.out.println("Sorry, that's too long");
+% } else {
+%     System.out.println("I can fit that in my schedule");
+% } else {
+%     System.out.println("Let me know when you are free")
+% }
+% \end{code}
+
+% \emph{Answer}: No, since an \ic{if} statement may only have at most one corresponding \ic{else} statement.
+% \end{example}
+
+% One way to keep track of how \ic{if} and \ic{else} statements will execute is to think of them in terms of decision trees. All the code we have seen so far can be represented by a linear flow through the lines of the program. For example, think about how the computer steps through the lines in this program:
+
+% \begin{lrbox}{\codebox}
+% \begin{minipage}{3.3in}
+%  \begin{code}
+% System.out.println("Program starting!");
+% int x = 7;
+% System.out.printf("x + 3 = %d\n",x + 3);
+% System.out.println("Program finished!");
+%   \end{code}
+% \end{minipage}
+% \end{lrbox}
+% \begin{center}
+% \begin{tabularx}{\textwidth}{c | X}
+%  \usebox\codebox &
+%  \noindent\parbox[c]{\hsize}{
+% \begin{tikzpicture}
+% \node at (0,4) (a) {Print ``Program starting!''};
+% \node at (0,3) (b) {Let \ic{x} be 7};
+% \node at (0,2) (c) {Print ``x + 3 = 10''};
+% \node at (0,1) (d) {Print ``Program finished!''};
+% \draw[-{Latex}, thick] (a) -- (b);
+% \draw[-{Latex}, thick] (b) -- (c);
+% \draw[-{Latex}, thick] (c) -- (d);
+% \end{tikzpicture}
+% }
+% \end{tabularx}
+% \end{center}
+
+% The \ic{if} and \ic{else} statements allow us to define other ways for the computer to move through the program. For example, take a look at the following program and a decision tree representing how the computer sees it.
+
+% \begin{lrbox}{\codebox}
+% \begin{minipage}{2.5in}
+%  \begin{code}
+% if(x < y) {
+%     System.out.println(x);
+% }
+% else {
+%     System.out.println(y);
+% }
+%   \end{code}
+% \end{minipage}
+% \end{lrbox}
+% \begin{center}
+% \begin{tabularx}{\textwidth}{c | X}
+%  \usebox\codebox &
+%  \noindent\parbox[c]{\hsize}{
+% \begin{forest}
+% [\ic{x < y} 
+%     [Print \ic{x}]
+%     [Print \ic{y}]
+% ]
+% \end{forest}
+% }
+% \end{tabularx}
+% \end{center}
+
+% The program can follow different paths depending on the evaluation of boolean expressions. 
+
+% \section{Nested conditionals}
+% It is possible to combine \ic{if} and \ic{else} statements in more interesting ways, by nesting them. Consider the following example:
+
+% \begin{code}
+% if (x < y) {
+%     System.out.println("x < y");
+% } else {
+%     if (x > y) {
+%         System.out.println("x > y");
+%     } else {
+%         System.out.println("x == y");
+%     }
+% }
+% \end{code}
+
+% We can draw a decision tree to understand how this program operates.
+
+% \begin{center}
+% \begin{forest}
+% [\ic{x < y}
+%     [Print ``x < y'']
+%     [\ic{x > y}
+%         [Print ``x > y'']
+%         [Print ``x {==} y'']
+%     ]
+% ]
+% \end{forest}
+% \end{center}
+
+% This example correctly prints out the relationship between two integer variables \ic{x} and \ic{y} using nested conditionals. No matter what the values of \ic{x} and \ic{y} are, only a single statement will be printed. 
+
+% \begin{example}
+% Fill in each blank below with \ic{if} or \ic{else} to describe a person's height.
+
+% \begin{code}
+% /*__________*/ (height < 60) {
+%     System.out.println("Relatively short")
+% } /*__________*/ {
+%     /*__________*/ (height > 72) {
+%         System.out.println("Relatively tall");
+%     } /*__________*/ {
+%         System.out.println("Pretty average");
+%     }
+% }
+% \end{code}
+
+% \emph{Answer}: The four blanks should contain \ic{if}, \ic{else}, \ic{if}, and \ic{else}, in that order.
+% \end{example}
+
+% \begin{example}
+% Given integer variables \ic{a} and \ic{b} and the following piece of code, what value gets stored in variable \ic{c}?
+
+% \begin{code}
+% int c;
+% if (a > b) {
+%     c = a;
+% } else {
+%     if (b > a) {
+%         c = b;
+%     } else {
+%         c = 0;
+%     }
+% }
+% \end{code}
+
+% \emph{Answer}: The larger of the two variables, \ic{a} and \ic{b}, gets stored in \ic{c}. If \ic{a} and \ic{b} are equal, 0 gets stored in \ic{c}.
+% \end{example}
+
+% \begin{example}
+% Imagine that the following program represents the person's reaction to different types of food. Given a pizza (\ic{green} = false, \ic{bitter} = false, \ic{warm} = true, \ic{cheesy} = true), how will this person respond? What about when given a kiwi (\ic{green} = true, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)? What about a strawberry (\ic{green} = false, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)?\safemarginnote{Recall Java's boolean operators: \ic{A || B} is true if at least one of \ic{A}, \ic{B} is true. \ic{A \&\& B} is true if both \ic{A} and \ic{B} are true. \ic{!A} is true if \ic{A} is false.}
+
+% \begin{code}
+% if (green || bitter) {
+%     System.out.println("No thank you");
+% } else {
+%     if (warm && cheesy) {
+%         System.out.println("Yum, yes please!");
+%     } else {
+%         System.out.println("Thank you, I'll take some");
+%     }
+% }
+% \end{code}
+% \emph{Answer}: The person reponds ``Yum, yes please!" to pizza, ``No thank you" to kiwi, and ``Thank you, I'll take some" to strawberry.
+% \end{example}
+
+% \section{The \ic{else if} statement}
+% Nested conditionals are useful in many applications, but they can start feeling clunky as the nesting becomes deep. For example, consider the following piece of code:
+
+% \begin{code}
+% if (grade > 90) {
+%     System.out.println("You earned an A");
+% } else {
+%     if (grade > 80) {
+%         System.out.println("You earned a B");
+%     } else {
+%         if (grade > 70) {
+%             System.out.println("You earned a C");
+%         } else {
+%             if (grade > 60) {
+%                 System.out.println("You earned a D");
+%             } else {
+%                 System.out.println("You earned an F");
+%             }
+%         }
+%     }
+% }
+% \end{code}
+
+% \noindent To avoid having such deeply nested conditionals, we introduce the \ic{else if} clause. Using \ic{else if} statements, we can rewrite the above program as:
+
+% \begin{code}
+% if (grade > 90) {
+%     System.out.println("You earned an A");
+% } else if (grade > 80) {
+%     System.out.println("You earned a B");
+% } else if (grade > 70) {
+%     System.out.println("You earned a C");
+% } else if (grade > 60) {
+%     System.out.println("You earned a D");
+% } else {
+%     System.out.println("You earned an F");
+% }
+% \end{code}
+
+% You can imagine an \ic{else if} statement as shorthand for an \ic{if} nested inside an \ic{else}. For example, the following snippets of code behave identically (for any boolean expressions \ic{A} and \ic{B}):
+
+% \begin{code}
+% // Version 1 (using nested conditionals)
+% if (A) {
+%     System.out.println("A");
+% } else {
+%     if (B) {
+%         System.out.println("B");
+%     } else {
+%         System.out.println("C");
+%     }
+% }
+
+% // Version 2 (equivalent, using else if)
+% if (A) {
+%     System.out.println("A");
+% } else if (B) {
+%     System.out.println("B");
+% } else {
+%     System.out.println("C");
+% }
+% \end{code}
+
+% It is very common to see a conditional block of code that consists of 1 \ic{if} statement, 0 or more \ic{else if} statements, and 1 \ic{else} statements. In these cases, recall that only one of these statements will ever execute. That will be the first statement that is true.
+
+% \begin{example}
+% Suppose \ic{A = false} and \ic{B = true}. What does the following code print out?
+
+% \begin{code}
+% if (A) {
+%     System.out.println("apple");
+% } else if (B) {
+%     System.out.println("banana");
+% } else {
+%     System.out.println("carrot");
+% } 
+% System.out.println("dragonfruit");
+% \end{code}
+
+% \emph{Answer}: The code will print ``apple" and then ``dragonfruit". Notice that ``banana" does not get printed even though \ic{B} is true since the entire \ic{if}, \ic{else if}, \ic{else} chain will only ever print one of ``apple", ``banana", and ``carrot". 
+% \end{example}
+
+% \begin{example}
+% Suppose \ic{X = true}, \ic{Y = false}, and \ic{Z = false}. What does the following code print out?
+
+% \begin{code}
+% if (X && Y) {
+%     System.out.println("xylophone");
+% } else if (!Z) {
+%     System.out.println("zoo");
+% }
+% \end{code}
+
+% \emph{Answer}: This code will print ``zoo". Notice that the boolean expressions used with \ic{if} statements can be complex and contain boolean operators such as \ic{\&\&} and \ic{||} and \ic{!}, as long as the expression evaluates to a true or false.
+% \end{example}
+
+\section{Optional: Curly braces}
+So far, we have been using curly braces to enclose each of our \ic{if}, \ic{else if}, and \ic{else} statements. These curly braces can be omitted if there is only a single statement. For example, in the snippet of code below, the first set of curly braces can be omitted, while the second cannot.
+
+\begin{code}
+if (guess == answer) 
+{
+    System.out.println("You guessed correctly!");
+} 
+else 
+{
+    System.out.println("Sorry, you guessed incorrectly.");
+    System.out.println("The answer was " + answer);
+} 
+\end{code}
+
+This code is equivalent to the following:
+
+\begin{code}
+if (guess == answer)
+    System.out.println("You guessed correctly!");
+else 
+{
+    System.out.println("Sorry, you guessed incorrectly.");
+    System.out.println("The answer was " + answer);
+} 
+\end{code}
+
+\noindent If all the curly braces were left out (as in the code below), the program would first either print ``You guessed correctly!" or ``Sorry, you guessed incorrectly.", but then also print ``The answer was ..." in all cases, regardless of the condition.
+
+\begin{code}
+if (guess == answer)
+    System.out.println("You guessed correctly!");
+else
+    System.out.println("Sorry, you guessed incorrectly.");
+    System.out.println("The answer was " + answer); 
+    // ^^^ Careful! This last line is not part of the else clause!
+\end{code}
+
+Here it is important to note that whitespace and indentation are ignored by Java. Indentation has no effect on the behavior of a program. In this case, although the indentation makes it harder to see, after omitting all the curly braces the code is equivalent to 
+
+\begin{code}
+if (guess == answer){
+    System.out.println("You guessed correctly!");
+} else {
+    System.out.println("Sorry, you guessed incorrectly.");
+}
+System.out.println("The answer was " + answer); 
+\end{code}
+
+Proper indentation is extremely important for human readability. When used incorrectly, however, misleading indentation can result in unexpected behavior.
+
+\begin{example}
+Does the following code compile and print the larger of two integers \ic{a} and \ic{b} correctly?
+
+\begin{code}
+if (a > b)      System.out.println("a");
+else {
+System.out.println("b");
+}
+\end{code}
+
+\emph{Answer}: Yes! Even though the whitespacing and indentation look funny, this piece of code compiles correctly.
+\end{example}
 \referencessection
 
 Computer Science: An Interdisciplinary Approach, Robert Sedgewick and Kevin Wayne.
