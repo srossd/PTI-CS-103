@@ -1,18 +1,14 @@
+language: r
 sudo: required
-language: generic
-services: docker
 
-install:
- - source ./texlive_install.sh
-
-cache:
-  directories:
-    - /tmp/texlive
-    - $HOME/.texlive
+apt_packages:
+  - texlive-latex-extra
+  - texlive-pictures
 
 script:
 - cd lectures
-- travis_wait 5 pdflatex --interaction=nonstopmode main.tex
+- pdflatex -interaction=nonstopmode main.tex
+- pdflatex -interaction=nonstopmode main.tex
 
 deploy:
   provider: releases
