@@ -4,8 +4,10 @@ services: docker
 
 script:
   # We use the docker image from https://hub.docker.com/r/rekka/tectonic/
-  - docker pull rekka/tectonic
-  - docker run --mount src=$TRAVIS_BUILD_DIR/lectures,target=/usr/src/tex,type=bind rekka/tectonic "ls; pwd; tectonic main.tex"
+  - docker pull dxjoke/tectonic
+  - script:
+ - docker run --mount src=$TRAVIS_BUILD_DIR/lectures,target=/usr/src/tex,type=bind dxjoke/tectonic-docker
+  /bin/sh -c "tectonic main.tex"
 
 deploy:
   provider: releases
