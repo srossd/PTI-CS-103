@@ -39,7 +39,9 @@ tlmgr install   \
   xcolor        \
   appendix      \
   caption       \
-  subcaption
+  subcaption    \
+  tikz          \
+  endnotes
   
   
 # Keep no backups (not required, simply makes cache bigger)
