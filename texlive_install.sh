@@ -47,7 +47,10 @@ tlmgr install   \
   environ       \
   trimspaces    \
   inlinedef     \
-  lipsum
+  lipsum        \
+  listings      \
+  mathtools     \
+  mdframed
    
   
 # Keep no backups (not required, simply makes cache bigger)
