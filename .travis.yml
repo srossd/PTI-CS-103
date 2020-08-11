@@ -6,7 +6,7 @@ apt_packages:
 
 script:
 - cd lectures
-- tlmgr install forest pgfopts inlinedef
+- tlmgr install forest pgfopts inlinedef endnotes mdframed zref
 - pdflatex -interaction=nonstopmode main.tex
 - pdflatex -interaction=nonstopmode main.tex
 
