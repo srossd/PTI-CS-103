@@ -1,0 +1,64 @@
+\ProvidesPackage{roboturt}
+
+\RequirePackage{tikz}
+\usepgfmodule{oo}
+
+\pgfooclass{maze}{
+    \attribute turtlex;
+    \attribute turtley;
+    \attribute turtleangle;
+    \method maze() {
+        \pgfooset{turtlex}{0}
+        \pgfooset{turtley}{-1}
+        \pgfooset{turtleangle}{0}
+    }
+    \method drawMaze() { % Causes the maze to be shown at coordinate (#1,#2)
+        \draw[gray!10, thick] (-1.1, -1.1) grid (11.1, 11.1);
+        \draw[blue,very thick] 
+            (0,0) -- (0,10) -- (9, 10)
+            (0,4) -- (4,4)
+            (0,6) -- (4,6)
+            (1,6) -- (1,7)
+            (1,3) -- (4,3)
+            (2,2) -- (1,2) -- (1,0) -- (10, 0) -- (10, 10)
+            (10, 1) -- (9, 1)
+            (9, 3) -- (9, 6) -- (8, 6) -- (8, 1) -- (2, 1)
+            (8, 2) -- (9, 2)
+            (4, 1) -- (4, 2)
+            (3, 2) -- (7, 2) -- (7, 6)
+            (9, 9) -- (9, 7)
+            (9, 8) -- (7, 8)
+            (8, 10) -- (8, 9)
+            (7, 10) -- (7, 9)
+            (6, 10) -- (6, 4)
+            (6, 9) -- (1, 9) -- (1, 8) -- (5, 8) -- (5, 4)
+            (2, 8) -- (2, 7)
+            (3, 8) -- (3, 7)
+            (5, 5) -- (2, 5)
+            (5, 3) -- (6, 3)
+            (6, 7) -- (8, 7)
+            (9, 5) -- (10, 5);
+        \node[flag,inner sep=0] at (9.5, 10.5) {\includegraphics[width=1cm]{lectures/images/flags.jpg}};
+    }
+    \method drawTurt() {
+        \node[turt,inner sep=0,shift={(0.5cm,0.5cm)}] at (\pgfoovalueof{turtlex}, \pgfoovalueof{turtley}) {\includegraphics[width=1cm,angle=\pgfoovalueof{turtleangle}]{lectures/images/turtle.png}};
+    }
+    \method MF(#1) {
+        \foreach \i in {1,...,#1} {
+            \pgfmathsetmacro{\newturtlex}{\pgfoovalueof{turtlex}-sin(\pgfoovalueof{turtleangle})}
+            \pgfmathsetmacro{\newturtley}{\pgfoovalueof{turtley}+cos(\pgfoovalueof{turtleangle})}
+            \draw[green!70!black,line width=.3mm,shift={(0.5cm,0.5cm)},-Latex] (\pgfoovalueof{turtlex},\pgfoovalueof{turtley}) -- (\newturtlex, \newturtley);
+            \pgfoolet{turtlex}{\newturtlex};
+            \pgfoolet{turtley}{\newturtley};
+        };
+        \pgfoothis.drawTurt();
+    }
+    \method TL(#1) {
+        \foreach \i in {1,...,#1} {
+            \pgfmathsetmacro{\newturtleangle}{\pgfoovalueof{turtleangle}+90}
+            \draw[green!70!black,line width=.3mm,shift={(0.5cm,0.5cm)},-Latex] ({\pgfoovalueof{turtlex}-sin(\pgfoovalueof{turtleangle})},{\pgfoovalueof{turtley}+cos(\pgfoovalueof{turtleangle})}) -- ++({\newturtleangle+90}:1) -- ++({\newturtleangle+180}:1);
+            \pgfoolet{turtleangle}{\newturtleangle};
+        };
+        \pgfoothis.drawTurt();
+    }
+}

@@ -3,16 +3,19 @@
 \usepackage{appendix}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[font=small,labelfont=bf,hypcap=false]{caption}
 \usepackage{color}
 \usepackage{fancyhdr}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{roboturt}
 \usepackage{forest}
 \usetikzlibrary{arrows.meta}
 \usepackage{subcaption}
+\captionsetup{compatibility=false}
 \usepackage{tabularx}
+\usepackage{endnotes}
 
 % Allow line breaks in URLs.
 \PassOptionsToPackage{hyphens}{url}
@@ -134,11 +137,12 @@
 }
 
 \mdfdefinestyle{exerciseframe}{%
-  linecolor=white,
-  innertopmargin=0,
-  innerbottommargin=0,
-  innerrightmargin=0,
-  innerleftmargin=0
+  bottomline=false,
+  linewidth=2,
+  linecolor=blue,
+  rightline=false,
+  topline=false,
+  innerrightmargin=0
 }
 
 \newenvironment{exercise}{%
@@ -370,7 +374,7 @@ frametitlebackgroundcolor=blue!20}
                 \linewidth\hsize
                 \kern-\parskip
                 \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
-                \ignorespaces#2\endgraf
+                \ignorespaces\small{#2}\endgraf
                 \vss}%
               \vss}%
           }%
