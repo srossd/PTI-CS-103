@@ -45,7 +45,8 @@ tlmgr install   \
   endnotes      \
   etoolbox      \
   environ       \
-  trimspaces
+  trimspaces    \
+  inlinedef
   
   
 # Keep no backups (not required, simply makes cache bigger)
