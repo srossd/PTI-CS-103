@@ -41,6 +41,7 @@ tlmgr install   \
   caption       \
   subcaption    \
   pgf           \
+  pgfopts       \
   endnotes
   
   
