@@ -36,8 +36,7 @@ tlmgr install   \
   textcase      \
   setspace      \
   soul          \
-  xcolor        \
-  style
+  xcolor
   
   
 # Keep no backups (not required, simply makes cache bigger)
