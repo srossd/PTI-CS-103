@@ -51,7 +51,8 @@ tlmgr install   \
   listings      \
   mathtools     \
   mdframed      \
-  zref
+  zref          \
+  marginnote
    
   
 # Keep no backups (not required, simply makes cache bigger)
