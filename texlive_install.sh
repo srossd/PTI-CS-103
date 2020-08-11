@@ -50,7 +50,8 @@ tlmgr install   \
   lipsum        \
   listings      \
   mathtools     \
-  mdframed
+  mdframed      \
+  zref
    
   
 # Keep no backups (not required, simply makes cache bigger)
