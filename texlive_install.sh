@@ -42,7 +42,8 @@ tlmgr install   \
   subcaption    \
   pgf           \
   pgfopts       \
-  endnotes
+  endnotes      \
+  etoolbox
   
   
 # Keep no backups (not required, simply makes cache bigger)
