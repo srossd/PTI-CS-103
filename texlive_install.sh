@@ -34,7 +34,8 @@ tlmgr install   \
   hardwrap      \
   catchfile     \
   titlesec      \
-  ragged2e
+  ragged2e      \
+  everysel
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
