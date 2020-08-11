@@ -46,8 +46,9 @@ tlmgr install   \
   etoolbox      \
   environ       \
   trimspaces    \
-  inlinedef
-  
+  inlinedef     \
+  lipsum
+   
   
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
