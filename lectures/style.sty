@@ -330,43 +330,28 @@ frametitlebackgroundcolor=blue!20}
           \else
             \@tempswatrue
         \fi\fi
+        %\if@tempswa
           \rlap{%
-            \ifx\@mn@currxpos\relax
-              \kern\marginnoterightadjust
-              \if@mn@verbose
-                \PackageInfo{marginnote}{%
-                  xpos not known,\MessageBreak
-                  using \string\marginnoterightadjust}%
+            \if@mn@verbose
+              \PackageInfo{marginnote}{xpos seems to be \@mn@currxpos}%
+            \fi
+            \begingroup
+              \ifx\@mn@currxpos\relax\else\ifx\@mn@currxpos\@empty\else
+                  \kern-\dimexpr\@mn@currxpos\relax
+              \fi\fi
+              \ifx\@mn@currpage\relax
+                \let\@mn@currpage\@ne
               \fi
-            \else\ifx\@mn@currxpos\@empty
-                \kern\marginnoterightadjust
-                \if@mn@verbose
-                  \PackageInfo{marginnote}{%
-                    xpos not known,\MessageBreak
-                    using \string\marginnoterightadjust}%
+              \if@twoside\ifodd\@mn@currpage\relax
+                  \kern\oddsidemargin
+                \else
+                  \kern\evensidemargin
                 \fi
               \else
-                \if@mn@verbose
-                  \PackageInfo{marginnote}{%
-                    xpos seems to be \@mn@currxpos,\MessageBreak
-                    \string\marginnoterightadjust
-                    \space ignored}%
-                \fi
-                \begingroup
-                  \setlength{\@tempdima}{\@mn@currxpos}%
-                  \kern-\@tempdima
-                  \if@twoside\ifodd\@mn@currpage\relax
-                      \kern\oddsidemargin
-                    \else
-                      \kern\evensidemargin
-                    \fi
-                  \else
-                    \kern\oddsidemargin
-                  \fi
-                  \kern 1in
-                \endgroup
+                \kern\oddsidemargin
               \fi
-            \fi
+              \kern 1in
+            \endgroup
             \kern\marginnotetextwidth\kern\marginparsep
             \vbox to\z@{\kern\marginnotevadjust\kern #3
               \vbox to\z@{%
@@ -374,7 +359,7 @@ frametitlebackgroundcolor=blue!20}
                 \linewidth\hsize
                 \kern-\parskip
                 \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
-                \ignorespaces\small{#2}\endgraf
+                \ignorespaces#2\endgraf
                 \vss}%
               \vss}%
           }%
@@ -383,6 +368,7 @@ frametitlebackgroundcolor=blue!20}
   \endgroup
 }
 \makeatother
+
 \let\safemarginnote\marginnote
 \let\marginnote\tempmarginnote
 
