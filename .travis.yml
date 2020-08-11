@@ -1,16 +1,14 @@
-language: r
-
 sudo: required
+language: generic
+services: docker
 
 script:
-# in the next step we use pdflatex to convert .tex to .pdf
-# of course we could use pandoc for this also, but pdflatex generates nicer PDFs
-  - cd lectures; pdflatex -interaction=nonstopmode main.tex; pdflatex -interaction=nonstopmode main.tex
-
-apt_packages:
-# we download pdf2djvu to also generate a djvu file of our LaTeX source
-  - texlive-latex-extra
-  - texlive-pictures
+  # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
+  - docker pull dxjoke/tectonic-docker
+  # Compiling only main.tex:
+  - docker run --mount src=$TRAVIS_BUILD_DIR/src,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic main.tex"
+  # Compiling multiple files as well as using biber:
+#  - docker run --mount src=$TRAVIS_BUILD_DIR/src,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 0 biber-mwe.tex; biber biber-mwe; tectonic biber-mwe.tex; tectonic main.tex"
 
 deploy:
   provider: releases
