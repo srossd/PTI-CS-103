@@ -6,7 +6,7 @@ apt_packages:
 
 script:
 - cd lectures
-- tlmgr install forest pgfopts
+- tlmgr install forest pgfopts inlinedef
 - pdflatex -interaction=nonstopmode main.tex
 - pdflatex -interaction=nonstopmode main.tex
 
