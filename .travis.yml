@@ -12,7 +12,7 @@ cache:
 
 script:
 - mkdir _build
-- travis_wait 5 pdflatex ./lectures/main.tex
+- travis_wait 5 pdflatex --interaction=nonstopmode ./lectures/main.tex
 
 deploy:
   provider: releases
