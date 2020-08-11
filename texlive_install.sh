@@ -33,7 +33,8 @@ tlmgr install   \
   xkeyval       \
   hardwrap      \
   catchfile     \
-  titlesec
+  titlesec      \
+  ragged2e
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
