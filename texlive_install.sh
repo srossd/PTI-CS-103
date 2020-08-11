@@ -37,7 +37,9 @@ tlmgr install   \
   setspace      \
   soul          \
   xcolor        \
-  appendix
+  appendix      \
+  caption       \
+  subcaption
   
   
 # Keep no backups (not required, simply makes cache bigger)
