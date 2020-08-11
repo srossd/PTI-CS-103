@@ -204,9 +204,9 @@ else
 What will happen if you run the above code? (You don't have to use your computer to answer this.)
 \end{exercise}
 
-\noindent \textbf{Question: } What happens if the price is \emph{exactly} \$20? (i.e. the first line is \ic{int price = 20;})
+\noindent \textbf{Question: } What happens if the price is \emph{exactly} \$20? i.e. the first line is \ic{int price = 20;}
 
-In this case, the \textcolor{mygreen}{condition} is \textbf{false}, as 20 is not less than 20. This means we execute the \textcolor{Rhodamine}{false-action}, and will print that we will not buy the toy.
+\noindent \textit{Answer: } In this case, the \textcolor{mygreen}{condition} is \textbf{false}, as 20 is not less than 20. This means we execute the \textcolor{Rhodamine}{false-action}, and will print that we will not buy the toy.
 This is known as an \emph{edge case}, since the price being equal to \$20 is right on the ``edge" of whether the \textcolor{mygreen}{condition} is true or false. If the price was even a little bit smaller than \$20, then the \textcolor{mygreen}{condition} would be true.
 
 Let's look at another example of turning a flowchart into code. We'll go through it step-by-step.
@@ -238,7 +238,7 @@ else
 }
 \end{code}
 
-To define the \textcolor{mygreen}{condition}, we first need to figure out what our variables are. In this problem, we need a variable for the user's ATM balance. Let's call that variable \ic{balance}. (While it may be simple here, note that in coding real software, figuring out your variables is a very tricky process!)
+To write the \textcolor{mygreen}{condition}, we first need to figure out what our variables are. In this problem, we need a variable for the user's ATM balance. Let's call that variable \ic{balance}. (While it may be simple here, note that in coding real software, figuring out your variables is a very tricky process!)
 
 For this flowchart, our \textcolor{mygreen}{condition} is ``\ic{balance} > 0". This is because, if the \textcolor{mygreen}{condition} is true, this means that the user's ATM balance is greater than \$0, so we would follow the ``yes" arrow in the flowchart. On the other hand, if the \textcolor{mygreen}{condition} is false, then the user's ATM balance is not greater than \$0, so we would follow the ``no" arrow. So our code outline looks like this:
 
@@ -315,7 +315,7 @@ if (rating >= 4) {
 \end{exercise}
 
 \begin{exercise}
-In the above examples, we made the true-action and false-actions very simple, i.e. you print something. In actual software, typically you will execute more complicated code than printing. Consider the following.
+In the above examples, we made the true-action and false-actions very simple, i.e. you print something. In actual software, typically you will execute more complicated code than printing. For example, consider the following code.
 
 \begin{code}
 boolean offerLoan;
@@ -347,7 +347,7 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{center}
 \end{exercise}
 
-\subsection{Different conditions}
+\subsection{Different conditions in an \ic{if}-\ic{else} statement}
 
 % Consider the generic Java \ic{if}-\ic{else} code.
 
@@ -551,7 +551,7 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{forest}
 \end{center}
 
-The Java code for this flowchart (see previous exercise) is
+The Java code for this flowchart (see exercise from previous section) is
 
 \begin{code}
 if (toy == "Age of Corpses") 
@@ -898,9 +898,152 @@ if (grade >= 90) {
 Draw out the flowchart for this code (you should only need ``yes" or ``no" questions). Compare to the flowchart at the beginning of the section, with multiple answers for a single question. Which flowchart is simpler? Which code is easier to read?
 \end{exercise}
 
-In general, it is very common to have a conditional block of code with 1 \ic{if} statement, 1 or more \ic{else if} statements, and 1 \ic{else} statement.
+\section{Control Flow}
 
-Suppose you have code where multiple of the \ic{if} and \ic{else if} statements are true. In this case, only the \emph{first} true statement will count. For example, consider the following generic code.
+\begin{definition}
+A \emph{conditional block} is a block of code starting with an \ic{if} statement, containing 1 or more \ic{else if} statements, and 0 or 1 \ic{else} statements.
+\end{definition}
+
+An important skill in writing code is to be able to identify conditional blocks in code.
+
+\begin{example}
+How many conditional blocks are in the following code snippet?
+
+\begin{code}
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+else if (x > 5) 
+{
+    System.out.println("banana");
+} 
+else 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+\textit{Answer: } There is one conditional block.
+
+\end{example}
+
+\begin{example}
+How many conditional blocks are in the following code snippet?
+
+\begin{code}
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+if (x > 5) 
+{
+    System.out.println("banana");
+} 
+else 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+\textit{Answer: } There are two conditional blocks. The first conditional block is
+
+\begin{code}
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+\end{code}
+
+and the second conditional block is
+
+\begin{code}
+if (x > 5) 
+{
+    System.out.println("banana");
+} 
+else 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+\end{example}
+
+\begin{example}
+How many conditional blocks are in the following code snippet?
+
+\begin{code}
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+if (x > 5) 
+{
+    System.out.println("banana");
+} 
+if (x > 10) 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+\textit{Answer: } There are three conditional blocks. The first conditional block is
+
+\begin{code}
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+\end{code}
+
+The second conditional block is
+
+\begin{code}
+if (x > 5) 
+{
+    System.out.println("banana");
+} 
+\end{code}
+
+The third conditional block is
+
+\begin{code}
+if (x > 10) 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+\end{example}
+
+One very important fact about conditional blocks is that if more than one \ic{if} or \ic{else if} statements are true, then only the \textbf{first} statement will be executed. We give an example below.
+
+\begin{example}
+What happens when you run the following code?
+
+\begin{code}
+int x = 10;
+
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+else if (x > 5) 
+{
+    System.out.println("banana");
+} 
+else 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+\textit{Answer: } The code will \textbf{only} print ``apple". This is because the code sees that \ic{x > 0} is true, executes the commands in that portion of the code (i.e. \ic{System.out.println("apple");}), and then immediately exits the conditional block. Even though \ic{x > 5} is true, the code has already exited the conditional block, and thus will not print ``banana".
+
+\end{example}
+
+
+In general, say you have a conditional block where multiple of the \ic{if} and \ic{else if} statements are true.
 
 \begin{code}
 if (ß\textcolor{ForestGreen}{Condition 1}ß) 
@@ -917,7 +1060,44 @@ else if (ß\textcolor{Mahogany}{Condition 3}ß)
 }
 \end{code}
 
-Suppose \textcolor{ForestGreen}{Condition 1} and \textcolor{Blue}{Condition 2} are both true. Then only \textcolor{LimeGreen}{Action 1;} will execute. \textcolor{Cerulean}{Action 2;} will \textbf{not} execute, even though \textcolor{Blue}{Condition 2} is true. This is because only one Action will be executed in an \ic{if}/\ic{else if}/\ic{else} block.
+Suppose \textcolor{ForestGreen}{Condition 1} and \textcolor{Blue}{Condition 2} are both true. Then only \textcolor{LimeGreen}{Action 1;} will execute. \textcolor{Cerulean}{Action 2;} will \textbf{not} execute, even though \textcolor{Blue}{Condition 2} is true. This is because only one Action will be executed in a conditional block.
+
+This behavior is known as \emph{control flow}. 
+\begin{definition}
+\emph{Control flow} is the order in which different \ic{if}, \ic{else if}, and \ic{else} statements in a single conditional block are executed.
+\end{definition}
+
+\noindent \textbf{Important Note:} Control flow sometimes cannot be represented in a flowchart. For example, consider the following conditional block.
+
+\begin{code}
+int x = 10;
+if (x > 0) 
+{
+    System.out.println("apple");
+} 
+else if (x > 5) 
+{
+    System.out.println("banana");
+}
+\end{code}
+
+As discussed in a previous example, when run the code will only print ``apple". It will not print ``banana".
+
+However, if we try to write that conditional block in a flowchart, it will look like the following.
+
+\begin{center}
+\begin{forest}
+for tree={l sep+=1.4cm, s sep+= 0.6cm,edge={thick, color=darkgray, -{Triangle[]}}}
+[What will you print?
+    [Print apple, edge label={node[midway,above left]{\ic{x > 0}}}]
+    [Print banana, edge label={node[midway,above right]{\ic{x > 5}}}]
+]
+\end{forest}
+\end{center}
+
+This flowchart doesn't entirely make sense, since it is possible for both \ic{x > 0} and \ic{x > 5} to be true. However, it is possible to make sense of the flowchart if you prioritize the arrows of the flowchart, with the left arrow having highest priority and the right arrow having lowest priority.
+
+Let's look at some more examples of control flow.
 
 \begin{example}
 Consider the following code.
@@ -925,11 +1105,17 @@ Consider the following code.
 \begin{code}
 boolean A = true;
 boolean B = true;
-if (A) {
+
+if (A) 
+{
     System.out.println("apple");
-} else if (B) {
+} 
+else if (B) 
+{
     System.out.println("banana");
-} else {
+} 
+else 
+{
     System.out.println("carrot");
 } 
 System.out.println("dragonfruit");
@@ -937,28 +1123,117 @@ System.out.println("dragonfruit");
 
 What does the following code print out?
 
-\emph{Answer}: The code will print ``apple" and then ``dragonfruit". Notice that ``banana" does not get printed even though \ic{B} is true. This is because once one of the \ic{if} or \ic{else if} conditions is true, no other conditions will be checked.
+\emph{Answer}: First, we note that the code has one conditional block
 
- ``dragonfruit" is always printed because it is outside of the \ic{if}/\ic{else if}/\ic{else} block.
+\begin{code}
+if (A) 
+{
+    System.out.println("apple");
+} 
+else if (B) 
+{
+    System.out.println("banana");
+} 
+else 
+{
+    System.out.println("carrot");
+} 
+\end{code}
+
+followed by a single print statement
+
+\begin{code}
+System.out.println("dragonfruit");
+\end{code}
+
+In the conditional block, the code will only print ``apple". ``banana" is not printed even though \ic{B} is true. This is because \ic{A} is true, and \ic{A} comes first in the conditional block.
+
+Moreover, ``dragonfruit" will always print because it is not in the conditional block.
+
+Thus, putting everything together, the code will print ``apple" on one line, and then ``dragonfruit" on the next line.
+\end{example}
+
+On the other hand, if the code only contains \ic{if} statements, then each \ic{if} statement will be executed individually. This is because each \ic{if} statement is an individual conditional block.
+
+\begin{example}
+Consider the following code.
+
+\begin{code}
+boolean A = true;
+boolean B = true;
+
+if (A) 
+{
+    System.out.println("apple");
+} 
+if (B) 
+{
+    System.out.println("banana");
+} 
+System.out.println("dragonfruit");
+\end{code}
+
+What does the following code print out?
+
+\emph{Answer}: First let's identify the conditional block. The code consists of two conditional blocks. 
+
+The first conditional block is
+
+\begin{code}
+if (A) 
+{
+    System.out.println("apple");
+} 
+\end{code}
+
+and the second conditional block is
+
+\begin{code}
+if (B) 
+{
+    System.out.println("banana");
+} 
+\end{code}
+
+The two conditional blocks are followed by a print statement
+
+\begin{code}
+System.out.println("dragonfruit");
+\end{code}
+
+In the first conditional block, the code will print ``apple". This is because \ic{A} is true.
+
+Likewise, in the second conditional block, the code will print ``banana". This is because \ic{B} is true.
+
+Finally, the code will print ``dragonfruit". This is because the line \ic{System.out.println("dragonfruit");} is not part of a conditional block, and will always execute.
+
+Thus, putting it all together, when run the code will print ``apple" on one line, ``banana" on the next line, and ``dragonfruit" on the following line. 
+
+Note the difference between this exercise and the previous exercise. In the previous exercise we had a single conditional block. Thus, in the previous exercise, even though \ic{B} was true, we did not print ``banana". 
+
+On the other hand, in this exercise, we had two conditional blocks. Thus we checked if both \ic{A} was true, and if \ic{B} was true.
 \end{example}
 
 \begin{exercise}
-Consider the following code.
+What does the following code print out?
 
 \begin{code}
 boolean A = false;
 boolean B = true;
-if (A) {
+if (A) 
+{
     System.out.println("apple");
-} else if (B) {
+} 
+else if (B) 
+{
     System.out.println("banana");
-} else {
+} 
+else 
+{
     System.out.println("carrot");
 } 
 System.out.println("dragonfruit");
 \end{code}
-
-What does the following code print out?
 \end{exercise}
 
 \begin{exercise}
@@ -969,14 +1244,43 @@ boolean X = true;
 boolean Y = false;
 boolean Z = false;
 boolean W = false;
-if (X && Y) {
+if (X && Y) 
+{
     System.out.println("xylophone");
-} else if (!Z) {
+} 
+else if (!Z) 
+{
     System.out.println("zoo");
-} else if (W) {
+} 
+else if (W) 
+{
     System.out.println("monkey");
 }
 \end{code}
+
+What about the following code, where we change all of the \ic{else if} statements to \ic{if} statements?
+
+\begin{code}
+boolean X = true;
+boolean Y = false;
+boolean Z = false;
+boolean W = false;
+if (X && Y) 
+{
+    System.out.println("xylophone");
+} 
+
+if (!Z) 
+{
+    System.out.println("zoo");
+} 
+
+if (W) 
+{
+    System.out.println("monkey");
+}
+\end{code}
+
 \end{exercise}
 
 \begin{exercise}
@@ -985,13 +1289,30 @@ What does the following piece of code print if \ic{x} is 101? What about if \ic{
 \safemarginnote{Recall that the modulo operator (\ic{a \% b}) computes the remainder of \ic{a} when divided by \ic{b}. By checking if the remainder of some number when divided by 2 is 0, we are checking if that number is even.}
 
 \begin{code}
-if (x > 100) {
+if (x > 100) 
+{
     System.out.println("Big number!");
 } 
 System.out.println("Hi there");
-if (x % 2 == 0) { // checks if a number is even
+if (x % 2 == 0)  // checks if a number is even
+{
     System.out.println("Even number!");
 }
+
+\end{code}
+
+Repeat the same exercise for the following code where we change the second \ic{if} statement to an \ic{else if}.
+
+\begin{code}
+if (x > 100) 
+{
+    System.out.println("Big number!");
+} 
+else if (x % 2 == 0)  // checks if a number is even
+{
+    System.out.println("Even number!");
+}
+
 \end{code}
 
 % \emph{Answer}: If \ic{x} is 101, the first boolean expression will evaluate to true, so the program will print ``Big number!" Then the program will print ``Hi there" regardless of any condition. Finally, since 101 is not even, the program will not print ``Even number!"
@@ -1013,14 +1334,18 @@ When writing conditional structures, beware of the following common  mistakes:
 In Java, the parentheses surrounding the boolean expression in conditional structures are required. For example, the following code will not compile.
 \begin{code}
 if count > 10
+{
     System.out.println("So many!");
+}
 \end{code}
 
 \subsection{Accidental semicolons}
 Having a spurious semicolon immediately after the parentheses around the boolean expression in an \ic{if} statement is one of the trickiest mistakes to detect. The following code compiles, but it behaves unexpectedly. 
 \begin{code}
 if (count > 10);
+{
     System.out.println("So many!");
+}
 \end{code}
 
 \noindent The code above is misleading because it is identical to the following:
@@ -1102,7 +1427,51 @@ if (temperature = 0)
 }
 \end{code}
 
-\noindent The assignment operator cannot be used here because conditional structures require a boolean expression (i.e. something that evaluates to either true or false). The double equals operator, \ic{==}, should be used when comparing two quantities.
+\noindent The assignment operator cannot be used here because conditional structures require a boolean expression (i.e. something that evaluates to either true or false). The double equals operator, \ic{==}, should be used when comparing two quantities, i.e.
+
+\begin{code}
+if (temperature == 0) 
+{
+    System.out.println("It's freezing!");
+}
+\end{code}
+
+\subsection{Brackets}
+
+Surprisingly, your placement of brackets is \textbf{not} a code mistake. In this book, we prefer the following convention for brackets
+
+\begin{code}
+if (A) 
+{
+    System.out.println("Action A");
+}
+else if (B)
+{
+    System.out.println("Action B");
+}
+else
+{
+    System.out.println("Action C");
+}
+\end{code}
+
+This makes it clear which block of code belongs to which conditional
+
+However, you may see other conventions. For example, another common convention is the following.
+
+\begin{code}
+if (A) {
+    System.out.println("Action A");
+} else if (B) {
+    System.out.println("Action B");
+} else {
+    System.out.println("Action C");
+}
+\end{code}
+
+This collapses the right bracket \} and the \ic{else if}/\ic{else} statements into a single line. The benefit is that the code is more compact, but the downside is that sometimes it is not clear which action is associated to which statement. 
+
+Brackets are not just a quirky way to express conditional blocks. In general, brackets \{ and \} are used to enclose blocks of code, and have many uses. We'll see them appear later on --- for example, in loop structures and methods. 
 
 \exercisesection
 
@@ -1120,13 +1489,39 @@ if (temperature = 0)
 % \end{exercise}
 
 \begin{exercise}
+Think about a situation in your life that can be modelled by a flowchart, and draw it out. (For example, deciding what to eat, or who to sit with)
+\end{exercise}
+
+\begin{exercise}
+Draw a flowchart for the following Java code.
+
+\begin{code}
+if(numPotatoes == 0)
+{
+    System.out.println("No potatoes for dinner tonight");
+}
+else if(numPotatoes > 0 && numPotatoes < 5)
+{
+    System.out.println("Mashed potatoes for dinner tonight");
+}
+else
+{
+    System.out.println("Mashed potatoes for dinner every day this week");
+}
+\end{code}
+
+What is the output of the above code if \ic{numPotatoes == 0}? What about if \ic{numPotatoes == 10}? \ic{numPotatoes == 5}?
+
+\end{exercise}
+
+\begin{exercise}
 What output is produced by the following code fragment?
 
 \begin{code}
-double minimum = 1.50;
-double maximum = 2.50;
+double minimum = 1;
+double maximum = 2;
 int numApples = 22;
-double totalPrice = 47.30;
+double totalPrice = 48;
 if(totalPrice/numApples > maximum)
 {
     System.out.println("Price too high!");
@@ -1142,34 +1537,136 @@ else
 \end{code}
 \end{exercise}
 
+\begin{exercise}
+Is there a bug in the following code? If so, what is the bug?
+
+\begin{code}
+int dressSize = 10;
+
+if (dressSize < 7) 
+{
+    System.out.println("too small");
+}
+else if (dressSize > 11) 
+{
+    System.out.println("too large");
+}
+else if (dressSize = 8)
+{
+    System.out.println("my unlucky number!");
+}
+else
+{
+    System.out.println("just right");
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Is there a bug in the following code? If so, what is the bug?
+
+\begin{code}
+int dressSize = 10;
+
+if (dressSize < 7) 
+{
+    System.out.println("too small");
+}
+else
+{
+    System.out.println("too large");
+}
+else
+{
+    System.out.println("just right");
+}
+\end{code}
+\end{exercise}
+
 
 \begin{exercise}
 Jenny is writing code to control the heating and AC in her office. Her code takes as input an integer variable \ic{season}, which is equal to 0 if it is fall, 1 if it is winter, 2 if it is spring, and 3 if it is summer. It also requires a boolean variable \ic{vacation} which is \ic{true} if the company has the day off, and \ic{false} otherwise.
 
-Jenny wants to set the temperature to 68$^\circ$ when it is spring or summer, and 72$^\circ$ when it is fall or winter. When the company has the day off, she wants to turn off the heat/AC. Write a code fragment for Jenny which prints out \ic{68}, \ic{72}, or \ic{OFF} accordingly.
+Jenny wants to set the temperature to 68$^\circ$ when it is spring or summer, and 72$^\circ$ when it is fall or winter. When the company has the day off, she wants to turn off the heat/AC. 
+
+\textbf{Part 1:} Write a flowchart that describes this behavior. (Hint: you can write it as a two-level flowchart)
+
+\textbf{Part 2:} Write Java code for Jenny which follows the logic in the flowchart. Your code should print out \ic{68}, \ic{72}, or \ic{OFF} accordingly.
 \end{exercise}
 
 \begin{exercise}
-You hear a knock on the door, and peek outside to see who it is. If you recognize the person, then you answer the door. If it is someone with a delivery for you, you open the door. Otherwise, you do not open the door. Given two boolean variables, \ic{isRecognized} and \ic{isDelivery}, write a code fragment which prints \ic{Answer} or \ic{Do not answer} accordingly. Can you do this using just one \ic{if} statement?
+You hear a knock on the door, and peek outside to see who it is. If you recognize the person, then you answer the door. If it is someone with a delivery for you, you open the door. Otherwise, you do not open the door. 
+
+\textbf{Part 1:} Write a flowchart that describes this behavior.
+
+\textbf{Part 2:} Given two boolean variables, \ic{isRecognized} and \ic{isDelivery}, write a Java code fragment which follows the logic in the flowchart. Your code should print \ic{Answer} or \ic{Do not answer} accordingly. Can you do this using just one \ic{if} statement?
 \end{exercise}
 
 \begin{exercise}
-Convert the following decision tree into Java code.
-\begin{center}
-\begin{forest}
-[\ic{isRaining}, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1) node[above] {Should I wear a coat?};}
-    [\ic{isCold}
-        [Yes] 
-        [No] 
-    ]   
-    [\ic{haveUmbrella}
-        [No]
-        [Yes]
-    ]   
-] 
-\end{forest}
-\end{center}
+What happens when you run the following code?
+
+\begin{code}
+int number = 10;
+string str = "Hello";
+boolean validity = false;
+
+if (number > 20) 
+{
+    System.out.println("Z");
+}
+else 
+{
+    if (validity && number > 0) 
+    {
+        System.out.println("Y");
+    } 
+    else if (number == 9) 
+    {
+        System.out.println("X");
+    } 
+    else if (number < 11) 
+    {
+        if (str == "Hello") 
+        {
+            System.out.println("W");
+        } 
+        else 
+        {
+            System.out.println("V");
+        }
+    } 
+    else 
+    {
+        if (validity) 
+        {
+            System.out.println("U");
+        } 
+    } 
+    System.out.println("T");
+}
+\end{code}
+
+Hint: Try drawing a flowchart-like diagram.
+
 \end{exercise}
+
+% \begin{exercise}
+% Convert the following decision tree into Java code.
+% \begin{center}
+% \begin{forest}
+% [\ic{isRaining}, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1) node[above] {Should I wear a coat?};}
+%     [\ic{isCold}
+%         [Yes] 
+%         [No] 
+%     ]   
+%     [\ic{haveUmbrella}
+%         [No]
+%         [Yes]
+%     ]   
+% ] 
+% \end{forest}
+% \end{center}
+% \end{exercise}
 
 
 
@@ -1585,9 +2082,12 @@ else
 Here it is important to note that whitespace and indentation are ignored by Java. Indentation has no effect on the behavior of a program. In this case, although the indentation makes it harder to see, after omitting all the curly braces the code is equivalent to 
 
 \begin{code}
-if (guess == answer){
+if (guess == answer)
+{
     System.out.println("You guessed correctly!");
-} else {
+} 
+else 
+{
     System.out.println("Sorry, you guessed incorrectly.");
 }
 System.out.println("The answer was " + answer); 
@@ -1600,7 +2100,8 @@ Does the following code compile and print the larger of two integers \ic{a} and 
 
 \begin{code}
 if (a > b)      System.out.println("a");
-else {
+else 
+{
 System.out.println("b");
 }
 \end{code}
