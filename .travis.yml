@@ -10,6 +10,7 @@ script:
 apt_packages:
 # we download pdf2djvu to also generate a djvu file of our LaTeX source
   - texlive-latex-extra
+  - texlive-pictures
 
 deploy:
   provider: releases
