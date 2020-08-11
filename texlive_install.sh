@@ -35,7 +35,8 @@ tlmgr install   \
   catchfile     \
   titlesec      \
   ragged2e      \
-  ms
+  ms            \
+  textcase
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
