@@ -29,7 +29,8 @@ tlmgr install luatex
 # texlive-latex-base is needed to run pdflatex
 tlmgr install   \
   tufte-latex   \
-  forest
+  forest        \
+  xkeyval
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
