@@ -30,7 +30,8 @@ tlmgr install luatex
 tlmgr install   \
   tufte-latex   \
   forest        \
-  xkeyval
+  xkeyval       \
+  hardwrap
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
