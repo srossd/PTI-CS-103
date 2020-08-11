@@ -35,8 +35,10 @@ tlmgr install   \
   ms            \
   textcase      \
   setspace      \
-  soul
-
+  soul          \
+  xcolor
+  
+  
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
 
