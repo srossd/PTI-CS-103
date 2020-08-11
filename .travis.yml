@@ -2,10 +2,17 @@ sudo: required
 language: generic
 services: docker
 
+install:
+ - source ./texlive_install.sh
+
+cache:
+  directories:
+    - /tmp/texlive
+    - $HOME/.texlive
+
 script:
-  # We use the docker image from https://hub.docker.com/r/rekka/tectonic/
-  - docker pull dxjoke/tectonic-docker
-  - docker run --mount src=$TRAVIS_BUILD_DIR/lectures,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic main.tex"
+- mkdir _build
+- pdflatex ./lectures/main.tex
 
 deploy:
   provider: releases
