@@ -43,7 +43,8 @@ tlmgr install   \
   pgf           \
   pgfopts       \
   endnotes      \
-  etoolbox
+  etoolbox      \
+  environ
   
   
 # Keep no backups (not required, simply makes cache bigger)
