@@ -40,7 +40,7 @@ tlmgr install   \
   appendix      \
   caption       \
   subcaption    \
-  tikz          \
+  pgf           \
   endnotes
   
   
