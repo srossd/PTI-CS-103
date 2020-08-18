@@ -1,28 +1,271 @@
 \chapter{Loop Structures}
 
-Sometimes, it is useful to repeat an action multiple times. Maybe you want to
-ask a user for their home address, if they do not provide a valid address, you
-ask them for an address again. Repeating an action a number of times in this way
-is a commonly used technique in programming. Structures that repeat actions are
-called \emph{loop structures}.
+\begin{goals}
+\item Understand why loops are useful
+\item Describe loops using flow charts
+\item Learn how to write \ic{while} loops
+\item Learn how to write \ic{for} loops
+\item Understand the mistakes to avoid when writing loops
+\end{goals}
 
-In this chapter, we will learn a number of useful loop structures, like
-\ic{while} and \ic{for} loops. We describe when to use a \ic{while} loop, and
-when to use a \ic{for} loop. The chapter ends with a list of common mistakes to
-avoid when writing loops.
+Is 587 a prime number? Well, it's not divisible by 2. It's not divisible by 3. It's not divisible by 4. It's not divisible by 5. Things are looking good so far, but 587 is a big number. There are a lot of potential factors for it. If we want to use Java to check whether or not it's prime, we'd have to have a really long control statement, something like this:\marginnote[-1cm]{Remember, an integer is prime when it has exactly two factors, 1 and itself.}
 
-\section{A \ic{while} loop}
+\begin{code}
+int n = 587;
+if(n % 2 == 0) {
+    System.out.println("not prime");
+}
+else if(n % 3 == 0) {
+    System.out.println("not prime");
+}
+else if(n % 4 == 0) {
+    System.out.println("not prime");
+}
+ß$\cdots$ß
+else if(n % 586 == 0) {
+    System.out.println("not prime");
+}
+else {
+    System.out.println("prime");
+}
+\end{code}
+
+It would take a long time to write all that code out -- there are 1743 lines of code hidden in the $\cdots$! It would do the trick, though (as long as you wrap it in a class and a main method). Now what if you want to know whether 761 is prime? You'd have to write a whole new program. Surely there's a better way.
+
+Indeed, there is. If we need to repeat some action multiple times, such as checking whether \ic{n} is divisible by a number, we can use a structure called a \emph{loop}. Loops allow the same code to be executed multiple times. We'll cover loops in this chapter, but to show how useful they are, here's how you check whether 587 is prime using a loop:
+
+\begin{code}
+int n = 587;
+boolean prime = true;
+for(int i = 2; i < n; i++) {
+    if(n % i == 0) {
+        System.out.println("not prime");
+        prime = false;
+    }
+}
+if(prime) {
+    System.out.println("prime");
+}
+\end{code}
+
+You don't have to understand how this works yet, but look how much shorter it is: this time only 11 lines, instead of nearly 2000. Better yet, if we want to check if 761 is prime, we can just change the first line to set \ic{n} equal to 761. Much better!\marginnote{In case you were wondering, both 587 and 761 are prime.}
+
+In this chapter, we'll see how to write Java code which makes use of loops. The two main kinds of loops are \ic{while} and \ic{for} loops. Any loop can be written using either a \ic{while} or a \ic{for} statement, but they are best used in different circumstances, which we will describe. We'll finish with a list of common mistakes to avoid when writing loops.
+
+\section{Flowcharts}
+
+In Chapter \ref{chap:control}, we used flowcharts to depict how control structures allow code to break into multiple branches. This gave our code new capabilities: instead of marching through a fixed sequence of instructions, code with control structures can follow different instructions depending on the circumstance.
+
+Now we want to extend our capabilities even further, by running the same code multiple times. How does this look in a flowchart? It's simple: we have arrows which flow back up the chart, so the instructions are executed repeatedly.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[block] (init) {Let \ic{x} be 1};
+        \node[block,below of=init] (print) {Print \ic{x}};
+        \node[block,below of=print] (inc) {Let \ic{x} be \ic{x+1}};
+        \coordinate[left of=print,node distance=3cm] (mid);
+        
+        \path[line] (inc) -| (mid);
+        \path[line] (mid) -- (print);
+        \path[line] (init) -- (print);
+        \path[line] (print) -- (inc);
+    \end{tikzpicture}
+    \caption{A flowchart which contains a loop. What happens if you follow these instructions?}
+    \label{fig:loop_flowchart_example_1}
+\end{figure}
+
+This flowchart tells to set \ic{x} to 1, and then print \ic{x} and increase the value of \ic{x} by one -- and then repeat, forever. If you convert this flowchart to Java code (which we'll see how to do later) and run it, your code will keep on printing numbers forever (or until you force it to stop).
+
+This illustrates an important feature of loops: generally we want them to stop somewhere, rather than repeating infinitely like this one.\marginnote{There are some programs where infinite loops are desirable. For example, your email client might have an infinite loop checking every few seconds if you have new mail.} That means we need code which can sometimes enter into a loop, and sometimes break out of it, depending on a condition. Sometimes this, sometimes that, depending on a condition -- that's a job for control structures! Let's edit the flowchart above so that we only print the numbers 1 through 10.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[block] (init) {Let \ic{x} be 1};
+        \node[decision,below of=init] (if) {Is \ic{x <= 10}?};
+        \node[block,right of=if,node distance=4cm] (stop) {End program};
+        \node[block,below of=if,node distance=6em] (print) {Print \ic{x}};
+        \node[block,below of=print] (inc) {Let \ic{x} be \ic{x+1}};
+        \coordinate[left of=print,node distance=3cm] (mid);
+        
+        \path[line] (inc) -| (mid);
+        \path[line] (mid) |- (if);
+        \path[line] (init) -- (if);
+        \path[line] (if) -- node [left,near start] {yes} (print);
+        \path[line] (if) -- node [above,near start] {no} (stop);
+        \path[line] (print) -- (inc);
+    \end{tikzpicture}
+    \caption{Now there's a way to break out of the loop, so it won't run forever.}
+    \label{fig:loop_flowchart_example_2}
+\end{figure}
+
+Try stepping through this flowchart yourself as if you were the computer. You end up reaching the code in the loop (the ``Print \ic{x}'' and ``Let \ic{x} be \ic{x+1}'') statements ten times. After the tenth time, the value of \ic{x} is 11, and so we follow the ``no'' branch of the control structure and end the program.
+
+Let's look at a more serious example. In Chapter \ref{chap:control}, we wrote a program which could take a numerical grade and output the corresponding letter grade. As a reminder, here's the code we came up with:
+
+\begin{code}
+if (grade >= 90) 
+{
+    System.out.println("Grade is A");
+}
+else if (80 <= grade && grade <= 90)
+{
+    System.out.println("Grade is B");
+}
+else if (70 <= grade && grade <= 80})
+{
+    System.out.println("Grade is C");
+}
+else if (grade <= 70)
+{
+    System.out.println("Grade is F");
+}
+\end{code}
+
+Now let's build on this code to write a program which can generate a table of grades. We'll start with \ic{grade = 60}, and move up in steps of 5 until we hit \ic{grade = 100}. For each value, we'll determine the letter grade and print it out, in lines like \ic{75: C}.
+
+\begin{figure*}
+    \centering
+    \begin{tikzpicture}
+        \node[block] (init) {\ic{int grade = 60;}};
+        \node[decision,below of=init] (if) {Is \ic{grade <= 100}?};
+        \node[block,below of=if,node distance=7em,text width=17em] (print) {\ic{System.out.print(grade + ": ");}};
+        \node[decision,below of=print] (letter) {\ic{grade} is$\ldots$};
+        \node[block,below right of=letter,node distance=20em,yshift=8em,text width=12em] (A) {System.out.println("A");};
+        \node[block,below of=A,text width=12em] (B) {System.out.println("B");};
+        \node[block,below of=B,text width=12em] (C) {System.out.println("C");};
+        \node[block,below of=C,text width=12em] (F) {System.out.println("F");};
+        \node[block,below of=print,node distance=12cm] (inc) {\ic{grade = grade + 5;}};
+        \node[block,below of=inc] (stop) {End program};
+        \coordinate[right of=letter,node distance=10cm] (mid);
+        \coordinate[left of=letter,node distance=5cm] (mid2);
+        \coordinate[right of=inc,node distance=8.5cm,yshift=2cm] (mid3);
+        \coordinate[above of=inc,node distance=1cm] (mid4);
+        
+        \path[line] (inc) -| (mid);
+        \path[line] (mid) |- (if);
+        \path[line] (init) -- (if);
+        \path[line] (if) -- node [left,near start] {yes} (print);
+        \path[line] (if) -| node [above,near start] {no} (mid2);
+        \path[line] (letter) |- node[above,near end] {\ic{grade >= 90}} (A);
+        \path[line] (letter) |- node[above,near end] {\ic{grade >= 80}} (B);
+        \path[line] (letter) |- node[above,near end] {\ic{grade >= 70}} (C);
+        \path[line] (letter) |- node[above,near end] {else} (F);
+        \path[line] (mid2) |- (stop);
+        \path[line] (print) -- (letter);
+        
+        \path[line] (A) -| (mid3);
+        \path[line] (B) -| (mid3);
+        \path[line] (C) -| (mid3);
+        \path[line] (F) -| (mid3);
+        \path[line] (mid3) |- (mid4) -- (inc);
+    \end{tikzpicture}
+    \caption{Each time the code moves through the loop, it checks the value of \ic{grade} and prints the appropriate letter grade.}
+    \label{fig:loop_flowchart_example_3}
+\end{figure*}
+
+This isn't much more complicated than the small loop above -- we just need to put the code we already wrote inside the loop. In more detail, we want to print \ic{grade} followed by a colon every time we go through the loop, and then use an \ic{if}/\ic{else if}/\ic{else} statement to print the letter grade. Finally we increment \ic{grade} by 5, and go back up to the control statement to see if we should continue the loop or end the program. The full flow chart is in Figure \ref{fig:loop_flowchart_example_3}.
+
+Let's do one more example with flowcharts from start to finish, before we turn to writing Java code. This time we'll consider a famous unsolved math problem called the Collatz conjecture.\marginnote{Lothar Collatz posed this problem in 1937. Nobody's solved it yet, and mathematicians think we're nowhere close to being able to solve it.} The Collatz conjecture is based on the following function of integers $n$:
+\begin{equation*}
+    f(n) = \begin{cases} n/2 & \text{if $n$ is even} \\ 3n+1 & \text{if $n$ is odd} \end{cases}.
+\end{equation*}
+Specifically, it says that if you take any positive integer and repeatedly apply $f$, you'll eventually get down to 1. This works for every instance anyone has tried, but nobody knows if it works for all starting numbers $n$.
+
+For example, let's say we start with $n = 5$. Since 5 is odd, $f(n) = 3\times 5 + 1 = 16$. Then 16 is even, so $f(f(n)) = f(16) = 8$. The next values are 4, 2, 1, so the Collatz conjecture holds for $n = 5$.
+
+To test the Collatz conjecture, we can write a program which takes an integer \ic{n} as input from the user, and then repeatedly applies the function $f$ until it reaches 1. Note that now we're not certain if our program eventually finishes for every input -- knowing that would be equivalent to answering the Collatz problem!
+
+Let's build this flowchart in stages. First, we need to write the function $f$ which updates the value of $n$. This is a simple \ic{if}/\ic{else} statement, which we can draw as follows. \marginnote[3cm]{Remember, \ic{n \% 2} is 0 if \ic{n} is even and 1 if \ic{n} is odd.}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[decision] (if) {Is \ic{n \% 2 == 0}?};
+        \node[block,below right of=if,node distance=8em] (no) {\ic{n = 3*n+1;}};
+        \node[block,below left of=if,node distance=8em] (yes) {\ic{n = n/2;}};
+        
+        \path[line] (if) -- node[left,near start] {yes} (yes);
+        \path[line] (if) -- node[right,near start] {no} (no);
+    \end{tikzpicture}
+    \caption{The Collatz function represented as a flowchart.}
+    \label{fig:collatz_1}
+\end{figure}
+
+Now we need to wrap this function in a loop. We want to apply the Collatz function until \ic{n} is equal to 1, so our condition for entering the loop is \ic{n != 1}. \marginnote{Remember, \ic{!=} means ``not equal to.''} We'll also add a print statement in the loop, so that we can see the values of \ic{n} as the code runs.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[decision] (loopif) {Is \ic{n != 1}?};
+        \node[decision,below of=loopif,node distance=9em] (if) {Is \ic{n \% 2 == 0}?};
+        \node[block,below right of=if,node distance=8em] (no) {\ic{n = 3*n + 1;}};
+        \node[block,below left of=if,node distance=8em] (yes) {\ic{n = n/2;}};
+        \node[block,below of=if,node distance=11em,text width=12em] (print) {\ic{System.out.println(n);}};
+        \coordinate[left of=if,node distance=5cm] (mid);
+        
+        \path[line] (loopif) -- node[left,near start] {yes} (if);
+        \path[line] (if) -- node[left,near start] {yes} (yes);
+        \path[line] (if) -- node[right,near start] {no} (no);
+        \path[line] (yes) -- (print);
+        \path[line] (no) -- (print);
+        \path[line] (print) -| (mid);
+        \path[line] (mid) |- (loopif);
+    \end{tikzpicture}
+    \caption{The Collatz function inside a loop, which prints out each value of $n$.}
+    \label{fig:collatz_2}
+\end{figure}
+
+Try stepping through this code yourself, starting with \ic{n = 12}. You should find that you go through the loop nine times before finishing at \ic{n = 1}. This means that Java would print nine lines if it ran this code starting at \ic{n = 12}.
+
+Let's make a few additions to turn this into a more complete program. First, we want to allow the user to initialize the value of \ic{n} to whatever they'd like, so we'll use a \ic{Scanner}. \marginnote{How do you use a \ic{Scanner} to get an integer? Try to remember before you look at Figure \ref{fig:collatz_3}!}
+
+We'll also keep track of how many times the code in the loop was executed before the code finished. For this, we'll initialize an integer \ic{count} to zero before the loop starts. Then we'll put a line \ic{count = count + 1} inside the loop, so that \ic{count} increases by 1 each time we go through the loop. Then after the loop finishes, we'll print that the code took \ic{count} iterations.\marginnote{``Iteration'' is the fancy word for going through a loop once.} Figure \ref{fig:collatz_3} depicts the full flowchart.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[block,text width=18em] (newscan) {\ic{Scanner s = new Scanner(System.in);}};
+        \node[block,text width=12em,below of=newscan] (getint) {\ic{int n = s.nextInt();}};
+        \node[block,below of=getint] (initcount) {\ic{int count = 0;}};
+        \node[decision,below of=initcount] (loopif) {Is \ic{n != 1}?};
+        \node[decision,below of=loopif,node distance=9em] (if) {Is \ic{n \% 2 == 0}?};
+        \node[block,below right of=if,node distance=8em] (no) {\ic{n = 3*n + 1;}};
+        \node[block,below left of=if,node distance=8em] (yes) {\ic{n = n/2;}};
+        \node[block,below of=if,node distance=11em,text width=12em] (print) {\ic{System.out.println(n);}};
+        \node[block,below of=print] (inccount) {\ic{count = count + 1}};
+        \node[block,below of=inccount,node distance=3cm,text width=28em] (printcount) {\ic{System.out.println("Took "+count+" iterations.");}};
+        \coordinate[left of=if,node distance=5cm] (mid);
+        \coordinate[right of=if,node distance=5cm] (mid2);
+        \coordinate[above of=printcount,node distance=2cm] (mid3);
+        
+        \path[line] (newscan) -- (getint);
+        \path[line] (getint) -- (initcount);
+        \path[line] (initcount) -- (loopif);
+        \path[line] (loopif) -- node[left,near start] {yes} (if);
+        \path[line] (if) -- node[left,near start] {yes} (yes);
+        \path[line] (if) -- node[right,near start] {no} (no);
+        \path[line] (yes) -- (print);
+        \path[line] (no) -- (print);
+        \path[line] (print) -- (inccount);
+        \path[line] (inccount) -| (mid);
+        \path[line] (mid) |- (loopif);
+        \path[line] (loopif) -| node[above,near start] {no} (mid2);
+        \path[line] (mid2) |- (mid3);
+        \path[line] (mid3) -- (printcount);
+    \end{tikzpicture}
+    \caption{Our flowchart for the full Collatz program, which prints each subsequent value of $f(n)$ and then prints how many times the loop executed before \ic{n} reached 1.}
+    \label{fig:collatz_3}
+\end{figure}
+
+\section{The \ic{while} loop}
 
 \begin{definition}
-A \emph{while loop} is a \emph{loop structure} that consists of the reserved
-keyword \ic{while}, followed by a boolean expression enclosed in parentheses,
-followed by statements typically enclosed in curly braces. These statements is
-executed as long as the boolean expression remains true. If the expression
-evaluates to false, the loop terminates, and the program continues.
+A \emph{while loop} is a \emph{loop structure} that consists of the reserved keyword \ic{while}, followed by a boolean expression enclosed in parentheses, followed by statements typically enclosed in curly braces. These statements is executed as long as the boolean expression remains true. If the expression evaluates to false, the loop terminates, and the program continues.
 \end{definition}
 
-A \ic{while} loop allows us to write programs execute statements
-(called the \emph{loop body}), based on a boolean expression (called the \emph{condition}). Below is an example of a simple \ic{while} loop:
+A \ic{while} loop allows us to write programs execute statements (called the \emph{loop body}), based on a boolean expression (called the \emph{condition}). Below is an example of a simple \ic{while} loop:
 
 \begin{code}
 while (count < 20) {
@@ -32,13 +275,8 @@ while (count < 20) {
 System.out.println("Count greater than, or equal to, 20");
 \end{code}
 
-\noindent The condition in this example is \ic{count > 20}. It is a boolean
-expression that evaluates to either true or false. That is, \ic{count} is either
-greater than \ic{20} or not. If it is, count is increased by one, and ``Count
-less than 20'' is printed. Then, the program tests whether the new count is less
-than 20. If it is, the count is again increased by one, and ``Count less than
-20'' is printed again. Once count is greater than, or equal to, 20, ``Count
-greater than, or equal to, 20'' is printed.
+\noindent The condition in this example is \ic{count > 20}. It is a boolean expression that evaluates to either true or false. That is, \ic{count} is either greater than \ic{20} or not. If it is, count is increased by one, and ``Count less than 20'' is printed. Then, the program tests whether the new count is less than 20. If it is, the count is again increased by one, and ``Count less than
+20'' is printed again. Once count is greater than, or equal to, 20, ``Count greater than, or equal to, 20'' is printed.
 
 \begin{example}
 What does the following piece of code print if \ic{x} is 98? What about if \ic{x} is 200? What about if \ic{x} is 100?
@@ -51,14 +289,10 @@ while (x < 100) {
 System.out.println("Big enough!");
 \end{code}
 
-\emph{Answer}: If \ic{x} is 98, the first boolean expression will evaluate to
-true, so the program will print ``Not big enough...'' Then the program will
-loop, and check the condition again.  Again, it will evaluate to true, and print
-``Not big enough...'' In the next iteration, x will be 100, and the conditional
-will evaluate to false, and will print out ``Big enough.''
+\emph{Answer}: If \ic{x} is 98, the first boolean expression will evaluate to true, so the program will print ``Not big enough...'' Then the program will loop, and check the condition again.  Again, it will evaluate to true, and print
+``Not big enough...'' In the next iteration, x will be 100, and the conditional will evaluate to false, and will print out ``Big enough.''
 
-Using the same reasoning to trace the execution with \ic{x} is 200, the
-following statements will be printed: ``Big enough!''.
+Using the same reasoning to trace the execution with \ic{x} is 200, the following statements will be printed: ``Big enough!''.
 
 When \ic{x} is 100, the condition is just barely big enough, so ``Big enough''
 will be printed.
@@ -94,10 +328,7 @@ while (x <= 10) {
 \end{example}
 
 \section{The \ic{for} loop}
-While a \ic{while} loop can express all possible loops, many while loops follow
-the same pattern. Before the loop, you initialize a variable; the loop condition
-involves that variable; and within the loop body, you then update that variable
-in the same way. When loops involves this pattern, programmers typically write a
+While a \ic{while} loop can express all possible loops, many while loops follow the same pattern. Before the loop, you initialize a variable; the loop condition involves that variable; and within the loop body, you then update that variable in the same way. When loops involves this pattern, programmers typically write a
 \ic{for} loop. Below is a \ic{for} loop that prints all the numbers from 0 to 9.
 
 \begin{code}
@@ -107,12 +338,7 @@ for (int i = 0; i < 10; i++)
 }
 \end{code}
 
-A \ic{for} loop has 4 parts, initialization, condition, change, and body. In the
-above \ic{for} loop, \ic{int i = 0} is the initialization. It initializes a new
-variable, \ic{i}, to be zero. Next is the condition, \ic{i < 10}. This is the
-condition that describes when the loop ends. Then comes the change, \ic{i++}.
-After the loop body is run, the change is run as well.  Finally is the loop
-body, which in this case merely prints out \ic{i}.
+A \ic{for} loop has 4 parts, initialization, condition, change, and body. In the above \ic{for} loop, \ic{int i = 0} is the initialization. It initializes a new variable, \ic{i}, to be zero. Next is the condition, \ic{i < 10}. This is the condition that describes when the loop ends. Then comes the change, \ic{i++}. After the loop body is run, the change is run as well.  Finally is the loop body, which in this case merely prints out \ic{i}.
 
 Note that this loop could have been written as a while loop, shown below:
 \begin{code}
@@ -124,10 +350,7 @@ while (i < 10)
 }
 \end{code}
 %
-However, programmers use a \ic{for} loop, they know that the loop structure has
-the structure of requiring initialization, having a loop condition (typically
-refer to the initialized variable), and having a change on each loop
-iteration (typically changing the initialized variable), and having a loop body
+However, programmers use a \ic{for} loop, they know that the loop structure has the structure of requiring initialization, having a loop condition (typically refer to the initialized variable), and having a change on each loop iteration (typically changing the initialized variable), and having a loop body
 (that typically does not change the initialized variable).
 
 \begin{example}
@@ -174,8 +397,7 @@ for (int j = 1; j<100; j = j*2)
 \end{example}
 
 \begin{example}
-What would you put in the initialization, condition, and change to print all
-even numbers from 0 to 20 with a new line in between them?
+What would you put in the initialization, condition, and change to print all even numbers from 0 to 20 with a new line in between them?
 
 \begin{code}
 for (?; ?; ?)
@@ -207,10 +429,8 @@ for (int i = 0; i < 100; i++)
 }
 \end{code}
 
-\noindent For each number from 0 to 99, this code will print all the numbers up
-to (and not including) it.  For example, it will start by printing \ic{0}. Then it will print \ic{0}
-and \ic{1}.  Then it will print \ic{0}, \ic{1}, and \ic{2}.  This will continue
-until it prints all the numbers from \ic{0} to \ic{98}.
+\noindent For each number from 0 to 99, this code will print all the numbers up to (and not including) it.  For example, it will start by printing \ic{0}. Then it will print \ic{0}
+and \ic{1}.  Then it will print \ic{0}, \ic{1}, and \ic{2}.  This will continue until it prints all the numbers from \ic{0} to \ic{98}.
 
 \section{Curly braces}
 So far, we have been using curly braces to enclose each of our loop bodies. These curly braces can be omitted if there is only a single statement. For example, in the snippet of code below, the first set of curly braces can be omitted, while the second cannot.
@@ -229,9 +449,7 @@ while (i < 10)
 }
 \end{code}
 
-\noindent If all the curly braces were left out (as in the code below), the
-program would complete the first loop, printing nothing. Then it would begin the
-second loop, and print 0 forever..
+\noindent If all the curly braces were left out (as in the code below), the program would complete the first loop, printing nothing. Then it would begin the second loop, and print 0 forever..
 
 \begin{code}
 int i = 0;

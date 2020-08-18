@@ -2,118 +2,129 @@
 
 % Abstraction, modularity, code-reuse, syntax, arguments and calling
 
-Sometimes it is useful to abstract certain computations into methods.
-In this chapter, we will be looking at how and why we can use methods to
-achieve more concise and easily-maintainable code.
+% Sometimes it is useful to abstract certain computations into methods.
+% In this chapter, we will be looking at how and why we can use methods to
+% achieve more concise and easily-maintainable code.
 
-We will first look at some code that does not use methods and identify some
-problems with this code. We will then, in Section \ref{sec:methods},
-introduce what a method is, including how to define and use them.
-In Sections \ref{sec:abstraction} and \ref{sec:modularity}, we will
-then talk about how we can use methods to improve the problems that
-we noticed with our code. In particular, in Section \ref{sec:abstraction},
-we talk about how methods allow us to abstract some of our code to get
-more concise and maintainable code, and in Section \ref{sec:modularity},
-we talk about how methods allow us to divide our code up into chunks
-that we can consider in isolation, allowing us to manage and maintain
-our code more easily.
+Let's go back to basics and recall how to write a program in Java. Within a new folder called "methods", create a file called "HelloMethods" in DrJava. Whenever you write a program in Java, all code should be enclosed within brackets for a class with the same name as the file. If the name is not the same as the file, the code won't run. 
 
-Let us consider the following problem:
+% shamelessly stolen from w3schools
+A \textbf{method} is a block of code which only runs when it is called. You can pass data, known as parameters, into a method. Methods are used to perform certain actions, and they are also known as functions. Why use methods? To reuse code: define the code once, and use it many times.
 
-We have a class of nine students, split up into three groups of three.
-We want to report the maximum score for each group.
-%as well as the maximum score for the students overall.
-We will use the variable names \ic{group1s1}, \ic{group1s2}, and \ic{group1s3}
-to refer to the three scores achieved by the students in Group 1, and we will use
-a similar naming convention for the variable names for the scores achieved by
-students in Group 2 and Group 3.
-
-The following snippet of code computes the maximum score in Group 1, storing
-the result in \ic{group1Max}.
-\begin{code}
-int group1Max = group1s1;
-if (group1s2 > group1Max) {
-  group1Max = group1s2; 
-}
-if (group1s3 > group1Max) {
-  group1Max = group1s3; 
-}
-\end{code}
-
-If we now wish to extend this to compute the maximum score for each group,
-we can copy the code and rename the variables to achieve the following
-code:
-\begin{code}
-int group1Max = group1s1;
-if (group1s2 > group1Max) {
-  group1Max = group1s2; 
-}
-if (group1s3 > group1Max) {
-  group1Max = group1s3; 
-}
-
-int group2Max = group2s1;
-if (group2s2 > group1Max) {
-  group2Max = group2s2; 
-}
-if (group2s3 > group2Max) {
-  group2Max = group2s3; 
-}
-
-int group3Max = group3s1;
-if (group3s2 > group3Max) {
-  group3Max = group3s2; 
-}
-if (group3s3 > group3Max) {
-  group3Max = group3s3; 
-}
-\end{code}
-
-\noindent There are a couple of things about the process of getting this resulting code
-that aren't particularly ideal.
-The first is that it is very easy to make a mistake when copying the code and renaming
-the variables. For example, we might have missed renaming \ic{group1Max} to \ic{group3Max}
-in the computation of the maximum score for Group 3, leading us to compute an incorrect maximum
-value in some cases.
-
-The second issue is that there is a lot of redundancy.
-If we look at the code, we can notice that there seem to be a lot of redundant parts
-across the code for the three different groups.
-If we had ended up with the wrong computation initially and needed to fix it
-later, then we would have to make sure we fixed it everywhere, leading to repeated work and the
-possibility that we didn't fix one of the copies. For example, if we initially started out with
-\ic{group1s3 < group1Max} instead of \ic{group1s3 > group1Max}, and then copied and renamed variables
-to compute the maximum scores for the other groups, we would end up with the code below:
+Let's jump right in by writing our first Java program from scratch. Open up a brand new file in DrJava in this week's folder and call it HelloWorld. 
 
 \begin{code}
-int group1Max = group1s1;
-if (group1s2 > group1Max) {
-  group1Max = group1s2;
-}
-if (group1s3 < group1Max) {
-  group1Max = group1s3;
-}
-
-int group2Max = group2s1;
-if (group2s2 > group1Max) {
-  group2Max = group2s2;
-}
-if (group2s3 < group2Max) {
-  group2Max = group2s3;
-}
-
-int group3Max = group3s1;
-if (group3s2 > group3Max) {
-  group3Max = group3s2;
-}
-if (group3s3 < group3Max) {
-  group3Max = group3s3;
-}
+class 
 \end{code}
 
-To fix our code, we would not only have to replace \ic{group1s3 < group1Max} with
-\ic{group1s3 > group1Max}, but we would also need to replace \ic{group2s3 < group2Max} with
-\ic{group2s3 > group2Max} and \ic{group3s3 < group3Max} with \ic{group3s3 < group3Max}.
+% We will first look at some code that does not use methods and identify some
+% problems with this code. We will then, in Section \ref{sec:methods},
+% introduce what a method is, including how to define and use them.
+% In Sections \ref{sec:abstraction} and \ref{sec:modularity}, we will
+% then talk about how we can use methods to improve the problems that
+% we noticed with our code. In particular, in Section \ref{sec:abstraction},
+% we talk about how methods allow us to abstract some of our code to get
+% more concise and maintainable code, and in Section \ref{sec:modularity},
+% we talk about how methods allow us to divide our code up into chunks
+% that we can consider in isolation, allowing us to manage and maintain
+% our code more easily. We'll finish the chapter by getting a more concrete understanding of how to write programs using methods. 
+
+% Let us consider the following problem:
+
+% We have a class of nine students, split up into three groups of three.
+% We want to report the maximum score for each group.
+% %as well as the maximum score for the students overall.
+% We will use the variable names \ic{group1s1}, \ic{group1s2}, and \ic{group1s3}
+% to refer to the three scores achieved by the students in Group 1, and we will use
+% a similar naming convention for the variable names for the scores achieved by
+% students in Group 2 and Group 3.
+
+% The following snippet of code computes the maximum score in Group 1, storing
+% the result in \ic{group1Max}.
+% \begin{code}
+% int group1Max = group1s1;
+% if (group1s2 > group1Max) {
+%   group1Max = group1s2; 
+% }
+% if (group1s3 > group1Max) {
+%   group1Max = group1s3; 
+% }
+% \end{code}
+
+% If we now wish to extend this to compute the maximum score for each group,
+% we can copy the code and rename the variables to achieve the following
+% code:
+% \begin{code}
+% int group1Max = group1s1;
+% if (group1s2 > group1Max) {
+%   group1Max = group1s2; 
+% }
+% if (group1s3 > group1Max) {
+%   group1Max = group1s3; 
+% }
+
+% int group2Max = group2s1;
+% if (group2s2 > group1Max) {
+%   group2Max = group2s2; 
+% }
+% if (group2s3 > group2Max) {
+%   group2Max = group2s3; 
+% }
+
+% int group3Max = group3s1;
+% if (group3s2 > group3Max) {
+%   group3Max = group3s2; 
+% }
+% if (group3s3 > group3Max) {
+%   group3Max = group3s3; 
+% }
+% \end{code}
+
+% \noindent There are a couple of things about the process of getting this resulting code
+% that aren't particularly ideal.
+% The first is that it is very easy to make a mistake when copying the code and renaming
+% the variables. For example, we might have missed renaming \ic{group1Max} to \ic{group3Max}
+% in the computation of the maximum score for Group 3, leading us to compute an incorrect maximum
+% value in some cases.
+
+% The second issue is that there is a lot of redundancy.
+% If we look at the code, we can notice that there seem to be a lot of redundant parts
+% across the code for the three different groups.
+% If we had ended up with the wrong computation initially and needed to fix it
+% later, then we would have to make sure we fixed it everywhere, leading to repeated work and the
+% possibility that we didn't fix one of the copies. For example, if we initially started out with
+% \ic{group1s3 < group1Max} instead of \ic{group1s3 > group1Max}, and then copied and renamed variables
+% to compute the maximum scores for the other groups, we would end up with the code below:
+
+% \begin{code}
+% int group1Max = group1s1;
+% if (group1s2 > group1Max) {
+%   group1Max = group1s2;
+% }
+% if (group1s3 < group1Max) {
+%   group1Max = group1s3;
+% }
+
+% int group2Max = group2s1;
+% if (group2s2 > group1Max) {
+%   group2Max = group2s2;
+% }
+% if (group2s3 < group2Max) {
+%   group2Max = group2s3;
+% }
+
+% int group3Max = group3s1;
+% if (group3s2 > group3Max) {
+%   group3Max = group3s2;
+% }
+% if (group3s3 < group3Max) {
+%   group3Max = group3s3;
+% }
+% \end{code}
+
+% To fix our code, we would not only have to replace \ic{group1s3 < group1Max} with
+% \ic{group1s3 > group1Max}, but we would also need to replace \ic{group2s3 < group2Max} with
+% \ic{group2s3 > group2Max} and \ic{group3s3 < group3Max} with \ic{group3s3 < group3Max}.
 
 \section{Methods}\label{sec:methods}
 In Java, we can use abstractions in our code in the form of \emph{methods}.

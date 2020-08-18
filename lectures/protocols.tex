@@ -1,5 +1,12 @@
 \chapter{Networks}
 
+\begin{goals}
+\item Understand the importance of protocols
+\item Know the four layers of the computer networks
+\item Understand the challenges and goals of network security
+\item Understand the difference between local area networks and wide area networks
+\end{goals}
+
 Computing devices have been in use for thousands of years, at least since the invention of the Sumerican abacus between four and five thousand years ago. Even as computers became more sophisticated, a long process culminating in the development of transistor-based digital computers, they remained specialized machines, largely for use in government or business settings. The explosion in personal computing, which has flooded the planet with billions of computers that pervade almost every aspect of society, coincided roughly with the development of computer networking and the Internet. Communicating via computers -- with friends, news outlets, vendors, banks, or even artificial intelligence systems -- has revolutionized the way the world works.
 
 In this chapter, we'll learn how computer networks work, from the wires in the ground up to the more familiar technologies in a browser or email client. The Internet is one of the largest and most complex machines ever built, so we certainly won't be able to cover every aspect of it, but we'll focus on a few important topics. After reading this chapter, you should be able to tell a story about what happens when you open a website or send an email, and understand how to get under the hood and see how different pieces are working together to complete the task.
@@ -74,14 +81,14 @@ There's a lot going on here -- when you think about it, it's amazing that the le
 
 \begin{figure}
     \centering
-    \begin{tikzpicture}[layer/.style={fill=blue!20,minimum width=6cm,align=center,text width=5.5cm,draw=black,solid,line width=.25mm}]
-        \draw[dashed,-latex] (-4, 4) node[layer] {\textbf{Alice}: initiate message} --
-        (-4, 2) node[layer] {\textbf{Employees}: draft letter, find address, place in post box} --
-        (-4, 0) node[layer] {\textbf{Post Office}: route letter towards destination city} --
+    \begin{tikzpicture}[layer/.style={fill=blue!20,minimum width=4cm,align=center,text width=4.5cm,draw=black,solid,line width=.25mm}]
+        \draw[dashed,-latex] (-3, 4) node[layer] {\textbf{Alice}: initiate message} --
+        (-3, 2) node[layer] {\textbf{Employees}: draft letter, find address, place in post box} --
+        (-3, 0) node[layer] {\textbf{Post Office}: route letter towards destination city} --
         (0, -2) node[layer,minimum width=8cm,text width=7.5cm] {\textbf{Mail truck}: carry letter over highway to destination} --
-        (4, 0)  node[layer] {\textbf{Post Office}: deliver letter to final destination} --
-        (4, 2)  node[layer] {\textbf{Employees}: deliver letter to Bob's office} --
-        (4, 4)  node[layer] {\textbf{Bob}: read letter, take action};
+        (3, 0)  node[layer] {\textbf{Post Office}: deliver letter to final destination} --
+        (3, 2)  node[layer] {\textbf{Employees}: deliver letter to Bob's office} --
+        (3, 4)  node[layer] {\textbf{Bob}: read letter, take action};
     \end{tikzpicture}
     \caption{Layers of the postal system.}
     \label{fig:layer_mail}
@@ -139,15 +146,15 @@ We have already thought about handshakes between humans in some detail, so now l
 \end{enumerate}
 This is the \emph{three-way handshake} model. First, Alice notifies Bob of her intent to communicate and synchronizes her sequence number. Then Bob sends an acknowledgement of Alice's sequence number, and also synchronizes his own sequence number. Finally, Alice acknowledge's Bob's sequence number, and then they are ready to communicate.
 
-There are two kinds of messages being sent in the handshake, synchronization and acknowledgement. These are typically abbreviated as \ic{SYN} and \ic{ACK}. The TCP handshake protocol works as follows.
-\begin{graybox}
-{\Large TCP Handshake}
-\begin{enumerate}
-    \item $A$ generates a random number $x$. $A$ sends $\boxed{\ic{SYN}\ x}$ to $B$.
-    \item $B$ generates a random number $y$. $B$ sends $\boxed{\ic{ACK}\ x+1}$ to $A$, and then sends $\boxed{\ic{SYN}\ y}$ to $A$.
-    \item $A$ sends $\boxed{\ic{ACK}\ y+1}$ to $B$.
-\end{enumerate}
-\end{graybox}
+% There are two kinds of messages being sent in the handshake, synchronization and acknowledgement. These are typically abbreviated as \ic{SYN} and \ic{ACK}. The TCP handshake protocol works as follows.
+% \begin{graybox}
+% {\Large TCP Handshake}
+% \begin{enumerate}
+%     \item $A$ generates a random number $x$. $A$ sends $\boxed{\ic{SYN}\ x}$ to $B$.
+%     \item $B$ generates a random number $y$. $B$ sends $\boxed{\ic{ACK}\ x+1}$ to $A$, and then sends $\boxed{\ic{SYN}\ y}$ to $A$.
+%     \item $A$ sends $\boxed{\ic{ACK}\ y+1}$ to $B$.
+% \end{enumerate}
+% \end{graybox}
 
 \subsection{Internet Layer}
 
@@ -157,29 +164,29 @@ An IP address is a sequence of 32 bits, grouped into blocks of 8. When they are 
 
 When the Internet layer receives a packet from the transport layer for transmission, it will look at the IP address of the destination. It knows how to find a server which is closer to that destination. For example, if a server in New York City sees a packet destined for an IP address in Washington, DC., it might decide to forward that packet to a server in Philadelphia, PA.
 
-You can view this process yourself using a Unix utility called \ic{traceroute}. Open a terminal and type \ic{traceroute} followed by any website. You'll see how the Internet Protocol routes your packets through different servers in order to reach their destination. For example, below is the route from a personal computer to \ic{youtube.com}. The address in the last line, \ic{172.217.12.238}, specifies the location of one of YouTube's servers.
+% You can view this process yourself using a Unix utility called \ic{traceroute}. Open a terminal and type \ic{traceroute} followed by any website. You'll see how the Internet Protocol routes your packets through different servers in order to reach their destination. For example, below is the route from a personal computer to \ic{youtube.com}. The address in the last line, \ic{172.217.12.238}, specifies the location of one of YouTube's servers.
 
-\label{code:traceroute}
-\begin{monospace}
-# traceroute youtube.com
-    1  192.168.1.1 (192.168.1.1)  0.448 ms  0.958 ms  0.966 ms
-    2  * * *
-    3  ae1312-21.ARTNVAFC-MSE01-AA-IE1.verizon-gni.net (100.41.21.152)  7.779 ms  7.766 ms  7.628 ms
-    4  0.ae10.GW13.IAD8.ALTER.NET (140.222.225.219)  9.139 ms  9.117 ms  9.082 ms
-    5  72.14.218.232 (72.14.218.232)  8.507 ms  7.277 ms  4.378 ms
-    6  * * *
-    7  216.239.54.106 (216.239.54.106)  4.779 ms 108.170.232.0 (108.170.232.0)  12.022 ms 108.170.246.33 (108.170.246.33)  16.086 ms
-    8  108.170.246.67 (108.170.246.67)  12.976 ms 108.170.232.19 (108.170.232.19)  12.769 ms 108.170.246.66 (108.170.246.66)  10.935 ms
-    9  iad30s15-in-f14.1e100.net (172.217.12.238)  10.570 ms 216.239.47.127 (216.239.47.127)  16.793 ms iad30s15-in-f14.1e100.net (172.217.12.238)  10.485 ms
-\end{monospace}
+% \label{code:traceroute}
+% \begin{monospace}
+% # traceroute youtube.com
+%     1  192.168.1.1 (192.168.1.1)  0.448 ms  0.958 ms  0.966 ms
+%     2  * * *
+%     3  ae1312-21.ARTNVAFC-MSE01-AA-IE1.verizon-gni.net (100.41.21.152)  7.779 ms  7.766 ms  7.628 ms
+%     4  0.ae10.GW13.IAD8.ALTER.NET (140.222.225.219)  9.139 ms  9.117 ms  9.082 ms
+%     5  72.14.218.232 (72.14.218.232)  8.507 ms  7.277 ms  4.378 ms
+%     6  * * *
+%     7  216.239.54.106 (216.239.54.106)  4.779 ms 108.170.232.0 (108.170.232.0)  12.022 ms 108.170.246.33 (108.170.246.33)  16.086 ms
+%     8  108.170.246.67 (108.170.246.67)  12.976 ms 108.170.232.19 (108.170.232.19)  12.769 ms 108.170.246.66 (108.170.246.66)  10.935 ms
+%     9  iad30s15-in-f14.1e100.net (172.217.12.238)  10.570 ms 216.239.47.127 (216.239.47.127)  16.793 ms iad30s15-in-f14.1e100.net (172.217.12.238)  10.485 ms
+% \end{monospace}
 
-The IP addresses we've described all correspond to version 4 of the Internet Protocol, or IPv4. There are about four billion unique IPv4 addresses, which seemed like plenty at the time of its creation. However, the growth of the Internet and the proliferation of mobile devices has led to the exhaustion of almost all IPv4 addresses. In order to ensure that the Internet can continue to grow, a transition to IPv6, which provides for many more addresses, is slowly taking place.
+The dotted quad IP addresses are all part of version 4 of the Internet Protocol, or IPv4. There are about four billion unique IPv4 addresses, which seemed like plenty at the time of its creation. However, the growth of the Internet and the proliferation of mobile devices has led to the exhaustion of almost all IPv4 addresses. In order to ensure that the Internet can continue to grow, a transition to IPv6, which provides for many more addresses, is slowly taking place.
 
-In the transport layer, we delved into the step-by-step procedure used for handshaking. These sorts of procedures are one important aspect of the protocols that run networks. Another important aspect is the format in which data is sent. The link layer, which we'll come to in the next section, can only send sequences of bits -- zeroes and ones -- so it is important for both parties to agree on which bits mean what.
+% In the transport layer, we delved into the step-by-step procedure used for handshaking. These sorts of procedures are one important aspect of the protocols that run networks. Another important aspect is the format in which data is sent. The link layer, which we'll come to in the next section, can only send sequences of bits -- zeroes and ones -- so it is important for both parties to agree on which bits mean what.
 
-To give an example of this, we will look inside the packets sent by IPv4. You should not try to memorize the following, but instead try to appreciate the importance of having a detailed packet structure.
+% To give an example of this, we will look inside the packets sent by IPv4. You should not try to memorize the following, but instead try to appreciate the importance of having a detailed packet structure.
 
-An IP packet is divided into its \emph{header} and the \emph{data}. The header contains information about how the packet is being transmitted, while the data is the actual contents of the packet. %The format of IPv4 headers is shown in Table %\ref{tab:ipv4}. The various segments specify the following information.
+% An IP packet is divided into its \emph{header} and the \emph{data}. The header contains information about how the packet is being transmitted, while the data is the actual contents of the packet. %The format of IPv4 headers is shown in Table %\ref{tab:ipv4}. The various segments specify the following information.
 %\begin{itemize}
 %    \item \textbf{Version}: the first four bits specify the version of IP being used. For IPv4, these bits are always \ic{0100}, binary for 4.
 %    \item \textbf{IHL}: this is the Internet Header Length. This specifies the number of 32 bit blocks, called ``words,'' used by the header. In Table \ref{tab:ipv4} we show a header with 5 words, so these bits are \ic{0101}. This is almost always the case, although it is possible to have a larger IHL value and include additional data in the header.
@@ -225,19 +232,19 @@ Finally, we come to the actual nuts and bolts of the Internet: how are individua
 
 There are two main link layer technologies you will encounter. The first is Ethernet, which is used for wired Internet connections. An Ethernet cable, also known as an RJ-45 cable, is shown in Figure \ref{fig:ethernet}. Each end of the cable has an 8-pin connector. Inside the cable, a twisted pair of wires can carry signals in both directions without having them collide with each other.
 
-\begin{figure}
+\begin{marginfigure}
     \centering
     \includegraphics[width=.6\linewidth]{images/ethernet.jpg}
     \caption{An Ethernet cable used to network computers together.}
     \label{fig:ethernet}
-\end{figure}
+\end{marginfigure}
 
 The other primary link layer technology is 802.11, more commonly known as Wi-Fi. With a wired network, signals can be sorted into separate wires so they don't overlap, but over a wireless network signals are broadcast and have the potential to interfere with one another. In order to prevent this, Wi-Fi is designed to allow devices to operate at slightly different frequencies which are arranged into channels.
 
 There are two major variants of Wi-Fi: 2.4 gigahertz (GHz) and 5 GHz. These are two different frequency bands. Within each of them there are multiple channels. At 2.4 GHz, which was the first frequency available for Wi-Fi, there are 11 channels. However, the channels overlap with one another, so it is best for devices to use channels 1, 6, and 11, reducing the efffective number of channels down to 3. The newer 5 GHz protocol alleviates this problem by making hundreds of channels available. Most new devices can operate at either 2.4 GHz or 5 GHz, but some older devices only support 2.4 GHz.
 
 
-Many organizations incorporate security measures at other system layers, from application layer all the way down to IP layer. However, link layer communication is very weak in terms of security. This can open the network to a variety of attacks (for example, the attackers can use the Address Resolution Protocol (ARP) - a protocol used to map an IP address to a physical machine address recognizable in the local Ethernet).% Link layer encryption can provide protection against “man-in-the middle” attacks.
+Many organizations incorporate security measures at other system layers, from the application layer all the way down to the Internet layer. However, link layer communication is very weak in terms of security. This can open the network to a variety of attacks (for example, the attackers can use the Address Resolution Protocol (ARP) - a protocol used to map an IP address to a physical machine address recognizable in the local Ethernet).% Link layer encryption can provide protection against “man-in-the middle” attacks.
 
 The details of link layer technologies are complex, but luckily you rarely have to deal with them directly. In most cases, Ethernet or Wi-Fi have been engineered to the point where little effort is required to make them work properly, and you can focus on other layers of the network while trusting that signals are being carried appropriately by the link layer.
 
@@ -245,7 +252,7 @@ The details of link layer technologies are complex, but luckily you rarely have 
 
 One of the most important issues with computer networks is security. The Internet is frequently used for transmitting confidential messages, facilitating financial transactions, and other applications where security is paramount. For this reason, there are protocols dedicated to ensuring that the Internet can be secure. The most common such protocol is Transport Layer Security (TLS), which is a successor to an older protocol called Secure Sockets Layer (SSL). TLS is implemented at the transport layer of a network. Web traffic which uses TLS/SSL security is sent using the HTTPS protocol at the application layer, rather than the unsecured HTTP protocol.
 
-Another common network security application is a Virtual Private Network, or VPN. A VPN allows computers connected to different Local Area Networks (LANs) to communicate over the Internet as if they belonged to the same LAN. This is often used by companies to allow employees to access private resources even when they are away from the office. Security is very important for a VPN, and it can be provided using TLS or other protocols.
+% Another common network security application is a Virtual Private Network, or VPN. A VPN allows computers connected to different Local Area Networks (LANs) to communicate over the Internet as if they belonged to the same LAN. This is often used by companies to allow employees to access private resources even when they are away from the office. Security is very important for a VPN, and it can be provided using TLS or other protocols.
 
 Below, we will cover what exactly security means in a network setting, and look at three goals of any secure network: privacy, authenticity, and reliability. Achieving these goals requires using tools from cryptography, which you may learn about in a future course.
 
@@ -253,11 +260,11 @@ Below, we will cover what exactly security means in a network setting, and look 
 
 When two parties want to securely transmit a message, one of their most straightforward goals is privacy. The two parties do not want a third party to be able to listen in on their communication.
 
-Following a standard convention in cryptography, we will denote the two parties by Alice and Bob, and the adversarial third party by Carol. Alice is sending a message to Bob, and Carol wants to listen in. Since network signals travel over cables, Carol could listen in to the signal by physically tapping into a wire. Even more easily, on a wireless network, all signals are broadcast over the air and can be received by anyone who wants to listen.
+Following a standard convention in cryptography, we will denote the two communicating parties by Alice and Bob, and the adversarial third party by Carol. Alice is sending a message to Bob, and Carol wants to listen in. Since network signals travel over cables, Carol could listen in to the signal by physically tapping into a wire. Even more easily, on a wireless network, all signals are broadcast over the air and can be received by anyone who wants to listen.
 
 In order to protect their messages from being read by Carol, Alice and Bob use an encryption algorithm. Alice and Bob have some shared key, and when Alice wants to send a message, she first uses her key to turn the plain text of the message into a cipher text. If the algorithm is secure, then the cipher text cannot be converted back to the plain text without knowledge of the key. This way, if Carol manages to read the message, she will only see nonsensical cipher text. Only Bob, who has the key, can produce the plain text.
 
-A key issue here is how Alice and Bob come to have the same key. If Alice tells Bob her key over the network, then Carol could retrieve the key and use it to decrypt all future messages. This is a fundamental problem in cryptography called the key-sharing problem. It is solved using a technique called public key cryptography. In TLS, public key cryptography is implemented using either the RSA algorithm, or a more sophisticated method called elliptic curve cryptography (ECC). These algorithms allow Alice and Bob to generate shared keys which Carol cannot intercept.
+A key issue here is how Alice and Bob come to have the same key. If Alice tells Bob her key over the network, then Carol could retrieve the key and use it to decrypt all future messages. This is a fundamental problem in cryptography called the key-sharing problem. It is solved using a technique called public key cryptography. In TLS, public key cryptography is implemented using either the RSA algorithm, or a more sophisticated method called elliptic curve cryptography (ECC). These algorithms allow Alice and Bob to generate shared keys which Carol cannot intercept.\marginnote[-2cm]{The RSA algorithm is based on the hardness of factoring. Given two numbers, like 587 and 761, it's straightforward to multiply them. But given their product, 446707, it's much harder to factor it into 587 and 761. Asymmetric problems like this are very important in cryptography.}
 
 \subsection{Authenticity}
 
@@ -279,33 +286,26 @@ In this context, it is important to recognize a key difference between security 
 
 There are many ways in which Bob could be unreliable. For example, Bob could be attempting to execute a phishing attack by impersonating someone else. TLS guarantees that Bob cannot truly impersonate \ic{facebook.com}, but he could own \ic{fcebook.com} and, using TLS security, provide a website that looks just like \ic{facebook.com} and asks for your login credentials. If you provide them to \ic{fcebook.com}, then Bob could read your password and log into your actual Facebook account.
 
-Even if Bob is not malicious, he could be irresponsible. For example, if Bob runs an online vendor which collects credit card information to make payments, it is crucial that Bob takes appropriate security measures on his local network to protect that credit card information from becoming known to an attacker. TLS does not guarantee that Bob has taken the necessary precautions. Many of the most substantial security problems arise on the Internet when many customers have trusted a vendor like Bob with their personal details like credit card numbers, and Bob suffers a data breach, putting this data into the wrong hands.
+Even if Bob is not malicious, he could be irresponsible. For example, if Bob runs an online vendor which collects credit card information to make payments, it is crucial that Bob takes appropriate security measures on his local network to protect that credit card information from becoming known to an attacker. TLS does not guarantee that Bob has taken the necessary precautions. Many of the most substantial security problems arise on the Internet when customers have trusted a vendor like Bob with their personal details like credit card numbers, and Bob suffers a data breach, putting this data into the wrong hands.
 
 Network security is an evolving field as companies and governments work to protect against these sorts of vulnerabilities. There are many opportunities for employment in this area, as organizations increasingly need to rely on dedicated security professionals in order to keep their data and their clients' data safe.
 
-\section{Local Area Networks}
+\section{Local and Wide Area Networks}
 
+% The Internet comprises the network edge and the network core. The network core is the set of interconnected networks that provide wide area connectivity to the customers of the network. The network edge is the set of devices and local networks that connect to the core network. Your computers, TV sets, thermostats, and local network constitute a network edge. Your Internet service provider and its Internet service provider are components of the network core.
 
+The network used to connect computers within a single home, business, or organization is called a local area network, or a LAN. A LAN uses the same network access protocol and usually the same transmission medium (e.g., Ethernet), allowing message delivery without the need to route messages through different networks. Devices that send and receive messages on the network are called hosts or nodes. Any host can initiate a data transfer with any other host on the LAN.
 
-The Internet comprises the network edge and the network core. The network core is the set of interconnected networks that provide wide area connectivity to the customers of the network. The network edge is the set of devices and local networks that connect to the core network. Your computers, TV sets, thermostats, and local network constitute a network edge. Your Internet service provider and its Internet service provider are components of the network core.
+Almost every LAN needs a way of communicating with the outside world. A network at a larger scale than a LAN is called a Wide Area Network (WAN). By far the most familiar example of a WAN is the global Internet, but a WAN need not be this large. For example, a campus or metropolitan area may have its network organized as a WAN.
 
-The network used to connect computers within a single home, business, or organization is called a local area network, or a LAN. LAN uses the same network access protocol and usually the same transmission medium (e.g., Ethernet), allowing message delivery without the need to route messages through different networks. Devices that send and receive messages on the network are called hosts or nodes. Any host can initiate a data transfer with any other host on the LAN.
+The link layer technology which carries signals over a WAN is similar to that of a LAN. A WAN typically needs higher capacity Ethernet cables, but the general principles are the same. The primary difference between a LAN and a WAN comes in at the Internet layer, where the IP protocol distinguishes between public and private networks.
 
-\section{Packet Switching}
-A \textit{switch} is a device dedicated to moving packets through a network. With packet switching, a communication stream is broken into chunks of data called packets. Each packet must contain a destination address in its message header. The packets travel from the source node to their final destination via packet switches. Routers and ethernet switches are examples of packet switches. Routers are used to transmit packets between different networks and switches are used to transmit packets within a local area network. Each packet switch decides on the disposition of the packet (to what port it should be transmitted) based on the packet’s destination address. There is no need to retain memory of a predefined route for a stream of packets that represents a communication stream. In fact, there is no real concept of a communication stream because no routes have to be set up and no resources need to be reserved ahead of time. Because packet switching is designed for baseband networks, each packet has full use of the network link. If there are no other packets transmitted on the network, a node may see its available bandwidth approach the maximum capacity of the network link.
-
-\section{Autonomous Systems}
-Once a packet is routed to the Internet, it needs to be sent to the network which contains the destination address. Typically, the first destination for a packet is a router belonging to an Internet Service Provider (ISP). For example, in the traceroute trace on page 172, the packet ends up at a router owned by Verizon, a popular ISP. This router belongs to an \textit{autonomous system} (AS) operated by Verizon. An autonomous system is simply a connection of routers on the Internet which are under common administrative control (e.g. the ISP).
+One unique feature of public networks is the presence of \emph{autonomous systems}. Once a packet is routed to the Internet, it needs to be sent to the network which contains the destination address. Typically, the first destination for a packet is a router belonging to an Internet Service Provider (ISP). For example, the packet might end up at a router owned by Verizon, a popular ISP. This router belongs to an autonomous system (AS) operated by Verizon. An autonomous system is simply a connection of routers on the Internet which are under common administrative control (e.g. the ISP).
 
 Autonomous systems are managed globally using autonomous system numbers, or ASNs, which are similar to IP addresses. These numbers are allocated by the Internet Assigned Numbers Authority (IANA) to Regional Internet Registries (RIRs), which then assign the numbers to autonomous systems.
 
-\section{Wide Area Networks}
-
-Almost every LAN needs a way of communicating with the outside world. A network at a larger scale than a LAN is called a Wide Area Network (WAN). By far the most familiar example of a WAN is the Internet, but a WAN need not be this large. For example, a campus or metropolitan area may have its network organized as a WAN.
-
-The link layer technology which carries signals over a WAN is similar to that of a LAN. A WAN typically needs higher capacity Ethernet cables, but the general principles are the same. The primary difference between a LAN and a WAN comes in at the Internet layer, where the IP protocol distinguishes between public and private networks. In this section we will discuss this difference, and the systems and protocols used to connect public networks together.
-
- 
+% \section{Packet Switching}
+% A \textit{switch} is a device dedicated to moving packets through a network. With packet switching, a communication stream is broken into chunks of data called packets. Each packet must contain a destination address in its message header. The packets travel from the source node to their final destination via packet switches. Routers and ethernet switches are examples of packet switches. Routers are used to transmit packets between different networks and switches are used to transmit packets within a local area network. Each packet switch decides on the disposition of the packet (to what port it should be transmitted) based on the packet’s destination address. There is no need to retain memory of a predefined route for a stream of packets that represents a communication stream. In fact, there is no real concept of a communication stream because no routes have to be set up and no resources need to be reserved ahead of time. Because packet switching is designed for baseband networks, each packet has full use of the network link. If there are no other packets transmitted on the network, a node may see its available bandwidth approach the maximum capacity of the network link.
 
 \exercisesection
 
@@ -313,14 +313,14 @@ The link layer technology which carries signals over a WAN is similar to that of
     What protocol is used as part of HTTPS in order to ensure secure transmission of data? List the three goals of this protocol and give a description of the kind of attack each goal seeks to prevent. Then give an example of an attack which would not be prevented by this protocol.
 \end{exercise}
 
-\begin{exercise}
-    What is the difference between a switch and a router? On which type of network would each be used?
-\end{exercise}
+% \begin{exercise}
+%     What is the difference between a switch and a router? On which type of network would each be used?
+% \end{exercise}
 
-\begin{exercise}
-    Margaret has been hired as a network administrator to set up a network for Acme, Inc. Acme has 10 computers in their office, and there is no network in place. If Margaret wants to put a unique cable between every pair of computers, how many cables will she need? 
-    %If Margaret wants to use the minimum number of cables to ensure every computer has a path in the network to every other computer, how many cables will she need?
-\end{exercise}
+% \begin{exercise}
+%     Margaret has been hired as a network administrator to set up a network for Acme, Inc. Acme has 10 computers in their office, and there is no network in place. If Margaret wants to put a unique cable between every pair of computers, how many cables will she need? 
+%     %If Margaret wants to use the minimum number of cables to ensure every computer has a path in the network to every other computer, how many cables will she need?
+% \end{exercise}
 
 \begin{exercise}
     What do ISP and AS stand for? What is an example of an ISP? What is the relationship between an ISP and an AS?
@@ -358,9 +358,9 @@ The link layer technology which carries signals over a WAN is similar to that of
 %    \end{itemize}
 %\end{exercise}
 
-\begin{exercise}
-    In a TCP handshake, Alice initiates by sending $\boxed{\ic{SYN}\ 895}$ to Bob. Give an example of the remaining steps that could take place in this handshake.
-\end{exercise}
+% \begin{exercise}
+%     In a TCP handshake, Alice initiates by sending $\boxed{\ic{SYN}\ 895}$ to Bob. Give an example of the remaining steps that could take place in this handshake.
+% \end{exercise}
 
 \begin{exercise}
     What is the main advantage of 5 GHz WiFi over 2.4 GHz WiFi? Why is 2.4 GHz WiFi still in use?
