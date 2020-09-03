@@ -72,10 +72,10 @@ Suppose you need to guess the value of a secret number which is an integer betwe
 The most straightforward approach is the following: since in each step, we ask a question (“is the number greater than or equal to $x$?”) that allows us to shrink the searching interval by half. In particular, we guess the number in the middle of the interval, and, based on the answer, discard the half of the interval that can not contain the secret number. For example, suppose we have a secret number 5 that is contained in an array of integers from 0 to 16. You guess $x=8$ (i.e. the middle of the array) and ask if the secret number is greater than or equal to $x$. You receive \textit{false} answer (since $5 < 8$); therefore, you can shrink the array to $[a;b) = [0, 8)$ and search for the secret number in this new array since you know for sure that the secret number is less than 8. Note that we denote the start of the new array of integers by $a$ and the end by $b$.  
 We can summarize this approach in the following recursive strategy:
 
-\begin{itemsize}
+\begin{itemize}
 \item \textit{Base case:} if $a-b = 1$, then the secret number is $a$.
 \item \textit{Reduction step:} If not, ask whether the secret number is greater than or equal to the number $middle = a + (a+b)/2$. If the answer is \textit{true}, look for the number in  $[middle; b]$. If the answer is \textit{false}, look for the number in $[a; middle]$.
-\end{itemsize}
+\end{itemize}
 
 This searching strategy is called \textit{binary search}. Figure \ref{fig:binary} shows another example of how you would find number 23 in a given array using the binary search algorithm.
 
@@ -96,7 +96,7 @@ public class Example
 	{
 	if (a-b == 1) return a;
  	int middle = a + (a-b)/2;
-	StdOut.print(“Is the secret number greater than or equal to ” + middle + “? ”);
+	StdOut.print("Is the secret number greater than or equal to " + middle + "? ");
 	if (StdIn.readBoolean())
 		return binarySearch(middle, b);
 	else
@@ -106,9 +106,9 @@ public class Example
 {
 int k = Integer.parseInt(args[0]);
 int n = (int) Math.pow(2, k);
-StdOut.println(“Choose a secret number between 0 and ” + (n-1));
+StdOut.println("Choose a secret number between 0 and " + (n-1));
 int guess = binarySearch(0, n)
-StdOut.println(“The secret number is ” + guess);
+StdOut.println("The secret number is " + guess);
 }
 }
 \end{code}
@@ -116,7 +116,7 @@ StdOut.println(“The secret number is ” + guess);
  
  Mathematically, we can show that $T(n) = lg n$ where $T(n)$ is the number of questions. This, the running time of binary search is logarithmic.
 
-\subsection{Binary search in a sorted array} \\
+\subsection{Binary search in a sorted array}
 An important application of binary search is when we would like to find a piece of information using a key to guide the search. For example, in the last century people would use a phone book to look up a person’s phone number. In this case, the elements are sorted by a key (i.e. a person’s name, sorted in alphabetical order). Nowadays, we can implement this searching process using binary search.
 
 
@@ -152,14 +152,14 @@ public static void sort(String[] a)
 
 
 \section{Mergesort}
-To create a faster sorting method, we need to understand recursion and a \textit{divide-and-conquer} approach to algorithm design. \textit{Divide-and-conquer} approach refers to the idea that we can solve a problem by \textit{diving} it into in depend parts, \textit{conquer} them independently, and then use the solution for the parts to develop a solution to the original problem. Applying this approach to sorting, we can first divide an array into two halves, sort the two halves independently, and then \textit{merge} the results into the full array. This sorting algorithm is called \texit{mergesort}. 
+To create a faster sorting method, we need to understand recursion and a \textit{divide-and-conquer} approach to algorithm design. \textit{Divide-and-conquer} approach refers to the idea that we can solve a problem by \textit{diving} it into in depend parts, \textit{conquer} them independently, and then use the solution for the parts to develop a solution to the original problem. Applying this approach to sorting, we can first divide an array into two halves, sort the two halves independently, and then \textit{merge} the results into the full array. This sorting algorithm is called \textit{mergesort}. 
 
 We consider contiguous subarrays of a given array \textit{array}, using the notation [a;b) to refer to the array consisting of elements array[a], array[a+1], …, array[b-1]. The mergesort algorithm implements the following strategy:
    
-\begin{itemsize}
+\begin{itemize}
 \item \textit{Base case:} if the subarray length is 0 or 1, it is already sorted.
 \item \textit{Reduction step:} If not, compute $middle = a + (a+b)/2$, recursively sort the two subarrays array[a, middle) and array[middle, b] and merge them.
-\end{itemsize}
+\end{itemize}
 
 You can view a short video that shows an example of how the mergesort algorithm works \href{https://youtu.be/4VqmGXwpLqc}{\textit{here}}.
 
@@ -172,7 +172,7 @@ Fill in the blanks in the implementation of the mergesort algorithm.
 \begin{code}
 
 public void merge(int[] list, int low, int high) {
-// temporary array stores the ‘‘merge’’ array within the method.
+// temporary array stores the "merge" array within the method.
 
 int[] temp = new int[list.length];
     // Set the midpoint and the end points for each of the subarrays
@@ -207,7 +207,7 @@ else {
         index1++;
         index3++;
 }
-    // load temp array’s contents back into original array
+    // load temp array's contents back into original array
     for (int i=low, j=0; i<=high; i++, j++) {
         list[i] = BLANK;
     }
@@ -227,11 +227,11 @@ else {
  
  Another sorting divide-and-conquer algorithm is called \textit{quicksort}. It works by \textit{partitioning} an array into two parts and then sorting the parts independently. The main feature of this sorting algorithm is the partiotioning process, which rearranges the array to make three conditions hold:
 
-\begin{itemsize}
+\begin{itemize}
 \item The entry array[j] is in its final place in the array, for some j
 \item No entry in array[a] through array[j-1] is greater than array[j]
 \item No entry in array[j+1] through array[b] is less than array[j]
-\end{itemsize}
+\end{itemize}
 
 With this algorithm, we do the sorting by first partitioning the array and then applying this method recursively to the subarrays of the array. This algorithm shuffles the array before sorting it. 
 
