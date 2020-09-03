@@ -1,4 +1,4 @@
-\chapter{Methods}
+\chapter{Methods}\label{ch:methods}
 
 % Abstraction, modularity, code-reuse, syntax, arguments and calling
 
@@ -6,16 +6,304 @@
 % In this chapter, we will be looking at how and why we can use methods to
 % achieve more concise and easily-maintainable code.
 
-Let's go back to basics and recall how to write a program in Java. Within a new folder called "methods", create a file called "HelloMethods" in DrJava. Whenever you write a program in Java, all code should be enclosed within brackets for a class with the same name as the file. If the name is not the same as the file, the code won't run. 
+Let's do a quick review of how to write a program in Java. Every line of code that runs in Java must be inside a class. A class should always start with an uppercase letter, and the name of the java file should be the same as the classname but with ``.java" at the end. 
 
-% shamelessly stolen from w3schools
-A \textbf{method} is a block of code which only runs when it is called. You can pass data, known as parameters, into a method. Methods are used to perform certain actions, and they are also known as functions. Why use methods? To reuse code: define the code once, and use it many times.
-
-Let's jump right in by writing our first Java program from scratch. Open up a brand new file in DrJava in this week's folder and call it HelloWorld. 
+Every Java program needs a \ic{main()} method that looks like this:
 
 \begin{code}
-class 
+public static void main(String[] args)
 \end{code}
+
+For example, our hello world program from the beginning of the semester is 
+
+\begin{code}
+class MyClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+\end{code}
+
+Any code inside the \ic{main()} method is executed when the program is run. But after all this time, we still don't know what a method is! Let's fix that. 
+
+\section{Methods}
+
+\subsection{Introduction}
+
+A \emph{method} is a block of code which only runs when it is called. You can pass data, known as parameters, into a method. Methods are used to perform certain actions, and they are also known as \emph{functions}.
+
+We use methods in order to define code once, and use it many times. They help organize code and make debugging much faster. We will understand the benefits more clearly in coming lectures and exercises. 
+
+A method must be declared within a class. It is defined with the name of the method, followed by parentheses (). Java provides some pre-defined methods, such as \ic{System.out.println()}, but you can also create your own methods. Here is an outline for making a method named ``myMethod" within a class called ``MyClass": 
+
+\begin{code}
+class MyClass {
+  static void myMethod() {
+    // code to be executed
+  }
+}
+\end{code}
+
+\ic{myMethod()} is the name of the method. Static means that the method belongs to the MyClass class and not an object of the MyClass class. We won't explain in detail what this means until later in the course. For now, you should just always use the ``static" keyword. \ic{void} means that this method does not have a return value. We will understand what this means later in this chapter. 
+
+Now let's define what the method should do. Let's make our method print \ic{Hello World}. 
+\begin{code}
+class MyClass {
+  static void myMethod() {
+    System.out.println("Hello World");
+  }
+}
+\end{code}
+
+We've successfully written a method! But remember that every Java program needs a \ic{main()} method, since the \ic{main()} method is what Java tries to execute when you run the program. Let's see the error Java throws if we \emph{don't} have a main method. Save this file as ``MyClass.java" (filename must match class name!) within a new folder called ``Methods" in your ``CS103" folder. Now compile, and try running the program. You should see the error \ic{Static Error: This class does not have a static void main method accepting String[].} Big lesson: only code within the main method actually gets executed. If we want to run the code in the \ic{myMethod()} function, we need to \emph{call} the \ic{myMethod()} method from the \ic{main()} method. To call a method in Java, write the method's name followed by two parentheses (). As always, your statement should end in a semicolon. The full program should look like this: 
+
+\begin{code}
+class MyClass {
+  static void myMethod() {
+    System.out.println("Hello World");
+  }
+
+  public static void main(String[] args) {
+    myMethod();
+  }
+}
+\end{code}
+
+Compile and run this code, and you should see the output ``Hello World". 
+
+Methods can be run multiple times. Try calling the \ic{myMethod} method 3 times from the \ic{main()} method:\marginnote{It's often helpful to trace through the code with your finger to understand the order of execution. Although \ic{myMethod()} comes before the \ic{main()} method in this program, when you run a program Java always just executes the \ic{main()} method. Try stepping through this example with your finger, showing the order in which Java looks at each piece of the program. What would happen if we had no code in our \ic{main()} method?}
+
+\begin{code}
+class MyClass {
+  static void myMethod() {
+    System.out.println("Hello World");
+  }
+
+  public static void main(String[] args) {
+    myMethod();
+    myMethod();
+    myMethod();
+  }
+}
+\end{code}
+
+This should print ``Hello World" 3 times, separated by newlines. 
+
+You can define as many methods as you want in a Java program as long as they have different names. Let's see this with an example: 
+
+\begin{example}
+Fill in the blanks within the main method of the following code to make it print ``Hello" then ``World" by calling the two methods \ic{printHello} and \ic{printWorld}. 
+\begin{code}
+class MyClass {
+
+    static void printHello() {
+        System.out.print("Hello ");
+    }
+    
+    static void printWorld() {
+        System.out.println("World");
+    }
+
+    public static void main(String[] args) {
+        ______________ // call method to say "Hello"
+        ______________ // call a method to say "World"
+    }
+}
+\end{code}
+\noindent \emph{Answer}:
+\begin{code}
+    printHello();
+    printWorld();
+\end{code}
+\end{example}
+
+\marginnote{Not only can you have as many methods as you want in a Java program, you can also put them in any order. Try typing the above into DrJava and make sure it runs and outputs what you expect. Then try moving the \ic{main()} method before the \ic{printHello()} and \ic{printWorld()} methods. Ensure it runs exactly the same.}
+
+\subsection{Parameters} 
+
+Information can be passed to methods as \emph{parameters}. Parameters act as variables inside the method. Parameters are specified after the method name, inside the parentheses. You can add as many parameters as you want, just separate them with a comma.
+
+The following example has a method called \ic{printFullName} that takes a String called \ic{firstName} as parameter. 
+
+\begin{code}
+class MyClass {
+  static void printFullName(String firstName) {
+    System.out.println(firstName + " Reyes");
+  }
+
+  public static void main(String[] args) {
+    printFullName("Liam");
+    printFullName("Jenny");
+    printFullName("Anja");
+  }
+}
+\end{code}
+
+Save, compile, and try running it. 
+
+\marginnote{Note that we can name parameters whatever we want. How would you rewrite the \ic{printFullName()} method to use the parameter name \ic{foreName} instead of \ic{firstName}?}When a parameter is passed to the method, it is called an \emph{argument}. So, from the example above: fname is a \emph{parameter}, while Liam, Jenny and Anja are \emph{arguments}. When the method is called, we pass along a first name as an argument and the method prints out the person's name with a last name of ``Reyes" appended. When we pass in ``Liam" as an argument to the \ic{printFullName()} method, Java makes a new variable called \ic{firstName} to be used within the \ic{printFullName()} method body. So whenever we see \ic{firstName} during the method call with argument ``Liam", Java really thinks of it as the String ``Liam". When we pass in the argument ``Jenny", Java sets \ic{firstName} to ``Jenny". 
+
+Now let's try an example with multiple parameters:
+
+\begin{example}
+
+Fill in the two blanks in the code below to print the message ``Liam is 5" ``Jenny is 8" and ``Anja is 31"
+\begin{code}
+class MyClass {
+  static void printNameAndAge(String firstName, int age) {
+    System.out.println(firstName + " is " + ____);
+  }
+
+  public static void main(String[] args) {
+    printNameAndAge("Liam", 5);
+    printNameAndAge("Jenny", 8);
+    // call a method to print the message "Anja is 31":
+    ____________________ 
+  }
+}
+\end{code}
+\end{example}
+
+\marginnote{What are the parameters and what are the arguments in the above example calling the \ic{printNameAndAge()} example?} Note that when you are working with multiple parameters, the method call must have the same number of arguments as there are parameters, and the arguments must be passed in the same order.
+
+\subsection{Return types}
+The void keyword, used in the examples above, indicates that the method should not return a value. If you want the method to return a value, you can specify a data type (such as int, char, etc.) instead of void, and use the return keyword\marginnote{when we write ``return" followed by a space then an expression, the method will immediately spit out the expression so it can be used by whatever code called the method} inside the method: 
+
+\begin{code}
+class MyClass {
+  static int addFive(int x) {
+    return 5 + x;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(addFive(3));
+  }
+}
+\end{code}
+
+Here's another example with a method taking two arguments:
+
+\begin{code}
+class MyClass {
+  static int takeSum(int x, int y) {
+    return x + y;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(takeSum(5, 3));
+  }
+}
+\end{code}
+
+\marginnote{What does the takeSum method do? What is the output of the full example program?}
+
+Whereas our previous examples printed information from within our methods, now we are getting the output of a method in the main method and printing its value from there. 
+
+Have a return type also allows us to store results from methods in variables. Catching the return value for methods is recommended, since it makes code easier to read and maintain. 
+
+\begin{code}
+class MyClass {
+  static int takeSum(int x, int y) {
+    return x + y;
+  }
+
+  public static void main(String[] args) {
+    int z = takeSum(5, 3);
+    System.out.println(z);
+  }
+}
+\end{code}
+
+\subsection{Endless possibilities} 
+
+All of the concepts we've learned so far can be applied in methods, from control structures to loops to arrays. Here's an example of a method that makes use of if...else: \marginnote{Note that in all of the examples so far our methods start with a verb: the method name says what the method does. ``printHello" printed ``Hello", ``printFullName" printed a person's full name, ``addFive" added five to a number, ``checkAge" checked a person's age to see whether to grant access, and ``getSmaller" got the smaller of two numbers. Try to always start with a verb when you're deciding how to name your methods. For example, what might you call a method meant to take a number from 0-100 as argument and return the number's corresponding letter grade from A-F?}
+
+\begin{code}
+class MyClass {
+
+  // Create a checkAge() method with an integer variable called age
+  static void checkAge(int age) {
+
+    // If age is less than 18, print "access denied"
+    if (age < 18) {
+      System.out.println("Access denied - You are not old enough!");
+
+    // If age is greater than 18, print "access granted"
+    } else {
+      System.out.println("Access granted - You are old enough!");
+    }
+
+  }
+
+  public static void main(String[] args) {
+    checkAge(20); // Call the checkAge method and pass along an age of 20
+  }
+}
+\end{code}
+
+What does the code above output?
+
+\begin{example}
+Fill in the blanks in the code below to make a method that returns the smaller of two numbers:
+
+\begin{code}
+class MyClass {
+
+  static int getSmaller(int num1, int num2) {
+    int ret;
+    if (num1 < num2) {
+        ret = ____;
+    }
+    else {
+        ret = ____;
+    }
+    return ret; 
+  }
+
+  public static void main(String[] args) {
+    System.out.println(getSmaller(1,2));
+  }
+}
+\end{code}
+
+\noindent \emph{Answer}:
+
+\textbf{1st blank:} num1
+
+\textbf{2nd blank:} num2
+\end{example}
+
+Let's use loops!
+
+\begin{example}
+Fill in the blanks in the code below to make a method that adds all numbers in an array and calls it on \ic{\{1, 2\}} to return \ic{3}. 
+
+\begin{code}
+class MyClass {
+  // make sure the parameter numArray's type is integer array
+  static int addNumbers(____ numArray) {
+    int sum = 0;
+    for (int i=0; i<numArray.length; i++) {
+      sum = sum + numArray[i]; // print i
+    }
+    return sum; 
+  }
+
+  public static void main(String[] args) {
+    int[] inputArray = {1,2};
+    int sum = ______; // call the addNumbers method on inputArray
+    System.out.println(sum);
+  }
+}
+\end{code}
+
+\noindent \emph{Answer}:
+
+\textbf{1st blank:} int[] 
+
+\textbf{2nd blank:} addNumbers(inputArray)
+\end{example}
+
 
 % We will first look at some code that does not use methods and identify some
 % problems with this code. We will then, in Section \ref{sec:methods},
@@ -126,273 +414,319 @@ class
 % \ic{group1s3 > group1Max}, but we would also need to replace \ic{group2s3 < group2Max} with
 % \ic{group2s3 > group2Max} and \ic{group3s3 < group3Max} with \ic{group3s3 < group3Max}.
 
-\section{Methods}\label{sec:methods}
-In Java, we can use abstractions in our code in the form of \emph{methods}.
-Methods contain bits of code that may compute things using \emph{arguments}
-that are passed into the method.
+% \section{Methods}\label{sec:methods}
+% In Java, we can use abstractions in our code in the form of \emph{methods}.
+% Methods contain bits of code that may compute things using \emph{arguments}
+% that are passed into the method.
 
-An example of the syntax for a \emph{method definition} is given below:
-\begin{code}
-public bool negate(bool arg) {
-  return !arg; // method body
-}
-\end{code}
-We can identify the different components of the method definition:
-\begin{itemize}
-\item  The \emph{access modifier} of the method is \ic{public},
-\item the \ic{bool} before \ic{negate} gives the \emph{return type} of the method
-\item \ic{negate} is the \emph{name of the method},
-\item \ic{arg} is the \emph{name of the first argument/parameter} of the method,
-\item the \ic{bool} before \ic{arg} it is the \emph{type} of the \ic{arg} parameter,
-\item and the code between the curly braces is the method \emph{body}.
-\end{itemize}
-Inside the method body, there is code that may use the arguments of the method.
-In the example above, the body only consists of the \ic{return} statement.
-The \ic{return} statement is followed by something of the return type of the method.
-This expression, after being evaluated, gives the \emph{return value} of the method.
-As soon as a \ic{return} statement is encountered, a method finishes its execution.
-\emph{Access modifiers} will be described later on when we talk about Classes,
-but note that if an access modifier is omitted, it the method has the \emph{default} modifier.
+% An example of the syntax for a \emph{method definition} is given below:
+% \begin{code}
+% public bool negate(bool arg) {
+%   return !arg; // method body
+% }
+% \end{code}
+% We can identify the different components of the method definition:
+% \begin{itemize}
+% \item  The \emph{access modifier} of the method is \ic{public},
+% \item the \ic{bool} before \ic{negate} gives the \emph{return type} of the method
+% \item \ic{negate} is the \emph{name of the method},
+% \item \ic{arg} is the \emph{name of the first argument/parameter} of the method,
+% \item the \ic{bool} before \ic{arg} it is the \emph{type} of the \ic{arg} parameter,
+% \item and the code between the curly braces is the method \emph{body}.
+% \end{itemize}
+% Inside the method body, there is code that may use the arguments of the method.
+% In the example above, the body only consists of the \ic{return} statement.
+% The \ic{return} statement is followed by something of the return type of the method.
+% This expression, after being evaluated, gives the \emph{return value} of the method.
+% As soon as a \ic{return} statement is encountered, a method finishes its execution.
+% \emph{Access modifiers} will be described later on when we talk about Classes,
+% but note that if an access modifier is omitted, it the method has the \emph{default} modifier.
 
-Other important terms to note are as follows:
-The \emph{parameter list} of a method consists of the types of its parameters in the
-order they are given in the method definition.
-For the above method, it is simply \ic{bool}.
-The \emph{method signature} consists of the method name and parameter list.
-For the above method, it is \ic{negate(bool)}.
-A method is identified by its method signature.
+% Other important terms to note are as follows:
+% The \emph{parameter list} of a method consists of the types of its parameters in the
+% order they are given in the method definition.
+% For the above method, it is simply \ic{bool}.
+% The \emph{method signature} consists of the method name and parameter list.
+% For the above method, it is \ic{negate(bool)}.
+% A method is identified by its method signature.
 
-\begin{example}
-Consider the following method:
-\begin{code}
-int squareSum(int arg0, int arg1) {
-  int res = arg0 + arg1;
-  return res * res;
-}
-\end{code}
-Give the following for the method:
-\begin{itemize}
-\item Access modifier
-\item Return type
-\item Arguments
-\item Method signature
-\end{itemize}
+% \begin{example}
+% Consider the following method:
+% \begin{code}
+% int squareSum(int arg0, int arg1) {
+%   int res = arg0 + arg1;
+%   return res * res;
+% }
+% \end{code}
+% Give the following for the method:
+% \begin{itemize}
+% \item Access modifier
+% \item Return type
+% \item Arguments
+% \item Method signature
+% \end{itemize}
 
-\noindent \emph{Answer}: 
-\begin{itemize}
-\item Access modifier: default
-\item Return type: \ic{int}
-\item Arguments: \ic{arg0}, \ic{arg1}
-\item Method signature: \ic{squareSum(int, int)}
-\end{itemize}
-\end{example}
+% \noindent \emph{Answer}: 
+% \begin{itemize}
+% \item Access modifier: default
+% \item Return type: \ic{int}
+% \item Arguments: \ic{arg0}, \ic{arg1}
+% \item Method signature: \ic{squareSum(int, int)}
+% \end{itemize}
+% \end{example}
 
-\begin{example}
-Consider the following method:
-\begin{code}
-private void mystery (int age, String name) {
-  if (age >= 18) {
-    System.out.println(name);
-  }
-}
-\end{code} 
-Give the following for the method:
-\begin{itemize}
-\item Access modifier
-\item Return type
-\item Name
-\item Parameter list
-\end{itemize}
+% \begin{example}
+% Consider the following method:
+% \begin{code}
+% private void mystery (int age, String name) {
+%   if (age >= 18) {
+%     System.out.println(name);
+%   }
+% }
+% \end{code} 
+% Give the following for the method:
+% \begin{itemize}
+% \item Access modifier
+% \item Return type
+% \item Name
+% \item Parameter list
+% \end{itemize}
 
-\noindent \emph{Answer:}
-\begin{itemize}
-\item Access modifier: \ic{private}
-\item Return type: \ic{void}
-\item Name: \ic{mystery}
-\item Parameter list: \ic{int, String}
-\end{itemize}
+% \noindent \emph{Answer:}
+% \begin{itemize}
+% \item Access modifier: \ic{private}
+% \item Return type: \ic{void}
+% \item Name: \ic{mystery}
+% \item Parameter list: \ic{int, String}
+% \end{itemize}
 
-\end{example}
+% \end{example}
 
-We may \emph{call} or \emph{invoke} the above \ic{negate} method from elsewhere in the code by,
-for example, using \ic{negate(true)} if we want to call \ic{negate} with argument
-\ic{true}.
-We must specify the name of the method that we wish to call, followed by the arguments
-that we wish to call it on, separated by commas if there are more than one.
-The arguments provided in the call must correspond to the types of the arguments
-specified in the method definition: if the method definition has the type \ic{bool}
-for its first argument, then the first argument supplied in the call should also be
-of type \ic{bool}, and if the definition has the type \ic{int} for its second argument,
-then the first argument in the call should also be of type \ic{int}, and so on.
-A method invocation evaluates to the return value it computes, where this
-computation happens with the actual arguments
-given in the call substituted for the arguments specified in the definition, so in
-this case, the invocation \ic{id(true)} evaluates to \ic{false}.
-A method invocation has the same type as its return type, which in this case, is \ic{bool}.
+% We may \emph{call} or \emph{invoke} the above \ic{negate} method from elsewhere in the code by,
+% for example, using \ic{negate(true)} if we want to call \ic{negate} with argument
+% \ic{true}.
+% We must specify the name of the method that we wish to call, followed by the arguments
+% that we wish to call it on, separated by commas if there are more than one.
+% The arguments provided in the call must correspond to the types of the arguments
+% specified in the method definition: if the method definition has the type \ic{bool}
+% for its first argument, then the first argument supplied in the call should also be
+% of type \ic{bool}, and if the definition has the type \ic{int} for its second argument,
+% then the first argument in the call should also be of type \ic{int}, and so on.
+% A method invocation evaluates to the return value it computes, where this
+% computation happens with the actual arguments
+% given in the call substituted for the arguments specified in the definition, so in
+% this case, the invocation \ic{id(true)} evaluates to \ic{false}.
+% A method invocation has the same type as its return type, which in this case, is \ic{bool}.
 
-So, for example, we can do something like in following code snippet:
-\begin{code}
-  bool f = negate(true);
-  bool t = negate(negate(true));
-\end{code}
-After executing the above code, the variable \ic{f} contains the value \ic{false}
-and the variable \ic{t} contains the value \ic{true}.
+% So, for example, we can do something like in following code snippet:
+% \begin{code}
+%   bool f = negate(true);
+%   bool t = negate(negate(true));
+% \end{code}
+% After executing the above code, the variable \ic{f} contains the value \ic{false}
+% and the variable \ic{t} contains the value \ic{true}.
 
-Note that we can also have methods that do not return anything. Such
-methods have \ic{void} return types. They may contain a \ic{return}
-statement with no expression following \ic{return}.
-Calls to these methods cannot be used inside of other expressions.
-Two examples of methods with \ic{void} return types are below:
-\begin{code}
-public void printSum(double a, double b) {
-  System.out.println(a + b);
-}
-\end{code}
+% Note that we can also have methods that do not return anything. Such
+% methods have \ic{void} return types. They may contain a \ic{return}
+% statement with no expression following \ic{return}.
+% Calls to these methods cannot be used inside of other expressions.
+% Two examples of methods with \ic{void} return types are below:
+% \begin{code}
+% public void printSum(double a, double b) {
+%   System.out.println(a + b);
+% }
+% \end{code}
 
-\begin{code}
-public void printBigger(double a, double b) {
-  if (a > b) {
-    System.out.println(a);
-    return;
-  }
-  System.out.println(b);
-}
-\end{code}
-Note that the latter example only ever prints the value of either \ic{a} or \ic{b} but
-never both because
-the \ic{return} statement finishes the execution of the method.
+% \begin{code}
+% public void printBigger(double a, double b) {
+%   if (a > b) {
+%     System.out.println(a);
+%     return;
+%   }
+%   System.out.println(b);
+% }
+% \end{code}
+% Note that the latter example only ever prints the value of either \ic{a} or \ic{b} but
+% never both because
+% the \ic{return} statement finishes the execution of the method.
 
-Some methods also do not take any arguments at all. One such example is below:
-\begin{code}
-public int constantOne() {
-  return 1;
-}
-\end{code}
-\noindent This method can be called using \ic{constantOne()}.
+% Some methods also do not take any arguments at all. One such example is below:
+% \begin{code}
+% public int constantOne() {
+%   return 1;
+% }
+% \end{code}
+% \noindent This method can be called using \ic{constantOne()}.
 
-\begin{example}
-What value does \ic{res} have after the following code snippet is executed?
-\begin{code}
-int res = constantOne() + constantOne();
-\end{code}
-\emph{Answer}: The value of \ic{res} is 2.
-\end{example}.
+% \begin{example}
+% What value does \ic{res} have after the following code snippet is executed?
+% \begin{code}
+% int res = constantOne() + constantOne();
+% \end{code}
+% \emph{Answer}: The value of \ic{res} is 2.
+% \end{example}.
 
-Note that for every method that does not have a \ic{void} return type,
-for every possible control-flow path through the method body,
-there must be a \ic{return} statement that is eventually reached.
-For example, the following method does not meet this requirement
-because when \ic{arg} is \ic{false}, the \ic{return} statement is not
-reached:
-\begin{code}
-public int twoIfTrue(bool arg) {
-  if (arg) {
-    return 2;
-  }
-}
-\end{code}
+% Note that for every method that does not have a \ic{void} return type,
+% for every possible control-flow path through the method body,
+% there must be a \ic{return} statement that is eventually reached.
+% For example, the following method does not meet this requirement
+% because when \ic{arg} is \ic{false}, the \ic{return} statement is not
+% reached:
+% \begin{code}
+% public int twoIfTrue(bool arg) {
+%   if (arg) {
+%     return 2;
+%   }
+% }
+% \end{code}
 
-\begin{example}
-Consider the following method:
-\begin{code}
-public void mystery (bool arg0, int arg1) {
-  if (arg0) {
-    return -1 * arg1;
-  }
-  return arg0;
-}
-\end{code}
+% \begin{example}
+% Consider the following method:
+% \begin{code}
+% public void mystery (bool arg0, int arg1) {
+%   if (arg0) {
+%     return -1 * arg1;
+%   }
+%   return arg0;
+% }
+% \end{code}
 
-\noindent What do each of the following evaluate to?
-\begin{itemize}
-\item \ic{mystery(true, -2)}
-\item \ic{mystery(true, 0)}
-\item \ic{mystery(true, 4)}
-\item \ic{mystery(false, -2)}
-\item \ic{mystery(false, 0)}
-\item \ic{mystery(false, 4)}
-\end{itemize}
+% \noindent What do each of the following evaluate to?
+% \begin{itemize}
+% \item \ic{mystery(true, -2)}
+% \item \ic{mystery(true, 0)}
+% \item \ic{mystery(true, 4)}
+% \item \ic{mystery(false, -2)}
+% \item \ic{mystery(false, 0)}
+% \item \ic{mystery(false, 4)}
+% \end{itemize}
 
-\noindent \emph{Answer:}
-\begin{itemize}
-\item \ic{mystery(true, -2)} evaluates to 2
-\item \ic{mystery(true, 0)} evaluates to 0
-\item \ic{mystery(true, 4)} evaluates to $-4$
-\item \ic{mystery(false, -2)} evaluates to $-2$
-\item \ic{mystery(false, 0)} evalutes to 0
-\item \ic{mystery(false, 4)} evalutates to 4
-\end{itemize}
+% \noindent \emph{Answer:}
+% \begin{itemize}
+% \item \ic{mystery(true, -2)} evaluates to 2
+% \item \ic{mystery(true, 0)} evaluates to 0
+% \item \ic{mystery(true, 4)} evaluates to $-4$
+% \item \ic{mystery(false, -2)} evaluates to $-2$
+% \item \ic{mystery(false, 0)} evalutes to 0
+% \item \ic{mystery(false, 4)} evalutates to 4
+% \end{itemize}
 
-\noindent What does the method do?
+% \noindent What does the method do?
 
-\noindent \emph{Answer:} It negates its second argument
-\ic{arg1} whenever its first argument \ic{arg0} is
-\ic{true} and otherwise just returns its second argument
-\ic{arg1}.
-\end{example}
+% \noindent \emph{Answer:} It negates its second argument
+% \ic{arg1} whenever its first argument \ic{arg0} is
+% \ic{true} and otherwise just returns its second argument
+% \ic{arg1}.
+% \end{example}
 
-\begin{example}
-How many methods can be called by the following method?
-What do you think each of their return types and parameter lists are?
+% \begin{example}
+% How many methods can be called by the following method?
+% What do you think each of their return types and parameter lists are?
 
-\begin{code}
-public void sayHello(int times, String name, String day) {
-  if (shouldStop(times))
-    return;
-  String hello = getHelloStr(name, day);
-  System.out.print.ln(hello);
-  sayHello(times - 1, name, day);
-}
-\end{code}
-\noindent \emph{Answer:}
-Three methods can be called: \ic{shouldStop}, \ic{getHelloStr} and \ic{sayHello}.
+% \begin{code}
+% public void sayHello(int times, String name, String day) {
+%   if (shouldStop(times))
+%     return;
+%   String hello = getHelloStr(name, day);
+%   System.out.print.ln(hello);
+%   sayHello(times - 1, name, day);
+% }
+% \end{code}
+% \noindent \emph{Answer:}
+% Three methods can be called: \ic{shouldStop}, \ic{getHelloStr} and \ic{sayHello}.
 
-The return type of \ic{shouldStop} is \ic{bool}, and it has parameter list \ic{int}.
-The return type of \ic{getHelloStr} is \ic{String}, and it has parameter list \ic{String, String}.
-The return type of \ic{sayHello} is \ic{void}, and it has parameter list \ic{int, String, String}.
-\end{example}
+% The return type of \ic{shouldStop} is \ic{bool}, and it has parameter list \ic{int}.
+% The return type of \ic{getHelloStr} is \ic{String}, and it has parameter list \ic{String, String}.
+% The return type of \ic{sayHello} is \ic{void}, and it has parameter list \ic{int, String, String}.
+% \end{example}
 
-\begin{example}
-Write a method with signature \ic{printInOrder(int, int, int)} that takes
-three \ic{int}s \ic{a}, \ic{b}, and \ic{c} as arguments and prints them out,
-one per line, in increasing order. E.g. \ic{printInOrder(5, 9, 7)} should output the following:
-\begin{code}
-5
-7
-9
-\end{code}
+% \begin{example}
+% Write a method with signature \ic{printInOrder(int, int, int)} that takes
+% three \ic{int}s \ic{a}, \ic{b}, and \ic{c} as arguments and prints them out,
+% one per line, in increasing order. E.g. \ic{printInOrder(5, 9, 7)} should output the following:
+% \begin{code}
+% 5
+% 7
+% 9
+% \end{code}
 
-\noindent \emph{Answer:}
-A possible solution is the following:
-\begin{code}
-public void printInOrder(int a, int b, int c) {
-  int smallest = a;
-  int middle = b;
-  int biggest = c;
-  if (smallest > middle) {
-    int tmp = smallest;
-    smallest = middle;
-    middle = tmp;
-  }
-  if (smallest > biggest) {
-    int tmp = smallest;
-    smallest = biggest;
-    biggest = tmp;
-  }
-  if (middle > biggest) {
-    int tmp = middle;
-    middle = biggest;
-    biggest = tmp;
-  }
-  System.out.println(smallest);
-  System.out.println(middle);
-  System.out.println(biggest);
-}
-\end{code}
-\end{example}
+% \noindent \emph{Answer:}
+% A possible solution is the following:
+% \begin{code}
+% public void printInOrder(int a, int b, int c) {
+%   int smallest = a;
+%   int middle = b;
+%   int biggest = c;
+%   if (smallest > middle) {
+%     int tmp = smallest;
+%     smallest = middle;
+%     middle = tmp;
+%   }
+%   if (smallest > biggest) {
+%     int tmp = smallest;
+%     smallest = biggest;
+%     biggest = tmp;
+%   }
+%   if (middle > biggest) {
+%     int tmp = middle;
+%     middle = biggest;
+%     biggest = tmp;
+%   }
+%   System.out.println(smallest);
+%   System.out.println(middle);
+%   System.out.println(biggest);
+% }
+% \end{code}
+% \end{example}
 
 \subsection{Overloading}
-As mentioned above, methods are identified by their signature, not just their names.
+
+With method \emph{overloading}, multiple methods can have the same name with different parameters. This is useful in a few cases.
+
+For one, consider the following code that includes both a \ic{addTwoInts()} and a \ic{addTwoDoubles()} method so that we can add both integers and doubles in our \ic{main()} method. 
+
+\begin{code}
+public class MyClass{
+  static int addTwoInts(int x, int y) {
+    return x + y;
+  }
+
+  static double addTwoDoubles(double x, double y) {
+    return x + y;
+  }
+
+  public static void main(String[] args) {
+    int myNum1 = addTwoInts(8, 5);
+    double myNum2 = addTwoDoubles(4.3, 6.26);
+    System.out.println("int: " + myNum1);
+    System.out.println("double: " + myNum2);
+  }
+}
+\end{code}
+
+Instead of defining two methods that should do the same thing (add two numbers), it is better to overload one. In the example below, we overload a single method called ``addNumbers" to work for both int and double:
+
+\begin{code}
+public class MyClass{
+  static int addTwoNumbers(int x, int y) {
+    return x + y;
+  }
+
+  static double addTwoNumbers(double x, double y) {
+    return x + y;
+  }
+
+  public static void main(String[] args) {
+    int num1 = addTwoNumbers(8, 5);
+    double num2 = addTwoNumbers(4.3, 6.26);
+    System.out.println("int: " + num1);
+    System.out.println("double: " + num2);
+  }
+}
+\end{code}
+
+
+
 Because of this, we can actually have methods with the same name (in the same
 Class) as long as they have different parameter lists.
 

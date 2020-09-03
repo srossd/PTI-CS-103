@@ -87,8 +87,8 @@ We can express this situation using the following ``multi-level" flowchart, some
 for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 [Is the price of the \\ toy less than \$20?
     [Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
-        [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
-        [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+        [Don't buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+        [Buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
     ]
     [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
 ]
@@ -129,7 +129,7 @@ for tree={l sep+=1.3cm, s sep+=-1cm,edge={thick, color=darkgray, -{Triangle[]}}}
 \begin{example}
 You and a friend are playing a game of soccer. At the end of the game, you each count the total number of goals scored. You compare your total points with your friend's total points to see who won. How do you model this with a flowchart?
 
-\textit{Answer: } We draw this represent using the following flowchart.
+\textit{Answer: } We draw this using the following flowchart.
 
 
 \begin{center}
@@ -147,7 +147,7 @@ for tree={l sep+=1.4cm, s sep+= 0.6cm,edge={thick, color=darkgray, -{Triangle[]}
 
 \section{The \ic{if}-\ic{else} statement}
 
-In this section, we'll connect the flowcharts we described before to actual Java code. We'll start by describing \ic{if}-\ic{else} statements, which correspond to the "yes or no" flow charts above.
+In this section, we'll translate the flowcharts we described before to actual Java code. We'll start by describing \ic{if}-\ic{else} statements, which correspond to the "yes or no" flow charts above.
 
 \begin{definition}
 An \ic{if}-\ic{else} statement allows us to write programs that execute one of two commands, depending on whether a condition is true or false.
@@ -166,7 +166,7 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{forest}
 \end{center}
 
-Let's see how to write this flowchart in Java code. The color-coded parts in the code correspond to the corresponding colors in the flowchart. Note: your Java code on the computer will not have these colors! This is just for explanation.
+Let's see how to write this flowchart in Java code. The color-coded parts in the code correspond to the matching colors in the flowchart. Note: when you write Java code it will not have these colors! This is just for the explanation.
 
 \begin{code}
 if (ß\textcolor{mygreen}{price < 20}ß) 
@@ -175,7 +175,7 @@ if (ß\textcolor{mygreen}{price < 20}ß)
 }
 else
 {
-    ß\textcolor{Rhodamine}{System.out.println("Do not buy the toy");}ß
+    ß\textcolor{Rhodamine}{System.out.println("Don't buy the toy");}ß
 }
 \end{code}
 
@@ -184,19 +184,23 @@ There are three components to an \ic{if}-\ic{else} statement: a \textcolor{mygre
 
 In our flow chart, the \textcolor{mygreen}{condition} is: ``the price of the toy is less than \$20``. If the \textcolor{mygreen}{condition} is true, which means that the toy \emph{does} cost less than \$20, then we execute the \textcolor{Brown}{true-action}. In our code, the \textcolor{Brown}{true-action} is to print that we will buy the toy.
 
-Otherwise, if the \textcolor{mygreen}{condition} is false, which means that the toy \emph{does} costs more than \$20, then we execute the \textcolor{Rhodamine}{false-action}. In our code, the \textcolor{Rhodamine}{false-action} is to print that we will not buy the toy.
+Otherwise, if the \textcolor{mygreen}{condition} is false, which means that the toy \emph{does not} cost less than \$20, then we execute the \textcolor{Rhodamine}{false-action}. In our code, the \textcolor{Rhodamine}{false-action} is to print that we will not buy the toy.
 
 Note: in the above code snippet, we never define the variable \textcolor{mygreen}{price}. So if you tried to run the code, Java would give you an error. You need to define \textcolor{mygreen}{price}. For example, the following code would successfully run.
 
 \begin{code}
-int price = 15;
-if (ß\textcolor{mygreen}{price < 20}ß) 
-{
-    ß\textcolor{Brown}{System.out.println("Buy the toy");}ß
-}
-else
-{
-    ß\textcolor{Rhodamine}{System.out.println("Do not buy the toy");}ß
+class Snippet {
+    public static void main(String[] args) {
+        int price = 15;
+        if (ß\textcolor{mygreen}{price < 20}ß) 
+        {
+            ß\textcolor{Brown}{System.out.println("Buy the toy");}ß
+        }
+        else
+        {
+            ß\textcolor{Rhodamine}{System.out.println("Don't buy the toy");}ß
+        }
+    }
 }
 \end{code}
 
@@ -496,7 +500,7 @@ if (duration > 60) {
 
 \section{Nested \ic{if}-\ic{else} statements (Nested conditionals)}
 
-In this section, we will describe how to turn ``multi-level" flowcharts into code. This involves ``nesting" our \ic{if}-\ic{else} statements, known as a \emph{nested conditional}. (From this section onwards, we will stop color coding the condition, true-action, and false-action.)
+In this section, we will describe how to turn ``multi-level" flowcharts into code. This involves ``nesting" our \ic{if}-\ic{else} statements, known as a \emph{nested conditional} (From this section onwards, we will stop color coding the condition, true-action, and false-action).
 
 Consider the following flowchart from earlier.
 
@@ -505,8 +509,8 @@ Consider the following flowchart from earlier.
 for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 [Is the price of the \\ toy less than \$20?
     [Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
-        [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
-        [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+        [Don't buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+        [Buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
     ]
     [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
 ]
@@ -526,7 +530,7 @@ else
 }
 \end{code}
 
-As before, our condition is still \ic{price < 20}. The false-action is also \ic{System.out.println(``Do not buy the toy")}. So our code would look like:
+As before, our condition is still \ic{price < 20}. The false-action is also \ic{System.out.println(``Don't buy the toy")}. So our code would look like:
 
 \begin{code}
 if (price < 20) 
@@ -535,7 +539,7 @@ if (price < 20)
 }
 else
 {
-    System.out.println("Do not buy the toy");
+    System.out.println("Don't buy the toy");
 }
 \end{code}
 
@@ -545,8 +549,8 @@ But unlike the previous example, the true-action here isn't just another print s
 \begin{forest}
 for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 [Is the toy \\ ``Age of Corpses"?, edge label={node[midway,above left,font=\normalsize]{Yes}}
-    [Buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
-    [Don't buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
+    [Don't buy the toy, edge label={node[midway,above left,font=\normalsize]{Yes}}]
+    [Buy the toy, edge label={node[midway,above right,font=\normalsize]{No}}]
 ]
 \end{forest}
 \end{center}
@@ -556,11 +560,11 @@ The Java code for this flowchart (see exercise from previous section) is
 \begin{code}
 if (toy == "Age of Corpses") 
 {
-    System.out.println("Buy the toy");
+    System.out.println("Don't buy the toy");
 }
 else
 {
-    System.out.println("Do not buy the toy");
+    System.out.println("Buy the toy");
 }
 \end{code}
 
@@ -571,39 +575,43 @@ if (price < 20)
 {
     if (toy == "Age of Corpses") 
     {
-        System.out.println("Buy the toy");
+        System.out.println("Don't buy the toy");
     }
     else
     {
-        System.out.println("Do not buy the toy");
+        System.out.println("Buy the toy");
     }
 }
 else
 {
-    System.out.println("Do not buy the toy");
+    System.out.println("Don't buy the toy");
 }
 \end{code}
 
 Note that you can't run this Java code by itself, as the variables \ic{price} and \ic{toy} were not previously defined. You need to define those variables before running the code. For example, the following code would be valid to run.
 
 \begin{code}
-int price = 15;
-int toy = "Age of Corpses"
+class Snippet {
+    public static void main(String[] args) {
+        int price = 15;
+        int toy = "Age of Corpses"
 
-if (price < 20) 
-{
-    if (toy == "Age of Corpses") 
-    {
-        System.out.println("Buy the toy");
+        if (price < 20) 
+        {
+            if (toy == "Age of Corpses") 
+            {
+                System.out.println("Don't buy the toy");
+            }
+            else
+            {
+                System.out.println("Buy the toy");
+            }
+        }
+        else
+        {
+            System.out.println("Don't buy the toy");
+        }
     }
-    else
-    {
-        System.out.println("Do not buy the toy");
-    }
-}
-else
-{
-    System.out.println("Do not buy the toy");
 }
 \end{code}
 
@@ -636,7 +644,7 @@ The flowchart is as follows.
 for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 [Is height \\ less than 60?
     [Relatively short, edge label={node[midway,above left,font=\normalsize]{Yes}}]
-    [Is height \\ larger than 72?, edge label={node[midway,above right,font=\normalsize]{No}}
+    [Is height \\ more than 72?, edge label={node[midway,above right,font=\normalsize]{No}}
         [Relatively tall, edge label={node[midway,above left,font=\normalsize]{Yes}}]
         [Pretty average, edge label={node[midway,above right,font=\normalsize]{No}}]
     ]
@@ -647,7 +655,7 @@ for tree={edge={thick, color=darkgray, -{Triangle[]}}}
 \end{example}
 
 \begin{example}
-Imagine that the following program represents the person's reaction to different types of food. Given a pizza (\ic{green} = false, \ic{bitter} = false, \ic{warm} = true, \ic{cheesy} = true), how will this person respond? What about when given a kiwi (\ic{green} = true, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)? What about a strawberry (\ic{green} = false, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)?\safemarginnote{Recall Java's boolean operators: \ic{A || B} is true if at least one of \ic{A}, \ic{B} is true. \ic{A \&\& B} is true if both \ic{A} and \ic{B} are true. \ic{!A} is true if \ic{A} is false.}
+Imagine that the following program represents a person's reaction to different types of food. Given a pizza (\ic{green} = false, \ic{bitter} = false, \ic{warm} = true, \ic{cheesy} = true), how will this person respond? What about when given a kiwi (\ic{green} = true, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)? What about a strawberry (\ic{green} = false, \ic{bitter} = false, \ic{warm} = false, \ic{cheesy} = false)?\safemarginnote{Recall Java's boolean operators: \ic{A || B} is true if at least one of \ic{A}, \ic{B} is true. \ic{A \&\& B} is true if both \ic{A} and \ic{B} are true. \ic{!A} is true if \ic{A} is false.}
 
 \begin{code}
 if (green || bitter) {
@@ -668,7 +676,7 @@ It might help to draw the flowchart for the code.
 
 \section{\ic{else if} statements}
 
-In this section, we will describe how to write Java code for flowcharts with more two answers.
+In this section, we will describe how to write Java code for flowcharts with more than two answers.
 
 Consider the following flowchart from the first section, which describes how to convert a number into a letter grade.
 
@@ -690,14 +698,14 @@ To express this flowchart with Java code, we use something called an \ic{else if
 An \ic{else if} statement allows us to write programs for flowcharts that have multiple answers for a single question.
 \end{definition}
 
-Below is Java code for writing the above flowchart. The colors in the code corresponding to those in the flowchart. 
+Below is Java code for writing the above flowchart. The colors in the code correspond to those in the flowchart. 
 
 \begin{code}
 if (ß\textcolor{ForestGreen}{grade >= 90}ß) 
 {
     ß\textcolor{LimeGreen}{System.out.println(``Grade is A");}ß
 }
-else if (ß\textcolor{Blue}{80 <= grade \&\& grade <= 90}ß)
+else if (ß\textcolor{Blue}{80 <= grade \&\& grade <= 90}ß) 
 {
     ß\textcolor{Cerulean}{System.out.println(``Grade is B");}ß
 }

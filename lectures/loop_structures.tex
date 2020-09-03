@@ -328,8 +328,30 @@ while (x <= 10) {
 \end{example}
 
 \section{The \ic{for} loop}
-While a \ic{while} loop can express all possible loops, many while loops follow the same pattern. Before the loop, you initialize a variable; the loop condition involves that variable; and within the loop body, you then update that variable in the same way. When loops involves this pattern, programmers typically write a
-\ic{for} loop. Below is a \ic{for} loop that prints all the numbers from 0 to 9.
+\begin{definition}
+A \ic{for} loop is a repetition control structure used to write a loop that needs to be executed a specific number of times.
+\end{definition}
+
+While a \ic{while} loop can express all possible loops, many while loops follow the same pattern. 
+
+We will now describe how to write \textit{for} loops in Java. We usually  use the \textit{for} loop instead of a \texit{while} loop when we know exactly how many times we want to loop through a block of code. The syntax of the loop is the following:
+
+\begin{code}
+for (initialization statement; test expression; update statement) {
+  // code to execute
+ }
+\end{code}
+
+\textbf{initialization statement} is executed once before the execution of the entire code block. This statement usually initializes the variable that will be updated as the code gets executed.
+
+\textbf{test expression} defines the condition for executing the code block. The code block will be executed while the condition is true.
+
+\textbf{update statement} is executed each time after the code block is executed.
+
+%Before the loop, you initialize a variable; the loop condition involves that variable; and %within the loop body, you then update that variable in the same way. When loops involves %this pattern, programmers typically write a
+%\ic{for} loop. 
+
+Below is a \ic{for} loop that prints all the numbers from 0 to 9.
 
 \begin{code}
 for (int i = 0; i < 10; i++)
@@ -338,7 +360,7 @@ for (int i = 0; i < 10; i++)
 }
 \end{code}
 
-A \ic{for} loop has 4 parts, initialization, condition, change, and body. In the above \ic{for} loop, \ic{int i = 0} is the initialization. It initializes a new variable, \ic{i}, to be zero. Next is the condition, \ic{i < 10}. This is the condition that describes when the loop ends. Then comes the change, \ic{i++}. After the loop body is run, the change is run as well.  Finally is the loop body, which in this case merely prints out \ic{i}.
+A \ic{for} loop has 4 parts, initialization, condition, change, and body. In the above \ic{for} loop, \ic{int i = 0} is the initialization. It initializes a new variable, \ic{i}, to be zero. Next is the condition, \ic{i < 10}. This is the condition that describes when the loop ends. Then comes the change, \ic{i++}. \ic{i++} means increment the \ic{i} variable by 1 each time after the code block is executed. After the loop body is run, the change is run as well.  The final part of the \ic{for} loop is the loop body, which in this case merely prints out the value of \ic{i} at each step of iteration over the \ic{for} loop.
 
 Note that this loop could have been written as a while loop, shown below:
 \begin{code}
@@ -350,11 +372,12 @@ while (i < 10)
 }
 \end{code}
 %
-However, programmers use a \ic{for} loop, they know that the loop structure has the structure of requiring initialization, having a loop condition (typically refer to the initialized variable), and having a change on each loop iteration (typically changing the initialized variable), and having a loop body
+However, when programmers use a \ic{for} loop, they know that the loop structure has the structure of requiring initialization, having a loop condition (typically referring to the initialized variable), and having a change on each loop iteration (typically changing the initialized variable), and having a loop body
 (that typically does not change the initialized variable).
 
 \begin{example}
 What does the following piece of code print?
+Note that \ic{i-}- means decrease the value of \ic{i} by 1 each time after the code block is executed.
 
 \begin{code}
 for (int i = 10; i > 0; i--)
@@ -419,7 +442,7 @@ for (int i = 0; i < 20; i = i+2)
 It is possible to combine loop statements in many interesting ways. Consider the following example:
 
 \begin{code}
-for (int i = 0; i < 100; i++)
+for (int i = 1; i < 100; i++)
 {
     System.out.println("Go up to: " + i);
     for (int j = 0; j < i; j++)
@@ -429,8 +452,7 @@ for (int i = 0; i < 100; i++)
 }
 \end{code}
 
-\noindent For each number from 0 to 99, this code will print all the numbers up to (and not including) it.  For example, it will start by printing \ic{0}. Then it will print \ic{0}
-and \ic{1}.  Then it will print \ic{0}, \ic{1}, and \ic{2}.  This will continue until it prints all the numbers from \ic{0} to \ic{98}.
+\noindent For each number from 0 to 99, this code will print all the numbers up to (and not including) it.  For example, it will start by printing "Go up to: 1" followed by \ic{0}.  Then it will print "Go up to: 2"  followed by \ic{0} and \ic{1}. Then it will print "Go up to: 3"  followed by \ic{0}, \ic{1},  \ic{2}. This will continue until it prints all the numbers from \ic{0} to \ic{98}.
 
 \section{Curly braces}
 So far, we have been using curly braces to enclose each of our loop bodies. These curly braces can be omitted if there is only a single statement. For example, in the snippet of code below, the first set of curly braces can be omitted, while the second cannot.
@@ -499,4 +521,33 @@ while (num > 0)
   using loops.
 \end{exercise}
 
+\begin{exercise}
+Suppose you have the following problem: given \textit{N} distinct integers, how many triples sum to exactly zero? The code for answering this question is provided below. Suppose you have an array of integers a = \{30, -40, -20, -10, 40, 0, 10, 5\} inputted to your program. What does the following program outputs? Note that a.length gives the number of elements in the array (which is 8 in our case).
+
+\begin{code}
+public class ThreeSum 
+{
+    public static void int count(int[] a) 
+    {
+        int N = a.length;
+        int count = 0;
+	for (int I = 0; I < N; i++)
+		for (int j = i+1; j < N; j++)
+			for (int k = j+1; k < N; k++)
+				if (a[i] + a[j] + a[k] == 0)
+					count++;
+        return count;
+    }
+
+    public static void main(String[] args)
+        { 
+        int[] a = In.readInts(args[0]);
+        // in this question, a = {30, -40, -20, -10, 40, 0, 10, 5}
+        StdOut.println(count(a));
+        }
+}
+    
+\end{code}
+
+\end{exercise}
 \referencessection

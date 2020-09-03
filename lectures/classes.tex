@@ -1,0 +1,166 @@
+\chapter{Classes}
+\label{ch:classes}
+
+An \emph{object} is a combination of variables, functions, and data. A \emph{class} is a blueprint for a type of object. For example, if a car is an object, then a class is a car factory. Every car (object) that is made by the car factory (class) follows the basic car blueprint: it has tires, an engine, a steering wheel, and so forth.
+
+Java is an \emph{object-oriented programming} (OOP) language, meaning that nearly everything is a class or an object. While you may not have thought about it, you have been working with classes this whole time. For example, here is a class that is very similar to classes you saw in Chapter~\ref{ch:methods}:
+
+\begin{code}
+class HelloWorld {
+
+    static void greeting() {
+        System.out.println("Hello World");
+    } 
+
+    public static void main(String[] args) {
+        greeting();
+    }
+}
+\end{code}
+
+Every program in Java follows this basic pattern. You have a class, for example \ic{HelloWorld}. The name of the file must match the name of the class, for example \ic{HelloWorld.java}. Methods such as \ic{greeting} are associated with the class. And every Java program needs one \ic{main} method that gets executed first. In this chapter, we'll discuss classes in more detail. This will allow us to build more complex and interesting programs.
+
+\section{Creating objects}
+
+We've been working with classes this whole time. And in fact, you've also already seen objects. Consider this program from Chapter~\ref{ch:io}:
+
+\begin{code}
+import java.util.Scanner;
+
+class HelloPlanet {
+
+    public static void main(String[] args) {
+        // Create a Scanner object.
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter a planet name: ");
+        String planet = input.next();
+        System.out.printf("Hello %s\n", planet);
+        input.close();  // Close the Scanner object.
+    }
+}
+\end{code}
+
+Notice that on Line 7, we create an object \ic{input} using the \ic{new} keyword. We say that \ic{input} has type \ic{Scanner}. Again, nearly everything in Java is an object, so a similar thing is happening on line 9: \ic{String planet = ...} is creating a \ic{planet} object of type \ic{String}.
+
+Since a class is like a factory for objects, this means we can create multiple objects from a single class. Consider this example of two objects of type \ic{Dog}:
+
+\begin{code}
+class Dog {
+
+    void bark() {
+        System.out.println("Woof, woof!");
+    }
+    
+    public static void main(String[] args) {
+        Dog fido = new Dog();
+        fido.bark();  // Prints "Woof, woof!"
+        Dog izzy = new Dog();
+        izzy.bark();  // Prints "Woof, woof!"
+    }
+}
+\end{code}
+
+The important point is that \ic{fido} and \ic{izzy} are both \ic{Dog} objects. They both have a \ic{bark} method.
+
+\section{Class methods and attributes}
+
+We have seen that classes have methods. For example, this snippet calls the \ic{Scanner} class's \ic{nextInt} method:
+
+\begin{code}
+Scanner input = new Scanner(System.in);
+int num = input.nextInt();
+\end{code}
+
+However, classes also have \emph{attributes}. An attribute, sometimes called a \emph{field}, is a variable associated with a class. Every object constructed from the class will then have the same variable name, although not necessarily the same value. For example, we can modify the \ic{Dog} class to have a \ic{color} attribute:
+
+\begin{code}
+class Dog {
+
+    String color;
+
+    void bark() {
+        System.out.println("Woof, woof!");
+    }
+    
+    public static void main(String[] args) {
+        Dog fido = new Dog();
+        fido.color = "brown";
+        Dog izzy = new Dog();
+        izzy.color = "black";
+        System.out.println(fido.color);  // Prints "brown"
+        System.out.println(izzy.color);  // Prints "black"
+    }
+}
+\end{code}
+
+So while both \ic{Dog} objects have an \ic{age} attribute, that attribute is different for each instance. Setting Fido's color does not effect Izzy's color, although both dogs have colors.
+
+Furthermore, a method can depend on the value of an attribute. Therefore, the runtime behavior of an object may depend on the object's state. For example
+
+\begin{code}
+class Dog {
+
+    int age = 0;
+    
+    void bark() {
+        System.out.printf("Woof! I'm %d-years-old.\n", age);
+    }
+    
+    public static void main(String[] args) {
+        Dog fido = new Dog();
+        fido.age = 3;
+        Dog izzy = new Dog();
+        izzy.age = 5;
+        fido.bark();  // Prints "Woof! I'm 3-years-old."
+        izzy.bark();  // Prints "Woof! I'm 5-years-old."
+    }
+}
+\end{code}
+
+Notice that the result of calling the method \ic{bark} can change depending on the object's state.  This is what we mean when we say, ``Java is an object-oriented programming language.'' Nearly everything in Java is actually a class or an object, and we build complex programs by composing objects.
+
+\section{Constructors}
+
+We may want to set attributes such as Izzy's age when we create the object. We can do this using a constructor. In Java, a \emph{constructor} is a special method that initializes the object. The constructor is called when the class is created. For example:
+
+\begin{code}
+class Dog {
+
+    // Declare but do not initialize class attributes.
+    String color;
+    int age;
+    
+    // This is a class constructor for the `Dog` class.
+    public Dog(String myColor, int myAge) {
+        color = myColor;
+        age = myAge;
+    }
+    
+    void bark() {
+        System.out.printf("Woof! I have %s fur and %d-years-old.\n", age);
+    }
+    
+    public static void main(String[] args) {
+        Dog fido = new Dog("brown", 3);
+        Dog izzy = new Dog("black", 5);
+        // Prints "Woof! I have brown fur and 3-years-old."
+        fido.bark();
+        // Prints "Woof! I have black fur and 5-years-old."
+        izzy.bark();
+    }
+}
+\end{code}
+
+As we can see, the \ic{Dog} constructor is a bit like a method in that it can accept parameters, in this case \ic{myColor} and \ic{myAge}. However, it is only called once per object using the \ic{new} keyword.
+
+TODO: Inheritance?
+
+\section{Creating multiple classes}
+
+TODO: Multiple classes (instantiate Class1 in file for Class2)
+    
+TODO: Final?
+
+\section{Packages}
+
+TODO: you've already seen many of these! Integer, Scanner, System, ...
