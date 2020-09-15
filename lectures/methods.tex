@@ -1,5 +1,11 @@
 \chapter{Methods}\label{ch:methods}
 
+\begin{goals}
+\item Write methods with parameters and non-void return types
+\item Understand the components of a method
+\item Study the main method in the context of the lesson
+\end{goals}
+
 % Abstraction, modularity, code-reuse, syntax, arguments and calling
 
 % Sometimes it is useful to abstract certain computations into methods.
@@ -38,18 +44,18 @@ A method must be declared within a class. It is defined with the name of the met
 
 \begin{code}
 class MyClass {
-  static void myMethod() {
+  public static void myMethod() {
     // code to be executed
   }
 }
 \end{code}
 
-\ic{myMethod()} is the name of the method. Static means that the method belongs to the MyClass class and not an object of the MyClass class. We won't explain in detail what this means until later in the course. For now, you should just always use the ``static" keyword. \ic{void} means that this method does not have a return value. We will understand what this means later in this chapter. 
+\ic{myMethod()} is the name of the method. Public means that code outside of the MyClass class will be able to run the method. Static means that the method belongs to the MyClass class and not an object of the MyClass class. We won't explain in detail exactly these definitions of "public" and "static" mean until later in the course. For now, you should just remember to write ``public static" at the start of every method declaration. \ic{void} means that this method does not have a return value. We will understand what this means later in this chapter. 
 
 Now let's define what the method should do. Let's make our method print \ic{Hello World}. 
 \begin{code}
 class MyClass {
-  static void myMethod() {
+  public static void myMethod() {
     System.out.println("Hello World");
   }
 }
@@ -59,7 +65,7 @@ We've successfully written a method! But remember that every Java program needs 
 
 \begin{code}
 class MyClass {
-  static void myMethod() {
+  public static void myMethod() {
     System.out.println("Hello World");
   }
 
@@ -75,7 +81,7 @@ Methods can be run multiple times. Try calling the \ic{myMethod} method 3 times 
 
 \begin{code}
 class MyClass {
-  static void myMethod() {
+  public static void myMethod() {
     System.out.println("Hello World");
   }
 
@@ -96,11 +102,11 @@ Fill in the blanks within the main method of the following code to make it print
 \begin{code}
 class MyClass {
 
-    static void printHello() {
+    public static void printHello() {
         System.out.print("Hello ");
     }
     
-    static void printWorld() {
+    public static void printWorld() {
         System.out.println("World");
     }
 
@@ -127,7 +133,7 @@ The following example has a method called \ic{printFullName} that takes a String
 
 \begin{code}
 class MyClass {
-  static void printFullName(String firstName) {
+  public static void printFullName(String firstName) {
     System.out.println(firstName + " Reyes");
   }
 
@@ -150,7 +156,7 @@ Now let's try an example with multiple parameters:
 Fill in the two blanks in the code below to print the message ``Liam is 5" ``Jenny is 8" and ``Anja is 31"
 \begin{code}
 class MyClass {
-  static void printNameAndAge(String firstName, int age) {
+  public static void printNameAndAge(String firstName, int age) {
     System.out.println(firstName + " is " + ____);
   }
 
@@ -171,7 +177,7 @@ The void keyword, used in the examples above, indicates that the method should n
 
 \begin{code}
 class MyClass {
-  static int addFive(int x) {
+  public static int addFive(int x) {
     return 5 + x;
   }
 
@@ -199,7 +205,7 @@ class MyClass {
 
 Whereas our previous examples printed information from within our methods, now we are getting the output of a method in the main method and printing its value from there. 
 
-Have a return type also allows us to store results from methods in variables. Catching the return value for methods is recommended, since it makes code easier to read and maintain. 
+Non-void return types also allow us to store results from methods in variables. Using variables to store the return value from methods is recommended, since it makes code easier to read and maintain. In the following example, we store the return value of \ic{takeSum(5, 3)} in the integer \ic{z}:
 
 \begin{code}
 class MyClass {
@@ -222,7 +228,7 @@ All of the concepts we've learned so far can be applied in methods, from control
 class MyClass {
 
   // Create a checkAge() method with an integer variable called age
-  static void checkAge(int age) {
+  public static void checkAge(int age) {
 
     // If age is less than 18, print "access denied"
     if (age < 18) {
@@ -249,7 +255,7 @@ Fill in the blanks in the code below to make a method that returns the smaller o
 \begin{code}
 class MyClass {
 
-  static int getSmaller(int num1, int num2) {
+  public static int getSmaller(int num1, int num2) {
     int ret;
     if (num1 < num2) {
         ret = ____;
@@ -281,7 +287,7 @@ Fill in the blanks in the code below to make a method that adds all numbers in a
 \begin{code}
 class MyClass {
   // make sure the parameter numArray's type is integer array
-  static int addNumbers(____ numArray) {
+  public static int addNumbers(____ numArray) {
     int sum = 0;
     for (int i=0; i<numArray.length; i++) {
       sum = sum + numArray[i]; // print i
@@ -679,7 +685,20 @@ class MyClass {
 % \end{code}
 % \end{example}
 
-\subsection{Overloading}
+\subsection{The main method}
+To tie things together, let's go back to the main method for the Hello World program that we've seen so many times but never understood.
+
+\begin{code}
+class MyClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+\end{code}
+
+In this case, the MyClass class has only one method, and it is the (required) main() method. ``public static" must be written for any method (at least for now). Main methods always have ``void" return types because Java simply runs them and doesn't store any values. And the parameter ``String[] args" is a parameter that always must be there for a main method. This String array will be filled with the words that you type after ``run MyClass" when running your program. We will get more practice with this in the next semester.  
+
+\subsection{Overloading (Optional)}
 
 With method \emph{overloading}, multiple methods can have the same name with different parameters. This is useful in a few cases.
 
@@ -949,7 +968,7 @@ for computing \ic{group1Max}, \ic{group2Max},
 or \ic{group3Max} in order to use the method
 \ic{max2}. The changes to \ic{max3} are sufficient.
 
-\section{Modularity}\label{sec:modularity}
+\section{Modularity (Optional)}\label{sec:modularity}
 Let us again consider the case in which our calculation of the maximum
 score is incorrect because we used \ic{<} instead of \ic{>} in
 the last comparison. Let us assume that we are still using the

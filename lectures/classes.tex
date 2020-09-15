@@ -1,11 +1,23 @@
 \chapter{Classes}
 \label{ch:classes}
 
-An \emph{object} is a combination of variables, functions, and data. A \emph{class} is a blueprint for a type of object. For example, if a car is an object, then a class is a car factory. Every car (object) that is made by the car factory (class) follows the basic car blueprint: it has tires, an engine, a steering wheel, and so forth.
+Java is an \emph{object-oriented programming} (OOP) language, meaning that nearly everything is a ``class'' or an ``object''. While you may not have thought about it, you have been working with classes and objects this whole time. Now let's define these terms:
 
-Java is an \emph{object-oriented programming} (OOP) language, meaning that nearly everything is a class or an object. While you may not have thought about it, you have been working with classes this whole time. For example, here is a class that is very similar to classes you saw in Chapter~\ref{ch:methods}:
+\begin{definition}
+An \emph{object} is a combination of variables, functions, and data (state and behavior).
+\end{definition}
+
+\begin{definition}
+A \emph{class} is a blueprint for a type of object.
+\end{definition}
+
+For example, if a car is an object, then a class is a car factory. Every car (object) that is made by the car factory (class) follows the basic car blueprint: it has tires, an engine, a steering wheel, and so forth. The type of an object is its class. So the type of an object from a car factory might be \ic{Car}.
+
+As another example, here is a class that is very similar to classes you saw in Chapter~\ref{ch:methods}:
 
 \begin{code}
+/* HelloWorld.java */
+
 class HelloWorld {
 
     static void greeting() {
@@ -40,9 +52,9 @@ class HelloPlanet {
 }
 \end{code}
 
-Notice that on Line 7, we create an object \ic{input} using the \ic{new} keyword. We say that \ic{input} has type \ic{Scanner}. Again, nearly everything in Java is an object, so a similar thing is happening on line 9: \ic{String planet = ...} is creating a \ic{planet} object of type \ic{String}.
+Notice that on Line 7, we create an object \ic{input} using the \ic{new} keyword. We say that \ic{input} has type \ic{Scanner}. Again, nearly everything in Java is an object, so a similar thing is happening on line 9: \ic{String planet = ...} is creating a \ic{planet} object of type \ic{String}. This object is the user's input, e.g. "Jupiter".
 
-Since a class is like a factory for objects, this means we can create multiple objects from a single class. Consider this example of two objects of type \ic{Dog}:
+Since a class is like a factory for objects of a given type, this means we can create multiple objects from a single class. Consider this example of two objects of type \ic{Dog}:
 
 \begin{code}
 class Dog {
@@ -56,11 +68,13 @@ class Dog {
         fido.bark();  // Prints "Woof, woof!"
         Dog izzy = new Dog();
         izzy.bark();  // Prints "Woof, woof!"
+        // False; they are not the same object.
+        System.out.println(fido == izzy);
     }
 }
 \end{code}
 
-The important point is that \ic{fido} and \ic{izzy} are both \ic{Dog} objects. They both have a \ic{bark} method.
+The important point is that \ic{fido} and \ic{izzy} are both \ic{Dog} objects. They both have a \ic{bark} method. But they're distinct objects.
 
 \section{Class methods and attributes}
 
@@ -76,6 +90,7 @@ However, classes also have \emph{attributes}. An attribute, sometimes called a \
 \begin{code}
 class Dog {
 
+    // Un-initialized `color` attribute.
     String color;
 
     void bark() {
@@ -93,7 +108,7 @@ class Dog {
 }
 \end{code}
 
-So while both \ic{Dog} objects have an \ic{age} attribute, that attribute is different for each instance. Setting Fido's color does not effect Izzy's color, although both dogs have colors.
+Notice that we access the attributes like we access methods, using dot notation. So while both \ic{Dog} objects have an \ic{age} attribute, that attribute is different for each instance. Setting Fido's color does not effect Izzy's color, although both dogs have colors.
 
 Furthermore, a method can depend on the value of an attribute. Therefore, the runtime behavior of an object may depend on the object's state. For example
 
@@ -117,7 +132,7 @@ class Dog {
 }
 \end{code}
 
-Notice that the result of calling the method \ic{bark} can change depending on the object's state.  This is what we mean when we say, ``Java is an object-oriented programming language.'' Nearly everything in Java is actually a class or an object, and we build complex programs by composing objects.
+Notice that the result of calling the method \ic{bark} can change depending on the object's state.  This is what we mean when we say, ``Java is an object-oriented programming language.'' Nearly everything in Java is actually a class or an object, and we build complex programs by composing objects and by manipulating them and their states.
 
 \section{Constructors}
 
@@ -153,14 +168,144 @@ class Dog {
 
 As we can see, the \ic{Dog} constructor is a bit like a method in that it can accept parameters, in this case \ic{myColor} and \ic{myAge}. However, it is only called once per object using the \ic{new} keyword.
 
-TODO: Inheritance?
-
 \section{Creating multiple classes}
 
-TODO: Multiple classes (instantiate Class1 in file for Class2)
+Since every Java class must go into a separate file, we can create programs with multiple classes by creating separate files with their respective class definitions and then compiling those files together.
+
+Let's look at an example. Consider these two classes, \ic{Car} and \ic{CarDealership}:
+
+\begin{code}
+// Car.java
+
+class Car {
+  
+  String make;
+  double price;
+ 
+  public Car(String myMake, double myPrice) {
+    make = myMake;
+    price = myPrice;
+  }
+}
+\end{code}
+
+\begin{code}
+// CarDealership.java
+
+class CarDealership {
+  
+  public static void printPrice(Car car) {
+    System.out.printf("%s costs: $%1.2f\n", car.make, car.price);
+  }
     
-TODO: Final?
+  public static void main(String[] args) {
+    Car car1 = new Car("Toyota", 12000);
+    Car car2 = new Car("Ford", 8000);
+    printPrice(car1);
+    printPrice(car2);
+  }
+}
+\end{code}
+
+The \ic{Car} class represent car objects. Its constructor takes a string, for the car's make or brand name, such as Lincoln, Ford, and Chevrolet, as well a price. The \ic{CarDealership} class uses the \ic{Car} class to print information about each car. 
+We can compile these two files together by passing both filenames to the \ic{javac} command:
+
+\begin{monospace}
+$ javac Car.java CarDealership.java
+\end{monospace}
+
+Notice that between these two files, there is only one \ic{main} method. This represents the start of the program. If we try to run the compiled \ic{Car} program, we will get an error:
+
+\begin{monospace}
+$ java Car
+Error: Main method not found in class Car, please define the main method as:
+   public static void main(String[] args)
+or a JavaFX application class must extend javafx.application.Application
+\end{monospace}
+
+This error tells us that the \ic{java} executable cannot find the \ic{main} method to start the program. Instead, we need to run the \ic{CarDealership} program:
+
+\begin{monospace}
+$ java CarDealership
+Toyota costs: $12000.00
+Ford costs: $8000.00
+\end{monospace}
+
+We can imagine more complex programs. For example, here is a program that computes the average price of the cars in the dealership:
+
+\begin{code}
+import java.util.ArrayList;
+
+class CarDealership {
+  
+  public static void printAveragePrice(ArrayList<Car> cars) {
+    double avg = 0;
+    for (Car car : cars ) {
+      avg += car.price;
+    }
+    avg = avg / cars.size();
+    System.out.printf("Average price: %1.2f\n", avg);
+  }
+    
+  public static void main(String[] args) {
+    ArrayList<Car> cars = new ArrayList<Car>();
+    cars.add(new Car("Toyota", 12000));
+    cars.add(new Car("Ford", 8000));
+    cars.add(new Car("Lincoln", 13500));
+    printAveragePrice(cars);
+  }
+}
+\end{code}
+
+After compiling this program and running it, we get
+
+\begin{monospace}
+$ java CarDealership
+Average price: 11166.67
+\end{monospace}
+
+Now that we understand methods, arrays and \ic{ArrayLists}, and multiple class programs, we can really start to build cool stuff.
+
+\section{Encapsulation}
+
+Now that we can build programs with multiple classes, we need to talk about a concept called ``encapsulation'':
+
+\begin{definition}
+\emph{Encapsulation} is the concept of restricting access to private data.
+\end{definition}
+
+Why might this be useful? As a software program becomea larger, it can be harder and harder to reason about what is happening or the state of a given object. Encapsulation helps manage complexity because it limits how different parts of a program can interact.
+
+This point is fairly abstract. Let's look at a concrete example...
+
+\begin{itemize}
+    \item TODO: Finish.
+    \item TODO: demonstrate \ic{private} keyword
+    \item TODO: explain \ic{public} keyword
+\end{itemize}
 
 \section{Packages}
 
-TODO: you've already seen many of these! Integer, Scanner, System, ...
+Notice in the previous \ic{CarDealership} program, we import something called \ic{java.util.ArrayList}. In fact, we've been using the \ic{import} keyword since nearly the beginning without explaining it. For example, perhaps our first import was for I/O:
+
+\begin{code}
+import java.util.Scanner;
+\end{code}
+
+This \ic{import} statement tells the Java compiler that we want to include the \ic{Scanner} class from the \ic{java} package. What's a \emph{package}?
+
+\begin{definition}
+A \emph{package} is a group of related classes.
+\end{definition}
+
+We can think of a package as just a folder of class files. In programming, this kind of organizational technique is called \emph{namespacing}. We are grouping or categorizing parts of our program under a specific name, which is analogous to a folder or path.
+
+Any package that begins with ``java'' is a built-in package from the Java API. Some
+
+\begin{itemize}
+    \item TODO: use definitions here: \url{https://docs.oracle.com/javase/tutorial/java/concepts/package.html}
+    
+    \item TODO: what's the difference between a package and a name?
+    
+    \item TODO: Compiling packages.
+\end{itemize}
