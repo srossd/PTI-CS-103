@@ -8,7 +8,7 @@ public class Driver {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                var panel = new RoboturtPanel();
+                var panel = new RoboturtPanel(10);
                 panel.setBackground(Color.GREEN.darker());
                 var frame = new JFrame("Roboturt");
                 frame.setSize(800, 800);
@@ -34,19 +34,31 @@ public class Driver {
         });
     }
 
+    public static void turnRight(Turtle turt) {
+        for(int i = 0; i < 3; i++)
+            turt.TL();
+    }
+
     public static void solveMaze(Turtle turt) {
+        int steps = 1;
         while(!turt.atFlag()) {
-            if(turt.wallRight() && !turt.wallFront())
+            if(!turt.wallRight()) {
+                if(turt.counters[turt.getX()][turt.getY()] == 0)
+                    turt.counters[turt.getX()][turt.getY()] = steps++;
+                turnRight(turt);
                 turt.MF();
-            else if(!turt.wallRight()) {
-                turt.TL();
-                turt.TL();
-                turt.TL();
+            }
+            else if(!turt.wallFront()) {
+                if(turt.counters[turt.getX()][turt.getY()] == 0)
+                    turt.counters[turt.getX()][turt.getY()] = steps++;
                 turt.MF();
             }
             else {
                 turt.TL();
             }
         }
+
+        turt.drawPath();
+        turt.hideNumbers();
     }
 }

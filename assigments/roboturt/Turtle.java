@@ -1,9 +1,16 @@
+import java.util.ArrayList;
+
+import javax.lang.model.util.ElementScanner6;
 import javax.swing.JPanel;
 
 public class Turtle {
     private int x, y, angle;
     private Maze maze;
     private JPanel panel;
+
+    public int[][] counters;
+
+    public boolean numbers = true, path = false;
 
     public Turtle(JPanel panel) {
         this.x = 0;
@@ -13,6 +20,7 @@ public class Turtle {
         this.panel = panel;
 
         this.maze = new Maze(10);
+        this.counters = new int[10][10];
     }
 
     public Turtle(JPanel panel, int size) {
@@ -23,6 +31,7 @@ public class Turtle {
         this.panel = panel;
 
         this.maze = new Maze(size);
+        this.counters = new int[size][size];
     }
 
     public Turtle(JPanel panel, int x, int y, int angle) {
@@ -33,6 +42,7 @@ public class Turtle {
         this.panel = panel;
 
         this.maze = new Maze(10);
+        this.counters = new int[10][10];
     }
 
     public int getX() {
@@ -114,5 +124,50 @@ public class Turtle {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void hideNumbers() {
+        numbers = false;
+        panel.repaint(0, 0, panel.getWidth(), panel.getHeight());
+    }
+
+    public void drawPath() {
+        path = true;
+        panel.repaint(0, 0, panel.getWidth(), panel.getHeight());
+    }
+
+    public ArrayList<Integer> getPath() {
+        ArrayList<Integer> coords = new ArrayList<Integer>();
+
+        coords.add(0);
+        int last = 0;
+        int temp = counters[getMaze().getWidth() - 1][getMaze().getHeight()-1];
+        counters[getMaze().getWidth() - 1][getMaze().getHeight()-1] = getMaze().getHeight() * getMaze().getWidth();
+        while(last != maze.getHeight()*maze.getWidth() - 1 && coords.size() < getMaze().getHeight() * getMaze().getWidth()) {
+            int x = last % maze.getWidth();
+            int y = last / maze.getWidth();
+
+            int up = y == maze.getHeight() - 1 || maze.hasWall(x, y, 0) ? 0 : counters[x][y+1];
+            int down = y == 0 || maze.hasWall(x, y, 180)  ? 0 : counters[x][y-1];
+            int right = x == maze.getWidth() - 1 || maze.hasWall(x, y, 270)  ? 0 : counters[x+1][y];
+            int left = x == 0 || maze.hasWall(x, y, 90) ? 0 : counters[x-1][y];
+
+            if(up > down && up > right && up > left)
+                last += maze.getWidth();
+            else if(down > right && down > left)
+                last -= maze.getWidth();
+            else if(right > left)
+                last += 1;
+            else
+                last -= 1;
+            
+            coords.add(last);
+        }
+        counters[getMaze().getWidth() - 1][getMaze().getHeight()-1] = temp;
+
+        if(coords.get(coords.size() - 1) != maze.getHeight()*maze.getWidth() - 1)
+            System.out.println("There seems to be something wrong with the counters array.");
+
+        return coords;
     }
 }
