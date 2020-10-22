@@ -1,14 +1,19 @@
 \chapter{Classes}
 \label{ch:classes}
 
+\begin{goals}
+\item Understand classes and objects.
+\item Understand class methods and attributes.
+\item Know how to create objects from classes.
+\item Write and compile programs with multiple classes.
+\item Understand the \ic{public} and \ic{private} access-level modifiers.
+\item Understand the \ic{static} modifier.
+\end{goals}
+
 Java is an \emph{object-oriented programming} (OOP) language, meaning that nearly everything is a ``class'' or an ``object''. While you may not have thought about it, you have been working with classes and objects this whole time. Now let's define these terms:
 
 \begin{definition}
-An \emph{object} is a combination of variables, functions, and data (state and behavior).
-\end{definition}
-
-\begin{definition}
-A \emph{class} is a blueprint for a type of object.
+An \emph{object} is a combination of variables, functions, and data (state and behavior). A \emph{class} is a blueprint for a type of object.
 \end{definition}
 
 For example, if a car is an object, then a class is a car factory. Every car (object) that is made by the car factory (class) follows the basic car blueprint: it has tires, an engine, a steering wheel, and so forth. The type of an object is its class. So the type of an object from a car factory might be \ic{Car}.
@@ -76,7 +81,7 @@ class Dog {
 
 The important point is that \ic{fido} and \ic{izzy} are both \ic{Dog} objects. They both have a \ic{bark} method. But they're distinct objects.
 
-\section{Class methods and attributes}
+\section{Class members}
 
 We have seen that classes have methods. For example, this snippet calls the \ic{Scanner} class's \ic{nextInt} method:
 
@@ -85,7 +90,7 @@ Scanner input = new Scanner(System.in);
 int num = input.nextInt();
 \end{code}
 
-However, classes also have \emph{attributes}. An attribute, sometimes called a \emph{field}, is a variable associated with a class. Every object constructed from the class will then have the same variable name, although not necessarily the same value. For example, we can modify the \ic{Dog} class to have a \ic{color} attribute:
+However, classes also have \emph{attributes}. An attribute, sometimes called a \emph{field}, is a variable associated with a class. We refer to both methods and attributes as \emph{members}. Every object constructed from the class will then have the same variable name, although not necessarily the same value. For example, we can modify the \ic{Dog} class to have a \ic{color} attribute:
 
 \begin{code}
 class Dog {
@@ -266,24 +271,6 @@ Average price: 11166.67
 
 Now that we understand methods, arrays and \ic{ArrayLists}, and multiple class programs, we can really start to build cool stuff.
 
-\section{Encapsulation}
-
-Now that we can build programs with multiple classes, we need to talk about a concept called ``encapsulation'':
-
-\begin{definition}
-\emph{Encapsulation} is the concept of restricting access to private data.
-\end{definition}
-
-Why might this be useful? As a software program becomea larger, it can be harder and harder to reason about what is happening or the state of a given object. Encapsulation helps manage complexity because it limits how different parts of a program can interact.
-
-This point is fairly abstract. Let's look at a concrete example...
-
-\begin{itemize}
-    \item TODO: Finish.
-    \item TODO: demonstrate \ic{private} keyword
-    \item TODO: explain \ic{public} keyword
-\end{itemize}
-
 \section{Packages}
 
 Notice in the previous \ic{CarDealership} program, we import something called \ic{java.util.ArrayList}. In fact, we've been using the \ic{import} keyword since nearly the beginning without explaining it. For example, perhaps our first import was for I/O:
@@ -295,17 +282,227 @@ import java.util.Scanner;
 This \ic{import} statement tells the Java compiler that we want to include the \ic{Scanner} class from the \ic{java} package. What's a \emph{package}?
 
 \begin{definition}
-A \emph{package} is a group of related classes.
+A \emph{package} organizes a set of related classes under a common name or \emph{namespace}.
 \end{definition}
 
 We can think of a package as just a folder of class files. In programming, this kind of organizational technique is called \emph{namespacing}. We are grouping or categorizing parts of our program under a specific name, which is analogous to a folder or path.
 
-Any package that begins with ``java'' is a built-in package from the Java API. Some
+For example, you can think of \ic{java.util.ArrayList} as refering to a file \ic{ArrayList.java} in the \ic{util} subdirectory of the \ic{java} root directory. As a programmer, you can write your own packages for others to use. In this course, you won't learn to do that, but you should know that packages exist and that we use code from others by importing packages.
 
+See \ref{appendix:packages} for a list of useful packages.
+
+\section{Encapsulation}
+
+Now that we can build programs with multiple classes, we need to talk about a concept called ``encapsulation'':
+
+\begin{definition}
+\emph{Encapsulation} is the concept of restricting access to private data.
+\end{definition}
+
+Why might this be useful? As the programs you write become bigger and bigger, you'll find it harder and harder to reason about what is happening or the state of a given object. Encapsulation helps manage complexity because it limits how different parts of a program can interact.
+
+\marginnote{MIT professor Hal Abelson said: "The real problems [of computer science] come when we try to build very, very large systems, computer programs that are thousands of pages long, so long that nobody can really hold them in their heads all at once. And the only reason that that's possible is because there are techniques for controlling the complexity of these large systems."}
+
+This point is fairly abstract. Let's look at a concrete example:
+
+\begin{code}
+class Person {
+  // The "private" keyword means the attribute cannot be
+  // accessed outside of the class.
+  private String name;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String newName) {
+    this.name = newName;
+  }
+}
+\end{code}
+
+We can get the value of the person's name using the \ic{getName} function, called a \emph{getter} function; and we can set the value of the person's name using the \ic{setName} function, called a \emph{setter} function. However, we cannot access this property directly:
+
+\begin{code}
+class MyClass {
+  public static void main(String[] args) {
+    Person p = new Person();
+    p.name = "Dave";  // Error: name has private access in Person.
+  }
+}
+\end{code}
+
+What's happening? We declared the \ic{name} attribute on the \ic{Person} class to be "private" using the \ic{private} keyword. This means that the attribute cannot be directly accessed outside of the class. Instead, we must use the getter/setter pattern to access the private data.
+
+\begin{definition}
+We call the keywords \ic{public}, \ic{private}, and \ic{protected} \emph{access-level modifiers}. Access-level modifiers control how members (attributes and methods) and classes can be accessed:
 \begin{itemize}
-    \item TODO: use definitions here: \url{https://docs.oracle.com/javase/tutorial/java/concepts/package.html}
-    
-    \item TODO: what's the difference between a package and a name?
-    
-    \item TODO: Compiling packages.
+    \item A \ic{public} member or class is accessible to all classes and packages.
+    \item A \ic{protected} member or class is only accessible within its own package.
+    \item A \ic{private} member is only accessible within the same class as it is declared. We won't discuss \ic{private} classes.
+    \item A member with \emph{no access modifier} is only accessible to classes within the same package.
 \end{itemize}
+\end{definition}
+
+Why are access-level modifiers useful? What's the point of making \ic{name} private and yet allowing the user to modify name via getters and setters? Encapsulation using access-level modifiers means the programmer has better control of class attributes and methods. This concept is easier to understand if we imagine multiple programmers working together.
+
+\subsection{A tale of two programmers}
+
+\marginnote{In programming, the \emph{front end} refers to the presentation layer or user interface, and the \emph{back end} refers to the data layer. For example, in an online store, the front end is the UI or website, while the back end is the server, which handles inventory and processes orders.}
+
+Imagine that two programmers, Alice and Bob, are building the back end of an online shopping website, called ``Nile''. Alice's code is responsible for processing orders, while Bob's code is responsible for managing inventory. Alice implements a package called \ic{nile.transactions}, while Bob implements a package called \ic{nile.inventory}. Both of them need to deal with objects that represents items, so they agree upon the following class:
+
+\begin{code}
+class Item {
+  private double price;
+  
+  public double getPrice() {
+    return price;
+  }
+  
+  protected void setPrice(double newPrice) {
+    if (newPrice < 0) {
+      throw new java.lang.Error("A item's price cannot be negative.");
+    } else {
+      price = newPrice;
+    }
+  }
+}
+\end{code}
+
+Since Bob manages the inventory, he writes the \ic{Item} class in his \ic{nile.inventory} package. Since \ic{setPrice} is protected, only his code can modify the price by calling the \ic{setPrice} function. Any code within Bob's package can set the price of an item, but Alice's code, which simply import's Bob's package, cannot set the price.
+
+Why does Bob use a setter function? Since \ic{price} is just a double, it can be set to any value, positive or negative. However, Bob knows that \ic{price} represents the cost of an item in the Nile warehouse. He wants to ensure that he never accidentally sets the price to a zero or a negative number. By implementing a setter function, \ic{setPrice}, Bob ensures he can always error handle new prices whenever he needs to set them. Without this functionality, Bob would have to do error handling every wherever he explicitly sets the price.
+
+\marginnote{In computer science, \emph{factoring} means breaking a problem or system into easier-to-manage parts. When Alice and Bob agree to divide their work into processing orders and managing inventory, they are factoring or decomposing their bigger problem---building an online ordering system.
+
+\emph{Refactoring} is the process of restructuring existing code.}
+
+Furthermore, encapsulation limits the amount of code you need to refactor. For example, imagine that Alice and Bob agree that Nile will be an English-only website. However, they hope that one day, they may expand Nile to serve Spanish-speakers. They decide that each item will have a \ic{description} member which is accessible via a getter function, and that the getter function will take a \ic{lang} argument:
+
+\begin{code}
+class Item {
+  
+  private double price;
+  private String description;
+  
+  public double getPrice() {
+    return price;
+  }
+  
+  private String getDescription(String lang) {
+    if (lang == "English") {
+      return description;
+    } else {
+      String msg = "'English' is the only supported value for 'lang'.";
+      throw new UnsupportedOperationException(msg);
+    }
+  }
+  
+  protected void setPrice(double newPrice) {
+    if (newPrice < 0) {
+      throw new java.lang.Error("A item's price cannot be negative.");
+    } else {
+      price = newPrice;
+    }
+  }
+}
+\end{code}
+
+Why is this nice? Alice can immediately start using Bob's \ic{Item} class, calling \ic{getDescription} with "English" as the argument. If she uses the wrong \ic{lang} argument, the method tells her what she needs to change. However, if Bob's inventory is ever refactored to support Spanish or another language, Alice just needs to call \ic{getDescription} with the desired language. In this way, encapsulation limits the scope of what needs to be changed when improving or modifying a code base.
+
+\subsection{The \ic{static} modifier}
+
+Sometimes, we want to create class members that are common to the class, not the objects. We can do this using the \ic{static} modifier. Consider this code:
+
+\marginnote{Now that we understand \ic{public} and \ic{static}, we can understand the function declaration \ic{public static void main(String[] args)}. This function is public, meaning accessible outside of its class file; it is static, meaning you do not have to instantiate the class in order to call the method; its return type is \ic{void}, meaning it has no return value; and it takes an array of \ic{String} objects as an argument. Calling this method with the appropriate arguments is handled by the program that runs your Java program!}
+
+\begin{code}
+class Bicycle {
+  
+    private String type;
+    private int speed;
+    private static int numBikes = 0;
+    
+    public Bicycle(String newType, int newSpeed) {
+      type = newType;
+      speed = newSpeed;
+      numBikes += 1;
+    }
+    
+    public static void main(String[] args) {
+      Bicycle x = new Bicycle("Road", 10);
+      Bicycle y = new Bicycle("Commuter", 1);
+      Bicycle z = new Bicycle("Mountain", 12);
+
+      System.out.println(x.numBikes);  // Prints 3
+      System.out.println(y.numBikes);  // Prints 3
+      System.out.println(z.numBikes);  // Prints 3
+    }
+}
+\end{code}
+
+Notice that each \ic{Bicycle} object (\ic{x}, \ic{y}, and \ic{z}) have the same attribute value for \ic{numBikes}. This is because \ic{numBikes} is a static member and is therefore associated with the class, not the objects themselves. Without the \ic{static} keyword, we would expect each \ic{println} statement to print 1 rather than 3.
+
+\exercisesection
+
+\begin{exercise}
+Create a class named \ic{MyClass} by completing the snippet below.  Save this code to a file (what should the filename be?) and ensure it compiles.
+
+\begin{code}
+public class ...
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Add the \ic{main} method to \ic{MyClass}. What is the argument to \ic{main}? (You've seen this many times by now!)
+\end{exercise}
+
+\begin{exercise}
+In the \ic{main} method, create a new object of type \ic{MyClass} named \ic{myObj}. It should look like:
+
+\begin{code}
+____ ____ = new ____();
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Create a class attribute named \ic{x} and then print it in \ic{main}:
+
+\begin{code}
+public class MyClass {
+  
+  // Create an integer with a value 5 here.
+
+  public static void main(String[] args) {
+    MyClass myObj = new MyClass();
+    // Add a print statement here.
+  }
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Create a method named \ic{myMethod} on the object. It should just print "My method!" What should its return type be? Call \ic{myMethod} in \ic{main}.
+
+\begin{code}
+public class MyClass {
+  
+  // Create a public method `myMethod` here.
+  // It should print "My method!"
+
+  public static void main(String[] args) {
+    MyClass myObj = new MyClass();
+    // Call `myMethod` here.
+  }
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Fill in the missing parts to import the \ic{Scanner} package:
+
+\begin{monospace}
+______ ______.______.______;
+\end{monospace}
+\end{exercise}

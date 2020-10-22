@@ -2,73 +2,202 @@
 \label{ch:arrays}
 
 \begin{goals}
-\item 
+\item Understand why arrays are useful
+\item Learn how to use arrays in Java
+\item Understand multi-dimensional arrays
 \end{goals}
 
-Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
+In Chapter \ref{chap:control}, we wrote a program which could take a numerical grade from the user, and output the corresponding letter grade. What if we wanted to include this program in a larger piece of software, which is used to make report cards for a whole class?
 
-To declare an array, define the variable type with square brackets:
+In principle, it's a simple idea. The steps for the previous program were as follows:
+\begin{itemize}
+    \item Create a variable to store the numeric grade, \ic{int grade}
+    \item Use a Scanner to read in the value of \ic{grade}
+    \item Use control structures to output the corresponding letter grade
+\end{itemize}
+We could wrap all this code in a \ic{for} loop to repeat it once for each student, but then we'll overwrite the \ic{grade} variable each time. To make report cards, we probably want to store all the grades at once, each in their own variables. So we'd have to do something like
+\begin{itemize}
+    \item Create a variable to store the first student's grade, \ic{int gradeOne}
+    \item Create a variable to store the second student's grade, ic{int gradeTwo}
+    \item Create a variable $\ldots$
+\end{itemize}
+Clearly this is going to get tiresome. There must be a better way.
 
+Indeed, this is the purpose of \emph{arrays}: to declare many variables at the same time. We think of an array as a list of variables. Arrays are excellent tools for working with data in your programs, as we'll see below.
+
+\section{Arrays in Java}
+
+Remember, in Java, every variable has a \emph{type}. Arrays have types too, but these types are derived from other types: we could have an array of \ic{int}s, or an array of \ic{Strings}s, or an array of \ic{double}s. To tell Java we want an array, we take the type of the variables inside the array, and then put square brackets after it. So an array of \ic{int}s has type \ic{int[]}, an array of \ic{String}s has type \ic{String[]}, and an array of \ic{double}s has type \ic{double[]}.
+
+When Java makes an array, such as an \ic{int[]}, it's really making a bunch of \ic{int}s. This means we need to tell it how long the array is, so it knows how many variables to create. One way to do this is using the \ic{new} keyword, which we've used before to create \ic{Scanner}s. Now we'll use it to create arrays. To create an array storing five \ic{int}s, we would say
 \begin{code}
-String[] cars;
+int[] arr = new int[5];
 \end{code}
-
-We have now declared a variable that holds an array of strings. To insert values to it, we can use an array literal - place the values in a comma-separated list, inside curly braces:
-
+Another way to tell Java how long an array is would be to directly tell it what the values are. To do this, we place the values in a comma-separated list, inside curly braces:
 \begin{code}
 String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
 \end{code}
 
-To create an array of integers, you could write:
+\begin{example}
+Write code which creates an array \ic{xs} of integers containing values 0, 2, 4, 5, 9, 13. Then write another line which creates an array \ic{ys} of seven doubles.
 
+\noindent\emph{Answer}: To create the array of integers, we can use the curly-brace syntax:
 \begin{code}
-int[] myNum = {10, 20, 30, 40};
+int[] xs = {0, 2, 4, 5, 9, 13};
 \end{code}
+\safemarginnote{This is the only time you'll see curly braces \ic{\{\}} used with arrays. For everything else, arrays use square braces, \ic{[]}.}
+To create the array of doubles, we can use the \ic{new} keyword:
+\begin{code}
+double[] ys = new double[7];
+\end{code}
+\end{example}
 
-You access an array element by referring to the index number. This statement accesses the value of the first element in cars:
+If we tell Java how long an array is, using the \ic{new} keyword, then later on we can go in and set the values of each individual array element. To access individual array elements, we use square braces again: \ic{xs[i]} tells Java we're referring to the $i$th element of \ic{xs}. The integer $i$ is called the \emph{index}. It's important to take note of this detail: array indices start counting at 0. So, to set the first element of an array, we would use \ic{xs[0]}. To set the last element of an array of length 5, we would use \ic{xs[4]}, because the five elements are \ic{xs[0]}, \ic{xs[1]}, \ic{xs[2]}, \ic{xs[3]}, and \ic{xs[4]}. This is shown in Figure \ref{fig:array_diagram}.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=1.5]
+        \draw (0,0) grid (5, 1);
+        \foreach \i in {0,...,4} {
+            \node at ({\i+0.5},0.5) {\ic{xs[\i]}};
+        };
+    \end{tikzpicture}
+    \caption{The elements of an array \ic{xs} of length 5.}
+    \label{fig:array_diagram}
+\end{figure}
+
+\begin{example}
+Write code which creates an integer array of length 4, and then sets the values to 5, 3, 8, and 7.
+
+\noindent\emph{Answer}: The following diagram shows the code on the left, and what happens to the array on the right.
+\begin{center}
+    \begin{tabular}{l|c}
+        \ic{int[] xs = new int[4];} & \tikz[baseline=(current bounding box.center)]{\draw (0,0) grid (4,1);} \\[2em]
+        \ic{xs[0] = 5;} & \tikz[baseline=(current bounding box.center)]{\draw (0,0) grid (4,1); \node at (0.5,0.5) {5};}\\[2em]
+        \ic{xs[1] = 3;} & \tikz[baseline=(current bounding box.center)]{\draw (0,0) grid (4,1); \node at (0.5,0.5) {5}; \node at (1.5, 0.5) {3};}\\[2em]
+        \ic{xs[2] = 8;} & \tikz[baseline=(current bounding box.center)]{\draw (0,0) grid (4,1); \node at (0.5,0.5) {5}; \node at (1.5, 0.5) {3}; \node at (2.5, 0.5) {8};}\\[2em]
+        \ic{xs[3] = 7;} & \tikz[baseline=(current bounding box.center)]{\draw (0,0) grid (4,1); \node at (0.5,0.5) {5}; \node at (1.5, 0.5) {3}; \node at (2.5, 0.5) {8}; \node at (3.5, 0.5) {7};}
+    \end{tabular}
+\end{center}
+\end{example}
+
+In addition to setting the values of an array, we can use the same syntax to access those values. For example, what if we want to print out the first value of an array? We could use the following code:
 \begin{code}
 String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
 System.out.println(cars[0]);
-// Outputs Volvo
 \end{code}
+This will output \ic{Volvo}.
 
-Note that in Java (and many other programming languages) the first array element is 0 rather than 1! This is a bit unintuitive, and the source of many coding bugs. 
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{images/array-diagram.png}
-	\caption{Diagram of an array (Credit: https://www.geeksforgeeks.org/arrays-in-java/)}
-\end{figure}
-
-To change the value of a specific element, refer to the index number:
-
+Just like regular variables, arrays can be set and then modified. For example, consider the following code:
 \begin{code}
 String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
 cars[0] = "Opel";
 System.out.println(cars[0]);
-// Now outputs Opel instead of Volvo
 \end{code}
+At first, \ic{cars[0]} is set to \ic{"Volvo"} using the curly-brace initialization. Afterwards, we change \ic{cars[0]} to \ic{"Opel"}. Thus, when we print \ic{cars[0]}, we will see \ic{Opel}.
 
-To find out how many elements an array has, use the length property:
+\begin{exercise}
+Fill in the array diagram on the right on each line to track what happens to the array \ic{arr}. Write down what is printed after each print statement.
+\begin{center}
+    \begin{tabular}{l|c}
+        \ic{int[] arr = {3, 1, 4, 1, 5};} & \tikz[baseline=(current bounding box.center),scale=0.8]{\draw (0,0) grid (5,1);} \\[2em]
+        \ic{System.out.println(arr[2]);} & \underline{\hspace{1.5in}} \\[2em]
+        \ic{arr[3] = 7;} & \tikz[baseline=(current bounding box.center),scale=0.8]{\draw (0,0) grid (5,1);} \\[2em]
+        \ic{arr[1] = arr[2] + arr[4];} & \tikz[baseline=(current bounding box.center),scale=0.8]{\draw (0,0) grid (5,1);} \\[2em]
+        \ic{System.out.println(arr[1]);} & \underline{\hspace{1.5in}} \\[2em]
+        \ic{arr[0] = arr[3] - arr[0];} & \tikz[baseline=(current bounding box.center),scale=0.8]{\draw (0,0) grid (5,1);} \\[2em]
+    \end{tabular}
+\end{center}
 
+\end{exercise}
+
+% Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
+
+% To declare an array, define the variable type with square brackets:
+
+% \begin{code}
+% String[] cars;
+% \end{code}
+
+% We have now declared a variable that holds an array of strings. To insert values to it, we can use an array literal - place the values in a comma-separated list, inside curly braces:
+
+% \begin{code}
+% String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+% \end{code}
+
+% To create an array of integers, you could write:
+
+% \begin{code}
+% int[] myNum = {10, 20, 30, 40};
+% \end{code}
+
+% You access an array element by referring to the index number. This statement accesses the value of the first element in cars:
+% \begin{code}
+% String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+% System.out.println(cars[0]);
+% // Outputs Volvo
+% \end{code}
+
+% Note that in Java (and many other programming languages) the first array element is 0 rather than 1! This is a bit unintuitive, and the source of many coding bugs. 
+
+% \begin{figure}
+% 	\centering
+% 	\includegraphics[width=0.5\textwidth]{images/array-diagram.png}
+% 	\caption{Diagram of an array (Credit: https://www.geeksforgeeks.org/arrays-in-java/)}
+% \end{figure}
+
+% To change the value of a specific element, refer to the index number:
+
+% \begin{code}
+% String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+% cars[0] = "Opel";
+% System.out.println(cars[0]);
+% // Now outputs Opel instead of Volvo
+% \end{code}
+
+% To find out how many elements an array has, use the length property:
+
+% \begin{code}
+% String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+% System.out.println(cars.length);
+% // Outputs 4
+% \end{code}
+
+\section{Arrays and Loops}
+
+Let's return to the example we started the chapter with, writing report card software. Now that we know about arrays, we can avoid declaring a large number of variables by hand. Instead, we can create a single array variable, \ic{grades}, which stores each grade as an element. But how will we fill in the elements of this array? We probably want input from the user, so we can use a \ic{Scanner}. But then, we would need to write a line of code for every grade we input:
 \begin{code}
-String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
-System.out.println(cars.length);
-// Outputs 4
+Scanner input = new Scanner(System.in);
+int[] grades = new int[100];
+grades[0] = input.nextInt();
+grades[1] = input.nextInt();
+// Many more lines...
+grades[99] = input.nextInt();
 \end{code}
+So many lines! This is exactly the kind of problem we were able to avoid with loops.
 
-You can loop through the array elements with the for loop, and use the length property to specify how many times the loop should run.
-
-The following example outputs all elements in the cars array:
-
+In order to use loops with arrays, we will need to access array elements using a variable. The key point to recognize is that, rather than saying \ic{grades[0]} directly, you could also define an \ic{int} which stores 0, and then use this \ic{int} as the index:
 \begin{code}
-String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
-for (int i = 0; i < cars.length; i++) {
-  System.out.println(cars[i]);
+int[] xs = {6, 2, 3, 4, 1};
+int i = 0;
+System.out.println(xs[i]);
+\end{code}
+There's no reason to do this if you only want the first element; but if you want to loop through every element of the array, this is very useful. For example, we could use a \ic{for} loop to set the values of the \ic{grades} array:
+\begin{code}
+Scanner input = new Scanner(System.in);
+int[] grades = new int[100];
+for(int i = 0; i < 100; i++) {
+    grades[i] = input.nextInt();
 }
 \end{code}
+This does the exact same thing as the code above, but without needing 100 lines.
 
-\begin{example}Where is the bug?
+Let's look carefully at how the \ic{for} loop is set up. We want to access the variables \ic{grades[0]}, \ic{grades[1]}, all the way through \ic{grades[99]} (but not \ic{grades[100]} -- this would be the 101\textsuperscript{st} element, which doesn't exist!). This means that our index variable \ic{i} should start at 0, and increase by 1 at each step, but always stay less than 100. This is how we set up the \ic{for} loop. In general, to loop through an array, you can use a loop like\marginnote{Your index variable can be called anything you'd like, but it's very common to use \ic{i}.}
+\begin{code}
+for(int i = 0; i < (*put length of array here*); i++)
+\end{code}
+
+\begin{example}Where is the bug in this code?
 \begin{code}
 int[] arr = new int[100]; 
 for (int i = 0; i <= 100; ++i) {
@@ -76,32 +205,41 @@ for (int i = 0; i <= 100; ++i) {
 }
 \end{code}
 \noindent \emph{Answer}:
-The issue is that the program attempts to access the value \ic{arr[100]}, while the last element in the array is \ic{arr[99]}.
+In the last iteration of the loop, when \ic{i = 100}, the program attempts to access the value \ic{arr[100]}, but the last element in the array is \ic{arr[99]}.\safemarginnote{This kind of bug is so common, it has its own name: it's called an ``off-by-one error.'' In general, an off-by-one error is one in which a loop iterates one time too many or too few.}
 
-This kind of bug is called an ``off-by-one error'' and is so common it has a name. In general, an off-by-one-error is one in which a loop iterates one time too many or too few.
-
+If you have this bug in your code, Java will not catch it when you compile the code. Your code will run, but then Java will halt and throw an \ic{ArrayOutOfBoundsException}. When you see this message when your code runs, you know you've tried to access an element of an array which doesn't exist.
 \end{example}
 
-Sometimes it is also useful to initialize the array in a for loop rather than typing in the values by hand. For example, suppose you wanted an array full of the integers from 0 to 999. This would be very hard to type! To complete this task, we could instead use the following code snippet:
+Instead of typing in the length of the array directly, you can use \ic{arr.length} to get the length of an array called \ic{arr}. For example, the following \ic{for} loop will print out all the \ic{String}s in the \ic{cars} array.
+\begin{code}
+String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+for (int i = 0; i < cars.length; i++) {
+  System.out.println(cars[i]);
+}
+\end{code}
+If you were to add another element to the \ic{cars} array, you wouldn't have to change the \ic{for} loop to reflect this: since it uses \ic{cars.length} directly, it will always iterate over the entire array, no matter how long it is.
 
+\begin{example}
+Use a \ic{for} loop to create an array of length 1000 which stores the numbers 0 through 999, in that order.
+
+\noindent\emph{Answer}: We can set each element of the array in a \ic{for} loop, like this:\safemarginnote{Note that we're using the variable \ic{n} to set the length of the array. This is useful when we need to create an array, but we don't know from the start how long it should be -- for example, if the user tells us at runtime how many values they'd like to store.}
 \begin{code}
 int n = 1000;
 int[] numbersArray = new int[n];
-for (int i=0; i<n; i++) {
+for (int i=0; i < numbersArray.length; i++) {
   numbersArray[i]=i;
 }
 \end{code}
-
-In this code, we initialize an array then use a for loop to fill it, rather than typing in the values ourselves. Just like when we worked with Scanners, the ``new" keyword is needed to initialize an empty array so that we can loop over it. The size must be set from the beginning (and can't be changed after!) within brackets []. In this case, we are initializing an integer array of size 1000 (i.e. \ic{n}). 
+\end{example}
 
 \begin{example}
 What are the values of the integer array \ic{arr} by the end of this code snippet? 
 \begin{code}
-    int n=6;
+    int n = 6;
     
     int[] arr = new int[n];
-    for (int i=0; i<n; i++) {
-      arr[i]=i;
+    for (int i = 0; i < n; i++) {
+      arr[i] = i;
     }
 
     for (int i = 0; i < arr.length/2; i++) {
@@ -112,11 +250,46 @@ What are the values of the integer array \ic{arr} by the end of this code snippe
 \end{code}
 
 \noindent \emph{Answer}:
-\ic{arr} is initialized to be the integers from 0 through 5. The second block loops over the first 3 array values and swaps the 0 index value with the 5, the 1 with the 4, and the 2 with the 3. By the end, the array has been reversed.
-
+Let's work this out step by step. The first \ic{for} loop is just like the previous example: it sets up \ic{arr} to store the values 0 through 5, so the array starts off as
+\begin{center}
+    \begin{tikzpicture}
+        \draw (0,0) grid (6, 1);
+        \foreach \i in {0,...,5} {
+            \node at ({\i+0.5}, 0.5) {\i};
+        };
+    \end{tikzpicture}
+\end{center}
+Now let's work through the first iteration of the next \ic{for} loop. The loop variable \ic{i} starts as 0, and so \ic{tmp} is set to the value of \ic{arr[0]}, which is 0. Then the next line sets \ic{arr[0]} to \ic{arr[6-1-0]}, which is \ic{arr[5]}, or 5. So now the array is
+\begin{center}
+    \begin{tikzpicture}
+        \draw (0,0) grid (6, 1);
+        \node at (0.5, 0.5) {5};
+        \foreach \i in {1,...,5} {
+            \node at ({\i+0.5}, 0.5) {\i};
+        };
+    \end{tikzpicture}
+\end{center}
+On the next line, we set the value of \ic{arr[5]} to \ic{tmp}, which was 0. So after the first iteration, the array is
+\begin{center}
+    \begin{tikzpicture}
+        \draw (0,0) grid (6, 1);
+        \node at (0.5, 0.5) {5};
+        \node at (5.5, 0.5) {0};
+        \foreach \i in {1,...,4} {
+            \node at ({\i+0.5}, 0.5) {\i};
+        };
+    \end{tikzpicture}
+\end{center}
+Let's take a step back: what happened to the array? We swapped the first element and the last element. Looking in detail at the code, we see that each iteration of the loop swaps the \ic{i}th element with the \ic{(arr.length-i-1)}th element. So, on the next iteration, we swap \ic{arr[1]} and \ic{arr[4]}. On the iteration afterwards, we swap \ic{arr[2]} and \ic{arr[3]}. And that's it -- the \ic{for} loop stops here, because the constraint says \ic{i < arr.length/2}, and \ic{arr.length/2} is 3. So, after the code is finished, the array is
+\begin{center}
+    \begin{tikzpicture}
+        \draw (0,0) grid (6, 1);
+        \foreach \i in {0,...,5} {
+            \node at ({5.5-\i}, 0.5) {\i};
+        };
+    \end{tikzpicture}
+\end{center}
 \end{example}
-
-\marginnote{This array-reversal example is extremely hard if you think about it in the abstract. But it's not as bad when you write out the array on paper and make the changes from the for loop as you go, carefully writing down every change. Even great developers use paper and pencil to write and debug code, especially for loops and arrays!}
 
 % There is also a "for-each" loop, which is used exclusively to loop through elements in arrays:
 
@@ -139,40 +312,124 @@ What are the values of the integer array \ic{arr} by the end of this code snippe
 
 % If you compare the for loop and for-each loop, you will see that the for-each method is easier to write, it does not require a counter (using the length property), and it is more readable.
 
-A multidimensional array is an array containing one or more arrays.
+\section{Multidimensional Arrays}
 
-To create a two-dimensional array, add each array within its own set of curly braces:
+Let's think carefully about what we've learned about array types. Whenever we have a variable type in Java, like \ic{int}, we can form an array type from it, like \ic{int[]}. More generally, if we have some type \ic{T}, we can always form an array type \ic{T[]}, which is an array of elements of type \ic{T}.
 
+We can apply this same logic back to array types themselves. For example, since \ic{int[]} is a type, we can form an array of \ic{int[]}s, using the \ic{int[][]} type.
+
+What does this kind of array look like? Let's start by initializing one. We can use curly braces to set the values of the array, but then each element is also an array, so we use nested curly braces, like this:
 \begin{code}
 int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
 \end{code}
+Now \ic{myNumbers.length} is 2, since we gave the array 2 elements. But since \ic{myNumbers[0]} is also an array, it has a length also: \ic{myNumbers[0].length} is 4. Likewise, \ic{myNumbers[1].length} is 3.
 
-myNumbers is now an array with two arrays as its elements.
+If we draw this array the way we've done before, we might get something like this:
+\begin{center}
+    \begin{tikzpicture}
+        \draw[xscale=3,yscale=2] (0,0) grid (2, 1);
+        \draw[shift={(0.6,0.775)},scale=0.45] (0,0) grid (4,1);
+        \draw[shift={(3.6,0.7)},scale=0.6] (0,0) grid (3,1);
+        \foreach \i in {1,...,4}
+            \node at ({0.825+0.45*(\i-1)},1) {\i};
+        \foreach \i in {5,...,7}
+            \node at ({3.9+0.6*(\i-5)},1) {\i};
+    \end{tikzpicture}
+\end{center}
 
-To access the elements of the myNumbers array, specify two indexes: one for the array, and one for the element inside that array. This example accesses the third element (2) in the second array (1) of myNumbers:
-
+The reason we call these ``multidimensional arrays'' is that it is often easier to draw them in another way. Typically, the entries in such an array all have the same length. That is, if our multidimensional array is \ic{xs}, then \ic{xs[0].length} is the same as \ic{xs[1].length}, \ic{xs[2].length}, and so on. This means that if we draw each element of \ic{xs} as a row of boxes like before, and stack all these rows, we get a grid. For instance, if \ic{xs.length} is 4 and \ic{xs[0].length} is 5, then we can represent the multidimensional array like this:
+\begin{center}
+    \begin{tikzpicture}[scale=2]
+        \draw (0,0) grid (5,4);
+        \foreach \i in {0,...,3} {
+            \foreach \j in {0,...,4}  {
+                \node at ({\j+.5},{3.5-\i}) {\ic{xs[\i][\j]}};
+            };
+        };
+    \end{tikzpicture}
+\end{center}
+We think of the first index as the row and the second index as the column, so \ic{xs[r][c]} is the element in the \ic{r}th row and the \ic{c}th column. To initialize a multidimensional array with a grid shape, we can tell Java how many rows and how many columns there are. For instance, to initialize the array \ic{xs} drawn above, we would use
 \begin{code}
-int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
-int x = myNumbers[1][2];
-System.out.println(x); // Outputs 7
+int[][] xs = new int[4][5];
 \end{code}
 
-We can also use a for loop inside another for loop to get the elements of a two-dimensional array (we still have to point to the two indexes):
-
+Just as with single-dimensional arrays, we can use \ic{for} loops to work with multidimensional arrays. Typically the right tool for a multidimensional array is a nested \ic{for} loop. We use one \ic{for} loop for the row index, and another \ic{for} loop for the column index. To loop over the \ic{xs} array above, we could use
 \begin{code}
-public class MyClass {
-  public static void main(String[] args) {
-    int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
-    for (int i = 0; i < myNumbers.length; ++i) {
-      for(int j = 0; j < myNumbers[i].length; ++j) {
-        System.out.println(myNumbers[i][j]);
-      }
+for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 5; j++) {
+        // do something to xs[i][j]
     }
-  }
+}
+\end{code}
+Instead of explicitly specifying the bounds 4 and 5, we could also use \ic{xs.length} and \ic{xs[0].length}, respectively.
+
+\begin{example}
+What does the following code snippet do?
+\begin{code}
+int[][] xs = new int[8][8];
+for(int i = 0; i < 8; i++) {
+    for(int j = 0; j < 8; j++) {
+        if((i+j) % 2 == 0) {
+            xs[i][j] = 0;
+        }
+        else {
+            xs[i][j] = 1;
+        }
+    }
 }
 \end{code}
 
+\noindent \emph{Answer}: The \ic{for} loops will run through all pairs of indices \ic{i} and \ic{j} in the array \ic{xs}. At each position in the array, we use an \ic{if} statement to check if \ic{i+j} is divisible by 2. Using the grid picture above, try marking all the entries where the sum of the indices is divisible by 2. You should get a checkerboard pattern. If you carry this out for the full $8\times 8$ grid \ic{xs}, you should find the following pattern of ones and zeroes:
+\begin{center}
+    \begin{tikzpicture}[scale=.6]
+        \draw (0,0) grid (8,8);
+        \foreach \i in {0,...,7} {
+            \foreach \j in {0,...,7} {
+                \node at ({7.5-\i},{0.5+\j}) {\pgfmathparse{int(mod(\i+\j,2))}\pgfmathresult};
+            };
+        };
+    \end{tikzpicture}
+\end{center}
+\end{example}
 
+\exercisesection
+
+\begin{exercise}
+Point out all four errors in the following code snippet, and rewrite the code so that it will compile.
+
+\begin{code}
+int xs = {3, 5, 7, 8};
+xs[1] = xs[2] + xs[4];
+for(int i = 0; i <= 4; i++) {
+    xs[i] = xs[i] + 1;
+}
+for(int i = 3; i >= 0; i--) {
+    System.out.println(xs{i});
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+What are the entries of the array \ic{cars} after the following code runs?
+\begin{code}
+String[] cars = {"Mazda", "Chevy", "Ford", "Toyota", "Honda"};
+for(int i = 0; i < 4; i++) {
+    cars[i] = cars[i+1];
+}
+\end{code}
+\end{exercise}
+
+\begin{exercise}
+Draw the array \ic{xs} as a grid after the following code runs.
+\begin{code}
+int[][] xs = new int[4][6];
+for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 6; j++) {
+        xs[i][j] = i*j - i - j;
+    }
+}
+\end{code}
+\end{exercise}
 
 % Consider this snippet of code:
 
