@@ -44,6 +44,7 @@ public class Maze {
         path.add(v);
 
         Random random = new Random();
+        // random.setSeed(43975593);
 
         while(!visited.contains(v)) {
             var neighbors = new ArrayList<Integer>();
