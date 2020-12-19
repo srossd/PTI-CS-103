@@ -1,53 +1,63 @@
 \chapter{Sorting and searching algorithms}
 
 \begin{goals}
-\item Understand why designing efficient algorithms is important and how to measure algorithms' performance
-\item Understand why sorting and searching algorithms are important
-\item Understand the basic sorting/searching methods
-\item Learn how to implement these methods
+% \item Understand why designing efficient algorithms is important and how to measure algorithms' performance
+\item Understand what sorting and searching are and why they are important
+\item Understand an algorithm for sorting
+\item Understand an algorithm for searching
+\item Learn how to code these algorithms in Java
 \end{goals}
 
- \section{Algorithm analysis}
+%  \section{Algorithm analysis}
  
- We will start off this chapter by building an intuitive understanding of why different implementations of the same algorithm have different performance (running time). We will first discuss how to observe and model performance characteristics of algorithms and then discuss how we can classify the algorithms based on the order of growth of their running time. 
+%  We will start off this chapter by building an intuitive understanding of why different implementations of the same algorithm have different performance (running time). We will first discuss how to observe and model performance characteristics of algorithms and then discuss how we can classify the algorithms based on the order of growth of their running time. 
 
-Understanding how to compare the performance of different algorithms and provide guarantees on how well they perform will help us learn and compare the sorting and searching algorithms we will be considering later in this chapter. 
-
-
-The main reason we would like to have a sense of the performance of an algorithm is to be able to tell whether the program can solve a large practical input or not. Given two computer programs that perform the same task, how can we tell which program is 'faster'? The most straightforward way is to time each program, for example, using the stopwatch. However, here, we assume that the two programs are run on the same computer to make the comparison fair. We can not make a meaningful comparison of the two programs if we ran them on different computers because even running the same programs on two different computers would likely lead to two different running times since one computer might have a better hardware (processor speed, memory, disk space). 
-
-Therefore, this way of measuring the performance of an algorithm is not the most convenient one. Another way of measuring the performance independent of the type of computer we use is by counting the number of instructions or operations in the two programs. Usually, the faster program has fewer operations. Intuitively, we would also expect that the number of operations is proportional to the number of data items that the program operates on. 
+% Understanding how to compare the performance of different algorithms and provide guarantees on how well they perform will help us learn and compare the sorting and searching algorithms we will be considering later in this chapter. 
 
 
+% The main reason we would like to have a sense of the performance of an algorithm is to be able to tell whether the program can solve a large practical input or not. Given two computer programs that perform the same task, how can we tell which program is 'faster'? The most straightforward way is to time each program, for example, using the stopwatch. However, here, we assume that the two programs are run on the same computer to make the comparison fair. We can not make a meaningful comparison of the two programs if we ran them on different computers because even running the same programs on two different computers would likely lead to two different running times since one computer might have a better hardware (processor speed, memory, disk space). 
 
-Donald Knuth pioneered the following approach to understating the total running time of a program:
-
-Total running time: sum of cost $\times$ frequency of all operations.
-
-Therefore, we need to analyze a program to determine the set of operations it uses. The cost depends on the machine and the compiler. The frequency of the operations depends on the algorithm as well as input data. 
-
-\begin{exercise}
-\begin{code}
-int count = 0;
-for (int i = 0; i < N; i++)
-	If (a[i] == 0)
-		count++;
-\end{code}
-
-For each operation (variable declaration, assignment statement, less than compare, equal compare, array access, increment), determine its frequency of execution as a function of input size $N$.
-
-\end{exercise}
+% Therefore, this way of measuring the performance of an algorithm is not the most convenient one. Another way of measuring the performance independent of the type of computer we use is by counting the number of instructions or operations in the two programs. Usually, the faster program has fewer operations. Intuitively, we would also expect that the number of operations is proportional to the number of data items that the program operates on. 
 
 
 
-Though, in theory, we could determine the running time of a program using Donald Knuth’s method, we usually don’t need to know the running time with such precision. We can approximate the running time by making the following simplifications: 1) use some basic operation (perhaps the one that costs the most) as a proxy for running time; 2) only consider the highest order terms in our derivation of the running time. For example, if we derived the running time to be $\frac{1}{2}N^3 + 50 N$, we would approximate this with ~ $\frac{1}{2}N^3$.
+% Donald Knuth pioneered the following approach to understating the total running time of a program:
 
-Next, it turns out that the following set of functions 
-$1, logN, N, NlogN, N^2, N^3, 2^N$
-suffices to describe order-of-growth of typical algorithms. 
+% Total running time: sum of cost $\times$ frequency of all operations.
+
+% Therefore, we need to analyze a program to determine the set of operations it uses. The cost depends on the machine and the compiler. The frequency of the operations depends on the algorithm as well as input data. 
+
+% \begin{exercise}
+% \begin{code}
+% int count = 0;
+% for (int i = 0; i < N; i++)
+% 	If (a[i] == 0)
+% 		count++;
+% \end{code}
+
+% For each operation (variable declaration, assignment statement, less than compare, equal compare, array access, increment), determine its frequency of execution as a function of input size $N$.
+
+% \end{exercise}
 
 
-\section{Sorting and searching algorithms}
+
+% Though, in theory, we could determine the running time of a program using Donald Knuth’s method, we usually don’t need to know the running time with such precision. We can approximate the running time by making the following simplifications: 1) use some basic operation (perhaps the one that costs the most) as a proxy for running time; 2) only consider the highest order terms in our derivation of the running time. For example, if we derived the running time to be $\frac{1}{2}N^3 + 50 N$, we would approximate this with ~ $\frac{1}{2}N^3$.
+
+% Next, it turns out that the following set of functions 
+% $1, logN, N, NlogN, N^2, N^3, 2^N$
+% suffices to describe order-of-growth of typical algorithms. 
+
+
+\section{Sorting algorithms [DO SEARCHING LATER]}
+
+Have you ever been in a group of people and lined up by height or age? Or maybe you organize your clothes by their size (e.g. summer clothes to winter clothes)? Or what if you are playing a card game and need to put the cards in order from lowest to highest? If you've ever done any of those things, then you've engaged in \emph{sorting}, or putting items in a specific order according to their attributes. Sorting is a task you do every day without even knowing it. 
+
+One
+
+
+Or have you ever played a card game and had to look through a deck of cards for a particular card? 
+
+Sorting and searching are tasks you do every day, without even knowing it.
 
 How do you find a friend's phone number in the phone book? If a deck of cards has less than 36 cards, how do you determine which card is not in the deck?
 

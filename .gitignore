@@ -28,6 +28,7 @@ lectures/*.synctex.gz
 *.cb
 *.cb2
 .*.lb
+*.ent
 main.pdf
 
 ## Build tool auxiliary files:

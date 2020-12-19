@@ -1,161 +1,156 @@
 \chapter{Hello World}
 
-It is now time for us to start practicing coding skills.
-In this course, we will be focusing on learning how to program
-in Java, which is just one of many programming languages.
-While each programming language has its own quirks and features
-specific to it, many of the concepts you will learn in this
-class will exist not only in Java but also in other languages.
+It is now time for us to start practicing coding skills. In this course, we will be focusing on learning how to program in Java. Java is one of many languages, and eventually you will want to learn others as well. The concepts you learn in this course will make it easier to understand other languages in the future.
 
-We will now write our first program in Java called ``Hello World.''
-We will use DrJava to help us write, compile, and run this program.
+Following a long-standing tradition in programming, the first Java program we write will tell the computer to say ``Hello world.''\marginnote{The ``hello world'' program originated in a 1978 book on the C programming language, which is an ancestor of Java.} We will use an application called DrJava to help us create this program.
 
 \section{Starting DrJava}
-TODO: how to start DrJava on laptop that students are given
 
-TODO: add screenshot of DrJava when just opened and label parts
+DrJava is an application that runs on your computer. It knows how to take Java code that you write and use it to tell the computer what to do. Today you'll write your Hello World program in DrJava. First, double click on the DrJava desktop icon to launch the application, as shown in Figure \ref{fig:drjava_launch}.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{example-image-a}
+    \caption{Double click on the DrJava icon to launch the application.}
+    \label{fig:drjava_launch}
+\end{figure}
 
-On the left-hand side of the window, there is a list of currently-open files. When you first start up DrJava, the only thing there should say ``(Untitled)''.
-The main part of the window is where you will write code.
+Once DrJava opens, you should see a screen like the one in Figure \ref{fig:drjava_fresh}. Most of the DrJava window is taken up by a text box, which is where you will write your code. There are also several menu items organized into a toolbar, which you can use to create new files, open old files, and so on. We will use these menu items today. At the bottom of the screen is where you will eventually tell Java to run your program.
 
-TODO: add instructions on adding line numbers on student laptop.
+\begin{figure*}
+    \centering
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=\linewidth]{images/drjava.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \draw[red,ultra thick,->] (.6,.6) node[below] {Text Area} -- (.4,.7);
+            \draw[red,ultra thick,->] (.1,.6) node[below] {Open Files} -- (.1,.7);
+            \draw[red,ultra thick,->] (.5,.3) node[above] {Java Panel} -- (.5,.2);
+            \draw[red,ultra thick,->] (.5,1.05) node[above] {Tool Bar} -- (.5,.93);
+        \end{scope}
+    \end{tikzpicture}
+    \caption{DrJava when it is first launched.}
+    \label{fig:drjava_fresh}
+\end{figure*}
 
-There should be numbers along the left-hand side to make it easy for you to see which line you are writing code on. The bottom part of the window is where we can interact with the program, for example by seeing the output of compiling the program or by seeing the output of running the program.
+We will start by making a small change to DrJava which will make it easier for us to discuss our code with each other. Click on the \textbf{Edit} menu, and then at the very bottom of the dropdown, click on \textbf{Preferences}. A new window will open, like the one in Figure \ref{fig:drjava_linenumbers}. On the left panel, click on \textbf{Display Options}. You should see several options appear. Find the checkbox labeled \textbf{Show All Line Numbers}, and check it. Press OK. There should now be numbers along the left-hand side of the text area to make it easy for you to see which line you are writing on. This way, if you want to refer to a line of code, you can say ``look at line 23'' so everyone knows what code you're talking about.  
 
-\section{Hello World}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=\linewidth]{images/drjava_linenumbers.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \draw[red,ultra thick,->] (.1,1) node[above] {Click here} -- (.1,.8);
+            \draw[red,ultra thick,->] (.54,1) node[above] {Then click here} -- (.54,.67);
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Double click on the DrJava icon to launch the application.}
+    \label{fig:drjava_linenumbers}
+\end{figure}
+
+\section{Writing your Program}
 
 In Java, every application begins with a class name, and that class must match the filename exactly.
 
-Let's create our first Java file, called HelloWorld.java.
-
-In the main part of the window, type the following code:
+Let's create our first Java program. In the main text area, type the following Java code. We'll learn what this code means shortly.
 \begin{code}
 class HelloWorld {
-    
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
-    
 }
 \end{code}
+You'll notice that some of the lines are indented. To produce an indent in your code, use the Tab key on the left side of your keyboard.
 
-We will return to what the code means shortly, but first let's learn how to run it!
+Just like Word documents or Excel spreadsheets are stored in files, Java programs are stored in files. When you launched DrJava, it created a new file for you, which is currently called (Untitled). Let's change this name by saving our file. Click on the ``Save'' button in the toolbar above the main text area.
 
-\section{Saving and Compiling in DrJava}
-
-In the upper part of the window, you should see a toolbar with many buttons.
-You can now click the ``Save'' button. 
-
-First, navigate to your Desktop folder. Once there, create a new folder called CS103 (see Figure \ref{fig:helloworld:sec:saving}). We will store all of our files for the semester in this folder. 
+DrJava will open a new window which lets you choose where the file will be saved. First, navigate to your Desktop folder. Once there, follow the instructions in Figure \ref{fig:drjava_saving} to create a new folder called CS103. We will store all of our files for the semester in this folder. 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{images/hello_world_saving}
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=\linewidth]{images/drjava_saving.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \draw[red,ultra thick,->] (.8,1) node[above] {Click here} -- (.8,.9);
+            \draw[red,ultra thick,->] (.1,1) node[above] {Then type CS103} -- (.1,.8);
+        \end{scope}
+    \end{tikzpicture}
 	\caption{Creating a CS103 folder inside your Desktop.}
-	\label{fig:helloworld:sec:saving}
+	\label{fig:drjava_saving}
 \end{figure}
 
-Next, make another folder, called ``Chapter\_2", inside the CS103 folder for this class's assignment (see Figure \ref{fig:helloworld:sec:saving2}).
+Next, double click on CS103 to navigate into the new folder, and then create another folder called ``Chapter\_\thechapter.''
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.85\textwidth]{images/hello_world_saving2}
-	\caption{Creating another folder inside the CS103 folder.}
-	\label{fig:helloworld:sec:saving2}
-\end{figure}
+You can now save your file inside the Chapter\_\thechapter\ folder. DrJava will suggest you use the file name \ic{HelloWorld.java}, and you should follow this suggestion. Whenever you have a Java program that starts with \ic{class ABC}, the program must be saved as \ic{ABC.java} for Java to recognize it.
 
-Finally, save your file inside this folder with the filename \ic{HelloWorld.java}. The \ic{.java} file extension is used for code written in Java. 
-Again, note that the file name for \ic{.java} files needs to match the name of the class (for us, the name of our class is \ic{HelloWorld}).
+\section{Compiling your Program}
 
-Clicking the ``Compile'' button at the top will first save your file (if it hasn't already been saved) and then \emph{compile} it. Compiling converts your human-readable
-source code into instructions that are easier for the computer to read. In Java, these instructions are in the form of a \ic{.class} file. After you click compile, DrJava will create a
-\ic{HelloWorld.class} file which contains the instructions for the computer.
+Now that we've written some code, we can tell Java to run it. When we ``run'' code, the computer follows the instructions we've laid out in a program and does what you've told it to do. It will take a lot of time to understand the rules Java follows when it runs your code, but you should know from the start that there's nothing mysterious going on. Java will do exactly what you've told it to do, so you just have to make sure that you've given Java the proper instructions.
 
+Running Java code requires a two-step process. The first step is \emph{compilation}. Java compiles the code in your \ic{.java} file into a new file with a \ic{.class} extension. This file contains instructions which are easier for the computer to follow than the instructions as you wrote them. Think of compilation as translation: you wrote your code in English, but the computer only speaks Hungarian, so first your instructions are converted to Hungarian for the computer's benefit.
 
-After clicking ``Compile,'' the bottom part of the window should say
-\ic{Compilation completed.}
+To compile your code, click the \textbf{Compile} button towards the right of the toolbar. The compilation should only take a second or two, and then the bottom panel should say \ic{Compilation completed}.
 
-\subsection{Errors with compiling}
+\subsection{Compiler Errors}
 
-If there is a problem with your program, you might get an error message when you try compiling. Don't panic! Errors happen all the time --- even to experienced programmers. Fixing errors is known as \emph{debugging}, and is an incredibly valuable skill. Here we will look at two common errors, and how to fix them. 
+If there is a problem with your program, you might get an error message when you try compiling. Don't panic! Errors happen all the time, even to experienced programmers. The process of fixing errors is called \emph{debugging}, and it is an incredibly valuable skill. Here we will look at two common errors, and how to fix them. \marginnote{The term ``debugging'' was coined in the 1940s by Admiral Grace Hopper, an early programmer, who had to remove an actual moth from inside an electrical component of her computer!}
 
-For example, suppose we forgot to include the final curly brace, i.e. our code looked like the following.
-
+Suppose we forgot to include the final curly brace, so that we gave Java the following code:
 \begin{code}
 class HelloWorld {
-    
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
 \end{code}
-
-If we hit the  ``Compile" button, then the bottom window should now show an error, with the message \ic{Error: reached end of file while parsing} (see below).
-
-\begin{figure}[ht]
+If we hit the  ``Compile'' button, then the bottom window should now show an error, with the message \ic{Error: reached end of file while parsing} (see below).
+\begin{figure}
 	\centering
-	\includegraphics[width=0.85\textwidth]{images/hello_world_error.png}
-	\caption{Example of compilation error when missing a curly bracket.}
+	\includegraphics[width=\textwidth]{images/hello_world_error.png}
+	\caption{If you're missing a curly bracket, Java might complain that it ``reached end of file while parsing.''}
 	\label{fig:helloworld:sec:error}
 \end{figure}
-
-In general, \ic{Error: reached end of file while parsing} shows up if you did not pair every left curly brace \{ with a right curly brace \}.
-To fix this error, add the last curly brace \} back in and hit ``Compile'' again.
+In general, \ic{Error: reached end of file while parsing} shows up if you did not pair every left curly brace \ic{\{} with a right curly brace \ic{\}}. To fix this error, add the last curly brace \} back in and hit ``Compile'' again.
 %Note that in the bottom part of the window, the ``Compiler Output'' tab is selected. This tab is where you can view any messages from compilation.
 
-Another common error is forgetting to end a command with a \ic{;}. For example, suppose your code looks like the following.
-
+Another common error is forgetting to end a command with a semicolon, the \ic{;} character. In Java, most lines of code have to end with a semicolon. For example, suppose you write the following code:
 \begin{code}
 class HelloWorld {
-    
     public static void main(String[] args) {
         System.out.println("Hello World!")
     }
 }
 \end{code}
-
 Note that Line 4 does not end with a semicolon. If we hit the ``Compile" button, the bottom window will show the error message \ic{Error: ';' expected}.
-
-\begin{figure}[ht]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.85\textwidth]{images/hello_world_error2.png}
-	\caption{Example of compilation error when missing a semicolon.}
+	\includegraphics[width=\textwidth]{images/hello_world_error2.png}
+	\caption{If you forget to include a semicolon character, Java might tell you that it was expecting a semicolon.}
 	\label{fig:helloworld:sec:error2}
 \end{figure}
 
-% Let's see another example of a compilation error. Try deleting the semicolon \ic{;} from the program and hit ``Compile.''
-The message \ic{Error: ';' expected} arises because the curly brace on line 5 was reached without the semicolon being
-encountered. In Java, every statement must end in a semicolon. In this case, the print statement on line 4 must
-end in a semicolon. Add the semicolon back in and recompile the program. Compilation should succeed.
+% Let's see another example of a compilation error. Try deleting the semicolon \ic{;} from the program and hit ``Compile.'' The message \ic{Error: ';' expected} arises because the curly brace on line 5 was reached without the semicolon being encountered. In Java, every statement must end in a semicolon. In this case, the print statement on line 4 must end in a semicolon. Add the semicolon back in and recompile the program. Compilation should succeed.
 
 As you progress through the course, you will run into many errors in your programs. This is a normal part of being a programmer. Recognizing different kinds of errors, and knowing how to fix them, are important skills that you will develop in this course.
 
-\section{Running Code with DrJava}
-Now that the program has been written and compiled, it is time to run it.
-We will use DrJava to run our compiled program by clicking the ``Run'' button in the toolbar. After clicking the ``Run" button, in the bottom part of the window, you should see the following. (If there are any errors, ask your teacher for assistance.)
+\section{Running your Program}
+
+Now that the program has been written and compiled, we can run it. We will use DrJava to run our compiled program by clicking the \textbf{Run} button in the toolbar.\marginnote{If you don't see the Run button, try dragging the right hand side of your window to make it larger.} After clicking the Run button, you should see the following output in the bottom panel.
 \begin{code}
-> run HelloWorld
+> run HelloWorld 
 Hello World!
 >
 \end{code}
 
-If you made it this far, then congrats! You ran your first program.
+If you made it this far, then congratulations! You ran your first Java program.
 
-In the bottom window, the \ic{run HelloWorld} part indicates that you want to run the program \ic{HelloWorld}. The following line is the output of the program. 
+In the bottom window, the \ic{run HelloWorld} command indicates that you want to run the program \ic{HelloWorld}. The following line shows the output of the program. Programs can have longer output, but this program only printed one line.
 
-Note that in the bottom part of the window, the ``Interactions'' tab is now
-selected. This tab allows you to interact with your program. Clicking
-the ``Run'' button is equivalent to clicking the ``Interactions'' tab, typing
-\ic{run HelloWorld}, and then hitting enter/return key on your keyboard.
+When you click the Run button, DrJava opens the \textbf{Interactions} tab of the bottom panel. In the Interactions tab, you can type commands telling Java what programs to run. For instance, you can run \ic{HelloWorld.java} again by typing \ic{run HelloWorld} and pressing the enter key. You should see the same output printed once again.
 
-As a final exercise, then, type \ic{run HelloWorld} after the final \ic{>} and
-hit the enter/return key to run your program. Make sure it outputs "Hello World!" again. 
+\section{How Did it Work?} 
 
-\section{Java Syntax} 
+Now let's understand how our \ic{HelloWorld.java} program told Java to print ``Hello World!'' to the screen.
 
-Now let's understand what's going on in our HelloWorld.java program. 
-
-Every line of code that runs in Java must be inside a class. In our example, we named the class HelloWorld. A class should always start with an uppercase first letter. Remember, the name of the java file must match the class name. When saving the file, save it using the class name and add ".java" to the end of the filename. This is why we saved our file for the "HelloWorld" class as "HelloWorld.java". 
+Every line of code that runs in Java must be inside a class. In our example, we named the class HelloWorld. A class should always start with an uppercase first letter. Remember, the name of the Java file must match the class name. When saving the file, save it using the class name and add ".java" to the end of the filename. This is why we saved our file for the "HelloWorld" class as "HelloWorld.java". 
 
 \textbf{General note: Java is case-sensitive, so "HelloWorld" and "helloworld" have different meanings. This is also true for code that we write.} 
 
@@ -168,24 +163,18 @@ public static void main(String[] args)
 Any code inside the \ic{main()} method will be executed when we run a program. 
 
 We will learn later what
-\ic{public static void} and \ic{String[] args} mean. For now, all you
-need to know is that every Java program needs a \ic{main} method, and that when we run a Java program, the code within the \ic{main()} method is executed. 
+\ic{public static void} and \ic{String[] args} mean. For now, all you need to know is that every Java program needs a \ic{main} method, and that when we run a Java program, the code within the \ic{main()} method is executed. 
 
-Inside the \ic{main()} method, we use the \ic{println()} method to print out
-whatever is specified between the open parenthesis \ic{(} and closed
-parenthesis\ic{ )} that follows immediately after. A semi-colon is always needed after statements, similar to how periods are needed to end sentences in English. This is the meaning of \ic{System.out.println("Hello World!");}
+Inside the \ic{main()} method, we use the \ic{println()} method to print out whatever is specified between the open parenthesis \ic{(} and closed parenthesis\ic{ )} that follows immediately after. A semi-colon is always needed after statements, similar to how periods are needed to end sentences in English. This is the meaning of \ic{System.out.println("Hello World!");}
 
 \section{Experimenting with Hello World}
-Now we've successfully written, compiled, and run our first Java program, and have a basic sense of how it is written.
-Let's try to make our ``Hello World!'' more enthusiastic.
+Now we've successfully written, compiled, and run our first Java program, and have a basic sense of how it is written. Let's try to make our ``Hello World!'' more enthusiastic.
 \newline
 
 \textbf{Exercise.} Change the \ic{Hello World!} in line 4 to \ic{Hello World!!}. Compile and re-run your program. What does it output now? 
 \newline
 
- In general,
-you can make changes to your program, recompile it, and run it again
-to see the results of your changes.
+ In general, you can make changes to your program, recompile it, and run it again to see the results of your changes.
 
 \subsection{Adding comments to your code}
 
@@ -198,25 +187,19 @@ Try adding \ic{ //print hello} to the end of line 4, so that your line 4 now loo
 
 Now compile and run your program. The behavior should remain unchanged from the previous time you ran the program.
 
-The two forward slashes \ic{//} denote the beginning of an \emph{inline comment}. Comments are ignored by the compiler and do not have any effect on
-the program's behavior. They are
-useful for adding explanations or providing information to people that are reading the code. In this case,
-the comment \ic{print hello} is explaining the purpose of the code on that line.
+The two forward slashes \ic{//} denote the beginning of an \emph{inline comment}. Comments are ignored by the compiler and do not have any effect on the program's behavior. They are useful for adding explanations or providing information to people that are reading the code. In this case, the comment \ic{print hello} is explaining the purpose of the code on that line.
 
 Now try adding \ic{//} to the beginning of line 4, so that it looks as follows:
 \begin{code}
 //        System.out.println("Hello World!!"); //print hello
 \end{code}
-Now compile and run your program. You should find that there is now no output. The two forward slashes that you added turned the whole line into a comment. As far as the compiler is concerned, your program is the same
-as if the entire line 4 did not exist. This is sometimes called ``commenting out" your code. In DrJava, a shortcut for commenting out a line is to hit ''control" and "/" simultaneously. Hitting ''control", "shift", and "/" simultaneously will uncomment code. Try commenting and uncommenting line 4 a few times using the DrJava shortcuts. 
+Now compile and run your program. You should find that there is now no output. The two forward slashes that you added turned the whole line into a comment. As far as the compiler is concerned, your program is the same as if the entire line 4 did not exist. This is sometimes called ``commenting out" your code. In DrJava, a shortcut for commenting out a line is to hit ''control" and "/" simultaneously. Hitting ''control", "shift", and "/" simultaneously will uncomment code. Try commenting and uncommenting line 4 a few times using the DrJava shortcuts. 
 
 \subsection{Multiple print statements}
 
-Make sure line 4 is not commented out before starting this part.
-Type the following lines after line 4:
+Make sure line 4 is not commented out before starting this part. Type the following lines after line 4:
 \begin{code}
-System.out.println("Hello!"); // print hello again
-System.out.println("Goodbye World!"); // say goodbye
+System.out.println("Hello!"); // print hello again System.out.println("Goodbye World!"); // say goodbye
 \end{code}
 Your code now has \emph{multiple statements}. In particular, you now have three. The first one on line 4 will print
 \ic{Hello World!!}, the second one will print \ic{Hello!}, and the third will print \ic{Goodbye World!}.
@@ -240,15 +223,11 @@ Hello!
 Goodbye World!
 \end{code}
 
-Note that each of these statements is followed by a semicolon.
-Deleting any one of these semicolons will result in a compilation error. Give it a try now - what output appears? 
+Note that each of these statements is followed by a semicolon. Deleting any one of these semicolons will result in a compilation error. Give it a try now - what output appears? 
 
 \subsection{Block comments}
 
-Let's add some description of what we're doing by adding a \emph{block comment}.
-A block comment begins with \ic{/*} and is ended whenever \ic{*/} is encountered.
-It may (but does not necessarily need to) span multiple lines.
-Right before the main method, type a block comment to get the following:
+Let's add some description of what we're doing by adding a \emph{block comment}. A block comment begins with \ic{/*} and is ended whenever \ic{*/} is encountered. It may (but does not necessarily need to) span multiple lines. Right before the main method, type a block comment to get the following:
 \begin{code}
 class HelloWorld {
 
@@ -265,11 +244,9 @@ class HelloWorld {
 
 }
 \end{code}
-If you compile and run the program now, it should have the same behavior as before, since whatever occurs
-inside comments does not affect the program's behavior.
+If you compile and run the program now, it should have the same behavior as before, since whatever occurs inside comments does not affect the program's behavior.
 
-Inline comments can be nested inside block comments, so for example, the following program
-will compile without issue:
+Inline comments can be nested inside block comments, so for example, the following program will compile without issue:
 \begin{code}
 class HelloWorld {
 
@@ -288,8 +265,7 @@ class HelloWorld {
 
 }
 \end{code}
-Note that since we have commented out all the code in the main method,
-this program is actually the same as the following program that we considered earlier:
+Note that since we have commented out all the code in the main method, this program is actually the same as the following program that we considered earlier:
 \begin{code}
 class HelloWorld {
 
@@ -313,8 +289,7 @@ class HelloWorld {
 
 }
 \end{code}
-Try compiling and running the program. Note the output.
-What happens when we remove the linebreaks and spaces between each pair of print statements?
+Try compiling and running the program. Note the output. What happens when we remove the linebreaks and spaces between each pair of print statements?
 Try removing them to get the following:
 \begin{code}
 class HelloWorld {
@@ -331,19 +306,13 @@ The behavior should still be such that it prints the same output:
 Hello!
 Goodbye!
 \end{code}
-\emph{Whitespace} such as linebreaks and spaces do not have any meaning in Java.
-While spaces are necessary to separate things like \ic{class} and \ic{HelloWorld} or \ic{String[]} and \ic{args}
-so that Java can distinguish between them, spaces are otherwise unimportant.
-Linebreaks have no significance at all in a Java program except to denote when an inline comment
-should end.
+\emph{Whitespace} such as linebreaks and spaces do not have any meaning in Java. While spaces are necessary to separate things like \ic{class} and \ic{HelloWorld} or \ic{String[]} and \ic{args}
+so that Java can distinguish between them, spaces are otherwise unimportant. Linebreaks have no significance at all in a Java program except to denote when an inline comment should end.
 
-That being said, whitespace should be used to make your code more legible. Although you can write
-all your Java programs on a single line, it is considered very bad style!
+That being said, whitespace should be used to make your code more legible. Although you can write all your Java programs on a single line, it is considered very bad style!
 For demonstrative purposes, here the original Hello World Java program all on two lines:
 \begin{code}
 class HelloWorld{public static void main(String[] args)
     {System.out.println("Hello World!");}}
 \end{code}
-Try removing whitespaces in your code, for example so that it looks like the above example, then compile and run it. It should still print \ic{Hello World!} as its output.
-You can even get rid of all the spacing after the close parenthesis \ic{)} to get the whole program on a single line--it
-just doesn't fit on the page if it's all on one line in these notes!
+Try removing whitespaces in your code, for example so that it looks like the above example, then compile and run it. It should still print \ic{Hello World!} as its output. You can even get rid of all the spacing after the close parenthesis \ic{)} to get the whole program on a single line--it just doesn't fit on the page if it's all on one line in these notes!
