@@ -6,8 +6,8 @@ apt_packages:
 
 script:
 - cd lectures
-- tlmgr install forest pgfopts inlinedef endnotes mdframed zref marginnote
 - tlmgr option repository http://ctan.math.illinois.edu/systems/texlive/tlnet
+- tlmgr install forest pgfopts inlinedef endnotes mdframed zref marginnote
 - pdflatex -interaction=nonstopmode main.tex
 - pdflatex -interaction=nonstopmode main.tex
 
