@@ -73,13 +73,50 @@ Line	with	spaces
 To format strings, use the printf function, like this
 
 \begin{code}
-System.out.printf("\%f\n", 10/3.0);
+System.out.printf("%.3f\n", 10/3.0);
 \end{code}
-
-
 
 Output
 \begin{code}
+3.333
+\end{code}
+
+The following table lists common format specifiers
+
+\begin{tabular}{|l|l|}
+\hline
+Format Specifier & Effect\\
+\hline
+\%s,\%S & Formats String\\
+\%f & Formats floating point (precision provided between \% and f)\\
+\%d & Formats integer\\
+\%c & Formats character\\
+\%b, \%B & Formats Boolean\\
+\hline
+\end{tabular}
+
+To specify precision, the number of digits shown after the floating point, use .\ x, where x is the number of digits you'd like. In general, you would want to fit the formatting specifier with the type of the variable you're printing, for example, format floats and doubles with \%f, and integers with \%d.
+
+Here is a complex example, with multiple formatting options. Notice that the number of formatting specifier should match the number of following arguments you give the printf function (Java might not notify you if you have unused arguments).
+
+\begin{code}
+    public static void main(String args[]) {
+      int age=47;
+      double size=35.555555;
+      String name = "John";
+      boolean isTrue = true;
+      char character = 'c';
+
+        System.out.printf("%s is %d years old.\n%s grows vegetable in a %.1f acre field.\nSome people say that %s likes the letter %c too much.\nIt is %b!\n", name, age, name, size, name, character, isTrue);
+    }
+\end{code}
+Output
+
+\begin{code}
+John is 47 years old.
+John grows vegetable in a 35.6 acre field.
+Some people say that John likes the letter c too much.
+It is true!
 
 \end{code}
 
