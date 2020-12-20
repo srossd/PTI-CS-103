@@ -8,7 +8,7 @@ script:
 - cd lectures
 - tlmgr option repository http://ctan.math.illinois.edu/systems/texlive/tlnet
 - tlmgr update --self
-- tlmgr install forest pgfopts inlinedef endnotes mdframed zref marginnote
+- tlmgr install forest pgfopts inlinedef endnotes mdframed zref marginnote minitoc
 - pdflatex -interaction=nonstopmode main.tex
 - pdflatex -interaction=nonstopmode main.tex
 
