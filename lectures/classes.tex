@@ -239,24 +239,22 @@ Ford costs: $8000.00
 We can imagine more complex programs. For example, here is a program that computes the average price of the cars in the dealership:
 
 \begin{code}
-import java.util.ArrayList;
-
 class CarDealership {
   
-  public static void printAveragePrice(ArrayList<Car> cars) {
+  public static void printAveragePrice(Car[] cars) {
     double avg = 0;
-    for (Car car : cars ) {
-      avg += car.price;
+    for (int i = 0; i < cars.length; i++) {
+      avg += cars[i].price;
     }
-    avg = avg / cars.size();
+    avg = avg / cars.length;
     System.out.printf("Average price: %1.2f\n", avg);
   }
     
   public static void main(String[] args) {
-    ArrayList<Car> cars = new ArrayList<Car>();
-    cars.add(new Car("Toyota", 12000));
-    cars.add(new Car("Ford", 8000));
-    cars.add(new Car("Lincoln", 13500));
+    Car[] cars = new Car[3];
+    cars[0] = new Car("Toyota", 12000);
+    cars[1] = new Car("Ford", 8000);
+    cars[2] = new Car("Lincoln", 13500);
     printAveragePrice(cars);
   }
 }
@@ -269,11 +267,11 @@ $ java CarDealership
 Average price: 11166.67
 \end{monospace}
 
-Now that we understand methods, arrays and \ic{ArrayLists}, and multiple class programs, we can really start to build cool stuff.
+Now that we understand methods, arrays, and multiple class programs, we can really start to build cool stuff.
 
 \section{Packages}
 
-Notice in the previous \ic{CarDealership} program, we import something called \ic{java.util.ArrayList}. In fact, we've been using the \ic{import} keyword since nearly the beginning without explaining it. For example, perhaps our first import was for I/O:
+Notice in the previous \ic{HelloPlanet} program, we import something called \ic{java.util.Scanner}. In fact, we've been using the \ic{import} keyword since nearly the beginning without explaining it, e.g.:
 
 \begin{code}
 import java.util.Scanner;
@@ -287,7 +285,7 @@ A \emph{package} organizes a set of related classes under a common name or \emph
 
 We can think of a package as just a folder of class files. In programming, this kind of organizational technique is called \emph{namespacing}. We are grouping or categorizing parts of our program under a specific name, which is analogous to a folder or path.
 
-For example, you can think of \ic{java.util.ArrayList} as refering to a file \ic{ArrayList.java} in the \ic{util} subdirectory of the \ic{java} root directory. As a programmer, you can write your own packages for others to use. In this course, you won't learn to do that, but you should know that packages exist and that we use code from others by importing packages.
+For example, you can think of \ic{java.util.Scanner} as referring to a file \ic{Scanner.java} in the \ic{util} subdirectory of the \ic{java} root directory. As a programmer, you can write your own packages for others to use. In this course, you won't learn to do that, but you should know that packages exist and that we use code from others by importing packages.
 
 See \ref{appendix:packages} for a list of useful packages.
 
