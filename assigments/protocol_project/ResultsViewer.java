@@ -1,17 +1,10 @@
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.*;
-
-import javafx.application.Platform;
-import javafx.animation.AnimationTimer;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javax.swing.JFrame;
 
 public class ResultsViewer extends JFrame {
 
@@ -24,32 +17,24 @@ public class ResultsViewer extends JFrame {
     private int width;
     private int height;
 
-    private XYChart.Series<Number,Number> sentSeries = new XYChart.Series<>();
-    private XYChart.Series<Number,Number> receivedSeries = new XYChart.Series<>();
-
-    
-    private ConcurrentLinkedQueue<Number> sentTime = new ConcurrentLinkedQueue<>();
-    private ConcurrentLinkedQueue<Number> sentNumber = new ConcurrentLinkedQueue<>();
-
-    private ConcurrentLinkedQueue<Number> receivedTime = new ConcurrentLinkedQueue<>();
-    private ConcurrentLinkedQueue<Number> receivedNumber = new ConcurrentLinkedQueue<>();
-
     private JLabel time;
     private JLabel accuracy;
 
+    private JButton start;
+
+    private JTable table;
+    private int row;
+    private double sec, acc;
+
     public ResultsViewer() {
         setTitle("Network Viewer");
-        setSize(1700, 900);
-        setLocationRelativeTo(null);
-
-        sentSeries.setName("Packets Sent");
-        receivedSeries.setName("Packets Received");
-        
-        setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public void setImage(String imagePath) {
+        JPanel superpane = new JPanel();
+        superpane.setLayout(new BoxLayout(superpane, BoxLayout.X_AXIS));
+
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.setBackground(Color.DARK_GRAY);
@@ -66,11 +51,6 @@ public class ResultsViewer extends JFrame {
 
         ImageIcon sentImageIcon = new ImageIcon(imagePath);
         Image image = sentImageIcon.getImage();
-        Image newimg = image.getScaledInstance(800, 600,  java.awt.Image.SCALE_SMOOTH);
-        sentImageIcon = new ImageIcon(newimg);
-        JLabel label = new JLabel(sentImageIcon);
-        imagePane.add(label);
-
         width = image.getWidth(null);
         height = image.getHeight(null);
 
@@ -83,14 +63,11 @@ public class ResultsViewer extends JFrame {
         pane.add(imagePane);
 
         JPanel statsPane = new JPanel();
-        statsPane.setSize(1600, 200);
+        statsPane.setSize(1000, 200);
         statsPane.setBackground(Color.DARK_GRAY);
 
-        final JFXPanel packetPanel = new JFXPanel();
-        statsPane.add(packetPanel);
-
         JPanel reportPanel = new JPanel();
-        ((FlowLayout)reportPanel.getLayout()).setHgap(30);
+        ((FlowLayout)reportPanel.getLayout()).setHgap(60);
         reportPanel.setBackground(Color.DARK_GRAY);
         reportPanel.setSize(400, 200);
 
@@ -128,10 +105,11 @@ public class ResultsViewer extends JFrame {
 
         statsPane.add(reportPanel);
 
-        final JFXPanel eccPanel = new JFXPanel();
-        statsPane.add(eccPanel);
-
         pane.add(statsPane);
+
+        start = new JButton("Start");
+        start.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        pane.add(start);
 
         Runnable update = new Runnable() {
             @Override
@@ -139,80 +117,39 @@ public class ResultsViewer extends JFrame {
                 redrawReceivedImage();
             }
         };
-        
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(update, 0, 100, TimeUnit.MILLISECONDS);
+
+        superpane.add(pane);
+
+        String[] columns = {"Packet Size", "Time (s)", "Accuracy (%)"};
         
-        Platform.runLater(() -> { initFX(packetPanel, eccPanel); });
+        DefaultTableModel tableModel = new DefaultTableModel(new Double[50][3], columns) {
+            private static final long serialVersionUID = 1L;
 
-        getContentPane().add(pane);
-    }
-
-    private void initFX(JFXPanel packetPanel, JFXPanel eccPanel) {
-        Scene packetScene = createPacketScene(sentSeries, receivedSeries);
-        packetPanel.setScene(packetScene);
-
-        // Scene receivedScene = createScene(receivedSeries);
-        // receivedPanel.setScene(receivedScene);
-
-        prepareTimeline();
-    }
-
-    public void addSentValue(double time, int sent) {
-        sentTime.add(time);
-        sentNumber.add(sent);
-    }
-
-    public void addReceivedValue(double time, int received) {
-        receivedTime.add(time);
-        receivedNumber.add(received);
-    }
-
-    private void addDataToSeries() {
-        while(!sentNumber.isEmpty()) {
-            sentSeries.getData().add(new XYChart.Data<>(sentTime.remove(), sentNumber.remove()));
-        }
-        
-        while(!receivedNumber.isEmpty()) {
-            receivedSeries.getData().add(new XYChart.Data<>(receivedTime.remove(), receivedNumber.remove()));
-        }
-    }
-
-    private void prepareTimeline() {
-        new AnimationTimer() {
             @Override
-            public void handle(long now) {
-                addDataToSeries();
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
             }
-        }.start();
+        };
+
+        table = new JTable(new Double[50][3], columns);
+        table.setModel(tableModel);
+        new ExcelAdapter(table);
+
+        JScrollPane data = new JScrollPane(table);
+        superpane.add(data);
+
+        getContentPane().add(superpane);
+        setSize(1100, 900);
+        setLocationRelativeTo(null);
+        
+        setVisible(true);
     }
 
-    private Scene createPacketScene(XYChart.Series<Number,Number> sentSeries, XYChart.Series<Number,Number> receivedSeries) {
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-
-        xAxis.setLabel("Time (s)");
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(10);
-        xAxis.setTickUnit(1);
-        xAxis.setMinorTickCount(0);
-
-        yAxis.setLabel("Packets");
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setUpperBound(4000);
-        yAxis.setTickUnit(500);
-        yAxis.setMinorTickCount(0);
-
-        final AreaChart<Number,Number> areaChart = new AreaChart<Number,Number>(xAxis,yAxis);
-                
-        areaChart.getData().add(sentSeries);
-        areaChart.getData().add(receivedSeries);
-        
-        Scene scene  = new Scene(areaChart,600,200);
-        scene.getStylesheets().add("chart.css");
-        return scene;
+    public void setAction(ActionListener al) {
+        start.addActionListener(al);
     }
 
     private BufferedImage scale(BufferedImage original, int width, int height) {
@@ -240,6 +177,7 @@ public class ResultsViewer extends JFrame {
             for(int i = 0; i < packetPixels.length; i++) {
                 receivedImagePixels[offset+i] = packetPixels[i];
             }
+            // redrawReceivedImage();
         }
         catch(UnsupportedEncodingException e) {
             System.out.println("ISO-8859-1 encoding failed");
@@ -247,6 +185,7 @@ public class ResultsViewer extends JFrame {
     }
 
     public void setTime(double seconds) {
+        sec = seconds;
         time.setText(String.format("%.1fs",seconds));
     }
 
@@ -256,7 +195,31 @@ public class ResultsViewer extends JFrame {
             if(sentImagePixels[i] == receivedImagePixels[i])
                 correct++;
         
-        double acc = ((double)correct)/sentImagePixels.length;
+        acc = ((double)correct)/sentImagePixels.length;
         accuracy.setText(String.format("%.1f%%", 100*acc));
+    }
+
+    public void logData(int packetSize) {
+        table.setValueAt(packetSize, row, 0);
+        table.setValueAt(sec, row, 1);
+        table.setValueAt(Math.round(1000*acc)/10., row, 2);
+        row++;
+    }
+
+    public void resetImage(int packetSize) {
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        start.setText("Testing packet size of "+packetSize);
+        start.setEnabled(false);
+
+        BufferedImage receivedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+        receivedImagePixels = ((DataBufferByte) receivedImage.getRaster().getDataBuffer()).getData();
+        // ImageIcon receivedImageIcon = new ImageIcon(scale(receivedImage, 800, 600));
+        // receivedImageLabel = new JLabel(receivedImageIcon);
     }
 }

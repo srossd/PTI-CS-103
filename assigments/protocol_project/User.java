@@ -13,15 +13,13 @@ public class User {
         return ID;
     }
 
-    public void send(String data, User recipient) {
-        for(int i = 0; i < data.length(); i += 1000) {
-            net.send(recipient.getID(), i, data.substring(i, Math.min(i+1000, data.length())));
+    public void send(String data, User recipient, int packetSize) {
+        net.reset(packetSize);
+        
+        for(int i = 0; i < data.length(); i += packetSize) {
+            net.send(recipient.getID(), i, data.substring(i, Math.min(i+packetSize, data.length())));
         }
 
-        net.endOfTransmission();
+        net.endOfTransmission(packetSize);
     }
-
-	public void receive(int destinationID, int offset, String packet) {
-        return;
-	}
 }

@@ -7,7 +7,7 @@ public class Network {
     private double dropRate;
 
     private int sent = 0;
-    private int received = 0;
+    // private int received = 0;
     private double started;
 
     private ArrayList<User> users;
@@ -17,8 +17,8 @@ public class Network {
     ExecutorService pool;
 
     public Network() {
-        this.meanLatency = 100; // milliseconds
-        this.errorRate = 0.12; // probability of bit flip
+        this.meanLatency = 500; // milliseconds
+        this.errorRate = 0; // probability of bit flip
         this.dropRate = 0.0001; // drop probability per character in packet
 
         this.users = new ArrayList<User>();
@@ -72,7 +72,6 @@ public class Network {
             sent++;
             if(sent == 1)
                 started = System.currentTimeMillis();
-            viewer.addSentValue((System.currentTimeMillis() - started)/1000, sent);
             try {
                 Thread.sleep(meanLatency);
             }
@@ -86,22 +85,35 @@ public class Network {
                 return;
 
             viewer.receive(offset, garbledPacket);
-            for(User user : users) {
-                user.receive(destinationID, offset, garbledPacket);
-            }
-            received++;
-            viewer.addReceivedValue((System.currentTimeMillis() - started)/1000, received);
+            // for(User user : users) {
+            //     user.receive(destinationID, offset, garbledPacket);
+            // }
+            // received++;
         };
 
         pool.execute(sender);
     }
 
-    public void endOfTransmission() {
+    public void reset(int packetSize) {
+        this.pool = Executors.newFixedThreadPool(50, new ThreadFactory(){
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r);
+                thread.setPriority(Thread.MIN_PRIORITY);
+                return thread;
+            }
+        });
+        viewer.resetImage(packetSize);
+        sent = 0;
+    }
+
+    public void endOfTransmission(int packetSize) {
         pool.shutdown();
         try {
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
             viewer.setTime((System.currentTimeMillis() - started)/1000);
             viewer.computeAccuracy();
+            viewer.logData(packetSize);
         }
         catch(InterruptedException e) {
             System.out.println("Program halted before statistics computed");
