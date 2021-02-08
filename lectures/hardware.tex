@@ -9,13 +9,13 @@
 
 This chapter will focus on \emph{hardware}, the physical devices that work together to perform a common task (or tasks).  When most of us think about computers, we often think of a desktop or laptop computer, equipped with a keyboard, mouse, and monitor as seen in Figure~\ref{fig:hardware:computers}. However, many things we interact with daily are computerized, including cell phones, cars, traffic lights, smart watches, televisions, and manufacturing lines. Each of these items has sensors to perceive the real world, uses an embedded computing device to understand the sensory input, and uses a combination of display and mechanical devices to interact with the real world. Thus, each of these commonplace items contain computer hardware that is essential to their operation.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.85\textwidth]{images/computer_system.png}
-	\caption{A variety of computer systems: desktops, a laptop, a tablet, and a
-    smart phone. \afm{Source for pic.}}
-	\label{fig:hardware:computers}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\includegraphics[width=0.85\textwidth]{images/computer_system.png}
+% 	\caption{A variety of computer systems: desktops, a laptop, a tablet, and a
+%     smart phone. \afm{Source for pic.}}
+% 	\label{fig:hardware:computers}
+% \end{figure}
 
 \begin{example}\label{exmp:traffic_light}
   For intersections across busy roadways, some traffic lights are computerized to optimize road traffic. These lights will stay green along the busier of the two roads, and use cameras or pressure sensors to detect the presence of cars along the less busy of the two roads. When cars arrive, the lights switch, allowing the cars on the less busy road to cross.
@@ -52,7 +52,13 @@ A monitor is a graphical display for computers. Let's consider a monitor connect
 \begin{figure}%
 	\centering%
 	\begin{minipage}{0.45\linewidth}%
-		\includegraphics[width=\textwidth]{images/checkered_image.jpg}
+		\begin{tikzpicture}[scale=0.275]
+		    \foreach \i in {1,...,20} {
+		        \foreach[evaluate=\j as \k using {ifthenelse(Mod(\i+\j,2)==0,100,0)}] \j in {1,...,20} {
+		            \fill[black!\k] (\i, -\j) rectangle ({\i+1},{-(\j+1)});
+		        };
+		    }
+		\end{tikzpicture}
 	\end{minipage}%
 	\hspace{.1\linewidth}%
         \begin{minipage}{0.45\linewidth}%
@@ -108,10 +114,7 @@ Memory is also home to a very special kind of data: computer programs. The step-
 
 The final part of a computer we will introduce today is the \emph{central processing unit} (CPU), also known as the \emph{processor} or \emph{main processor}. The CPU is the physical circuitry of a computer that performs instructions. This is where all the magic happens.
 
-The CPU is divided into several components. It has an arithmetic and logic unit (ALU) which is responsible for physically carrying out basic mathematical operations. It also has control logic which helps the CPU to determine which instructions to carry out. One especially important component of the CPU is its clock, which keeps track of how many steps, known as ``clock cycles,'' the CPU has carried out.
-
-The CPU has several key components: the control logic, arithmetic and logic unit (ALU), registers, program counter, and clock. These components work together to 
-fetch, decode, and execute all instructions --- the building blocks of all programs. Instructions vary between different brands of CPUs, but, in general, they will include arithmetic, control, read (from memory), and write (to memory) functionalities.\marginnote{A typical computer today might run at 2.4 GHz -- which means its clock goes through 2.4 billion cycles every second. That's fast!}
+The CPU is divided into several components. It has an arithmetic and logic unit (ALU) which is responsible for physically carrying out basic mathematical operations. It also has control logic which helps the CPU to determine which instructions to carry out. One especially important component of the CPU is its clock, which keeps track of how many steps, known as ``clock cycles,'' the CPU has carried out.\marginnote{A typical computer today might run at 2.4 GHz -- which means its clock goes through 2.4 billion cycles every second. That's fast!}
 
 We already discussed how a computer uses its main memory as scratch paper. Even when you use scratch paper, though, you do a little bit of arithmetic -- things like adding two one-digit numbers -- in your head. Your head is like your CPU, and it has to be able to store those few numbers so you can work with them. When a CPU does math ``in its head,'' it uses special memory locations called registers. Most modern CPUs will have between 16 and 64 registers that programs may use. That may not sound like a lot, but imagine trying to hold 64 numbers in your head at once!
 
